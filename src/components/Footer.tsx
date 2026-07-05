@@ -2,29 +2,26 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { 
-  MapPin, 
-  Phone, 
-  Mail, 
-  Calendar, 
-  GraduationCap, 
-  ExternalLink 
-} from 'lucide-react';
+import { MapPin, Phone, Mail, GraduationCap } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export function Footer() {
+  const { t } = useLanguage();
+
   const quickLinks = [
-    { name: 'About Jamia', path: '/about' },
-    { name: 'Academic Programs', path: '/programs' },
-    { name: 'Admissions Criteria', path: '/admissions' },
-    { name: 'Apply Digitally', path: '/admission-form' },
-    { name: 'Search Directory', path: '/students' },
+    { name: t('navbar.about'), path: '/about' },
+    { name: t('navbar.programs'), path: '/programs' },
+    { name: t('navbar.admissions'), path: '/admissions' },
+    { name: t('navbar.admissionForm'), path: '/admission-form' },
+    { name: t('navbar.studentsDirectory'), path: '/students' },
   ];
 
   const resources = [
-    { name: 'Frequently Asked FAQs', path: '/faqs' },
-    { name: 'Privacy & Policy', path: '/privacy' },
-    { name: 'Terms of Service', path: '/terms' },
-    { name: 'Faculty Profiles', path: '/faculty' },
+    { name: t('navbar.gallery'), path: '/gallery' },
+    { name: t('navbar.faculty'), path: '/faculty' },
+    { name: 'FAQs', path: '/faqs' },
+    { name: 'Privacy Policy', path: '/privacy' },
+    { name: 'Terms', path: '/terms' },
   ];
 
   return (
@@ -50,7 +47,7 @@ export function Footer() {
               </div>
             </Link>
             <p className="text-zinc-500 leading-relaxed max-w-sm">
-              Established with the vision to provide high-quality integrated Islamic education, blending classical theological scholarship (Dars-e-Nizami) with modern secondary and higher secondary education.
+              {t('footer.description')}
             </p>
             <div className="flex items-center gap-3 mt-2">
               <a 
@@ -69,7 +66,7 @@ export function Footer() {
           {/* Quick Links */}
           <div className="md:col-span-2 flex flex-col gap-4">
             <h4 className="text-white font-extrabold text-sm tracking-wider uppercase border-l-2 border-emerald-600 pl-2">
-              EMS Pages
+              {t('footer.quickLinks')}
             </h4>
             <div className="flex flex-col gap-2.5 font-medium">
               {quickLinks.map((link) => (
@@ -97,7 +94,7 @@ export function Footer() {
           {/* Contacts */}
           <div className="md:col-span-4 flex flex-col gap-4">
             <h4 className="text-white font-extrabold text-sm tracking-wider uppercase border-l-2 border-emerald-600 pl-2">
-              Address & Contact
+              {t('footer.contactUs')}
             </h4>
             <div className="flex flex-col gap-3 font-semibold text-zinc-400">
               <div className="flex items-start gap-2.5">
@@ -123,7 +120,9 @@ export function Footer() {
       {/* Footer copyright bar */}
       <div className="bg-zinc-950 border-t border-zinc-900 py-6 text-center select-none text-zinc-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] font-bold tracking-wider font-mono">
-          <span>&copy; {new Date().getFullYear()} JAMIA ISLAMABAD. ALL RIGHTS RESERVED.</span>
+          <span>
+            {t('footer.rights', { year: new Date().getFullYear().toString() })}
+          </span>
           <span className="flex items-center gap-1">
             Engineered for Jamia Islamabad EMS
             <GraduationCap className="w-3.5 h-3.5 text-emerald-600" />

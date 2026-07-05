@@ -1,0 +1,23 @@
+{
+  "title": "Student Directory",
+  "description": "Official records of registered students at Jamia Islamabad. Search by roll number, name, or class.",
+  "searchPlaceholder": "Search by roll number, name, or class...",
+  "filters": {
+    "all": "All Grades",
+    "dars": "Dars-e-Nizami",
+    "hifz": "Hifz-ul-Quran",
+    "tajweed": "Tajweed & Qira'at"
+  },
+  "table": {
+    "rollNo": "Roll No",
+    "name": "Student Name",
+    "fatherName": "Father's Name",
+    "classGrade": "Class / Grade",
+    "department": "Department",
+    "admissionDate": "Admission Date",
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "noRecords": "No student records found."
+  }
+}

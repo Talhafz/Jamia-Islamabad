@@ -1,0 +1,34 @@
+{
+  "navbar": {
+    "home": "Home",
+    "about": "About",
+    "admissions": "Admissions",
+    "admissionForm": "Admission Form",
+    "programs": "Programs",
+    "studentsDirectory": "Students Directory",
+    "faculty": "Faculty",
+    "gallery": "Gallery",
+    "contact": "Contact",
+    "applyNow": "Apply Now"
+  },
+  "footer": {
+    "description": "A premium integration of classical Islamic learning and modern schooling, fostering ethical leadership and academic brilliance.",
+    "quickLinks": "Quick Links",
+    "contactUs": "Contact Us",
+    "address": "Jamia Islamabad, Sector G-10, Islamabad, Pakistan",
+    "phone": "Phone: 051-9234567",
+    "email": "Email: info@jamiaislamabad.edu.pk",
+    "rights": "All rights reserved © {year} Jamia Islamabad"
+  },
+  "buttons": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "save": "Save",
+    "print": "Print",
+    "download": "Download PDF",
+    "back": "Back",
+    "next": "Next",
+    "loading": "Loading..."
+  }
+}

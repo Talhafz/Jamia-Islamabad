@@ -1,0 +1,21 @@
+{
+  "title": "Contact Us",
+  "description": "If you have any questions or would like to gather more information, feel free to contact us via the form below or using our office details.",
+  "form": {
+    "name": "Your Name",
+    "namePlaceholder": "Enter your full name",
+    "email": "Email Address",
+    "emailPlaceholder": "name@example.com",
+    "message": "Your Message",
+    "messagePlaceholder": "Write your message here...",
+    "submit": "Send Message",
+    "sending": "Sending message...",
+    "success": "Your message has been sent successfully. We will get back to you shortly."
+  },
+  "info": {
+    "title": "Contact Information",
+    "addressTitle": "Our Address",
+    "phoneTitle": "Phone Number",
+    "emailTitle": "Email"
+  }
+}

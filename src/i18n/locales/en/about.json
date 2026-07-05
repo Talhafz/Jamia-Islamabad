@@ -1,0 +1,30 @@
+{
+  "title": "About Jamia Islamabad",
+  "description": "Founded in 1992, Jamia Islamabad stands as an emblem of sacred learning, integrating classical Islamic texts (Dars-e-Nizami) with modern schooling curricula.",
+  "vision": {
+    "title": "Our Vision",
+    "desc": "To be a leading center of educational excellence where sacred theology and modern academic fields merge. We aim to nurture scholars who are deeply rooted in classical methodologies yet completely capable of engaging with modern sciences, forming a moderate and progressive voice for society."
+  },
+  "mission": {
+    "title": "Our Mission",
+    "desc": "To provide a disciplined and supportive environment that encourages academic rigor, character development, and spiritual maturity. We combine the traditional Dars-e-Nizami (Aalim Course) with formal Matric and F.A. education, preparing students for both theological leadership and professional fields."
+  },
+  "biography": {
+    "profileLabel": "Principal Profile",
+    "name": "Prof. Dr. Mufti Muhammad Zafar Iqbal Jalali",
+    "subtitle": "Sheikh-ul-Hadith & Principal",
+    "heading": "Leadership & Academic Direction",
+    "desc1": "Prof. Dr. Mufti Muhammad Zafar Iqbal Jalali is the founding principal and academic director of Jamia Islamabad. With a doctorate in Islamic studies and over three decades of teaching, counseling, and theological writing, Dr. Jalali has shaped the careers of hundreds of graduates who now serve as researchers, teachers, and lawyers.",
+    "desc2": "Under his direct guidance, the faculty maintain strict standards of research, citation, and grammar. This ensures that classical training in Arabic grammar (Sarf and Nahw), Logic (Mantiq), Jurisprudence (Fiqh), and Prophetic Narrations (Hadith) is preserved at its highest fidelity."
+  },
+  "coreValues": {
+    "title": "Our Core Foundations",
+    "subtitle": "Core Pillars",
+    "rigorTitle": "Academic Rigor",
+    "rigorDesc": "Preserving deep, textual analysis of classical theological texts while teaching secondary board sciences.",
+    "tarbiyahTitle": "Moral Growth (Tarbiyah)",
+    "tarbiyahDesc": "Cultivating respectful dialogue, ethical behavior, and strong Islamic characteristics.",
+    "leadershipTitle": "Leadership",
+    "leadershipDesc": "Preparing students to guide and serve society with wisdom, moderation, and contemporary awareness."
+  }
+}
