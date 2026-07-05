@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import { Language, translations } from '../i18n/translations';
 
 interface LanguageContextType {
@@ -13,98 +13,66 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  // Default to 'ur' (Urdu) as requested
-  const [currentLanguage, setLanguageState] = useState<Language>('ur');
-  const [direction, setDirection] = useState<'rtl' | 'ltr'>('rtl');
+  const [currentLanguage, setCurrentLanguage] = useState<Language>('ur');
 
-  // Load language from localStorage on client mount
+  const direction: 'rtl' | 'ltr' = currentLanguage === 'en' ? 'ltr' : 'rtl';
+
+  // Load persisted preference on mount
   useEffect(() => {
-    const savedLang = localStorage.getItem('app_language') as Language;
-    if (savedLang && (savedLang === 'ur' || savedLang === 'en' || savedLang === 'ar')) {
-      setLanguageState(savedLang);
-      setDirection(savedLang === 'en' ? 'ltr' : 'rtl');
+    const saved = localStorage.getItem('app_language') as Language;
+    if (saved === 'ur' || saved === 'en' || saved === 'ar') {
+      setCurrentLanguage(saved);
     }
   }, []);
 
-  // Update HTML attributes and save preference on change
+  // Sync HTML attributes whenever language changes
   useEffect(() => {
     localStorage.setItem('app_language', currentLanguage);
-    setDirection(currentLanguage === 'en' ? 'ltr' : 'rtl');
-    
-    // Dynamically update document attributes for proper RTL/LTR rendering
+    const dir = currentLanguage === 'en' ? 'ltr' : 'rtl';
     document.documentElement.setAttribute('lang', currentLanguage);
-    document.documentElement.setAttribute('dir', currentLanguage === 'en' ? 'ltr' : 'rtl');
+    document.documentElement.setAttribute('dir', dir);
   }, [currentLanguage]);
 
-  const setLanguage = (lang: Language) => {
-    setLanguageState(lang);
-  };
+  const setLanguage = useCallback((lang: Language) => {
+    setCurrentLanguage(lang);
+  }, []);
 
-  // Translation resolver with namespace support (e.g. 'home:hero.title')
-  const t = (key: string, variables?: Record<string, string>): string => {
-    const [namespace, path] = key.includes(':') ? key.split(':') : ['common', key];
-    
-    const langTranslations = translations[currentLanguage];
-    const nsTranslations = (langTranslations as any)[namespace];
-    
-    if (!nsTranslations) {
-      // Fallback to common if namespace doesn't exist
-      return key;
-    }
+  // Build t() as a stable callback that closes over currentLanguage
+  const t = useCallback(
+    (key: string, variables?: Record<string, string>): string => {
+      const [namespace, path] = key.includes(':')
+        ? key.split(':')
+        : ['common', key];
 
-    // Resolve nested path (e.g., 'hero.title')
-    const parts = path.split('.');
-    let value: any = nsTranslations;
-    
-    for (const part of parts) {
-      if (value === undefined || value === null) {
-        // Fallback to English if Urdu key is missing, or return the key
-        const enFallback = (translations['en'] as any)[namespace];
-        if (enFallback) {
-          let fallbackVal = enFallback;
-          for (const fbPart of parts) {
-            if (fallbackVal === undefined || fallbackVal === null) break;
-            fallbackVal = fallbackVal[fbPart];
-          }
-          if (typeof fallbackVal === 'string') {
-            value = fallbackVal;
-            break;
-          }
-        }
-        return key;
+      const ns = (translations[currentLanguage] as any)[namespace];
+      if (!ns) return key;
+
+      const value = path.split('.').reduce((obj: any, part: string) => {
+        return obj !== null && obj !== undefined ? obj[part] : undefined;
+      }, ns);
+
+      if (typeof value !== 'string') return key;
+
+      if (variables) {
+        return Object.entries(variables).reduce(
+          (str, [k, v]) => str.replace(new RegExp(`\\{${k}\\}`, 'g'), v),
+          value
+        );
       }
-      value = value[part];
-    }
-
-    if (typeof value !== 'string') {
-      return key;
-    }
-
-    // Variable interpolation
-    if (variables) {
-      let result = value;
-      for (const [varName, varVal] of Object.entries(variables)) {
-        result = result.replace(new RegExp(`{${varName}}`, 'g'), varVal);
-      }
-      return result;
-    }
-
-    return value;
-  };
+      return value;
+    },
+    [currentLanguage]
+  );
 
   return (
     <LanguageContext.Provider value={{ currentLanguage, setLanguage, direction, t }}>
-      <div style={{ direction }}>
-        {children}
-      </div>
+      {children}
     </LanguageContext.Provider>
   );
 }
 
 export function useLanguage() {
   const context = useContext(LanguageContext);
-  if (context === undefined) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
-  }
+  if (!context) throw new Error('useLanguage must be used within a LanguageProvider');
   return context;
 }
