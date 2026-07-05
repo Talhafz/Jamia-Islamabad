@@ -1,0 +1,75 @@
+{
+  "scroll": "Scroll",
+  "applyOnline": "Apply Online",
+  "viewDetails": "View Details",
+  "principal": {
+    "label": "Principal & Founder",
+    "title": "Preserving Sacred Knowledge, Shaping Future Leaders",
+    "desc1": "Jamia Islamabad is a beacon of Islamic learning, established to nurture scholarly intelligence alongside practical modern competencies. Our curriculum provides a solid foundation in the Islamic sciences (Hadith, Tafseer, Fiqh, Arabic Calligraphy) coupled with formal board education.",
+    "desc2": "Through this Education Management System, we streamline our admissions, academic performance, and student tracking, moving towards a modern digital workspace while remaining grounded in our fundamental values.",
+    "readMore": "Read More About Our Mission"
+  },
+  "testimonials": {
+    "title": "Student & Parent Success",
+    "subtitle": "Testimonials",
+    "t1": "The dual pathway matric system at Jamia Islamabad let my son continue Quranic specialization without putting his school certifications on hold. Highly recommended for parents who want both education tracks.",
+    "t1Author": "Muhammad Aslam",
+    "t1Role": "Parent of Muhammad Ali",
+    "t2": "Under Mufti Zafar Iqbal's guidance, study circles are deep, rigorous, and inspiring. Classical grammar and Arabic syntax are taught at a very high standard, helping me gain solid command.",
+    "t2Author": "Anas Khan",
+    "t2Role": "Alim Graduate (2025)",
+    "t3": "The environment at Jamia is extremely respectful and focused. Tutors push students to exhibit excellence in daily character traits. It is much more than simple academics, it is tarbiyah.",
+    "t3Author": "Bilal Ahmad",
+    "t3Role": "Hifz Student"
+  },
+  "cta": {
+    "title": "Admissions are Open for Academic Session {year}",
+    "desc": "Secure your seat today by filling out our digital admission application. Print it out and submit it physically to the administrator to initialize your academic records.",
+    "btnApply": "Start Application Form",
+    "btnContact": "Contact Admin Office"
+  },
+  "hero": {
+    "subtitle": "Jamia Islamabad",
+    "title": "Empowering Minds, Nurturing Souls",
+    "description": "Where classical Islamic theological studies blend seamlessly with modern secondary education, fostering ethical leadership and academic brilliance under the guidance of Dr. Mufti Muhammad Zafar Iqbal Jalali.",
+    "ctaApply": "Apply Online",
+    "ctaExplore": "Explore Programs",
+    "ctaRequirements": "Admission Requirements"
+  },
+  "programs": {
+    "title": "Our Academic Programs",
+    "subtitle": "Explore the diverse courses offered at Jamia Islamabad",
+    "dars": {
+      "title": "Dars-e-Nizami (Islamic Theology)",
+      "desc": "A comprehensive 8-year course covering classical Arabic grammar, Fiqh, Tafseer, and Hadith literature."
+    },
+    "hifz": {
+      "title": "Hifz-ul-Quran (Memorization)",
+      "desc": "A structured memorization curriculum taught by experienced Qaris with focus on revision and correct Tajweed."
+    },
+    "tajweed": {
+      "title": "Tajweed & Qira'at",
+      "desc": "Specialized certification in the classical rules of Quranic recitation and reading methodologies."
+    },
+    "matricFa": {
+      "title": "Matric / F.A. (High School)",
+      "desc": "Board-affiliated science and arts education running concurrently with secondary Islamic theological courses."
+    }
+  },
+  "process": {
+    "title": "Admission Process",
+    "subtitle": "Complete your registration in three simple steps",
+    "step1": {
+      "title": "Fill Online Form",
+      "desc": "Input your personal, educational, and guardian details on the digital form and submit."
+    },
+    "step2": {
+      "title": "Print & Sign Form",
+      "desc": "Download the generated PDF replica, print it on A4, and secure student and guardian signatures."
+    },
+    "step3": {
+      "title": "Submit & Interview",
+      "desc": "Bring the signed form along with educational documents to the admin office for verification."
+    }
+  }
+}

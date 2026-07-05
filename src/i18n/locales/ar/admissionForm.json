@@ -1,0 +1,68 @@
+{
+  "steps": {
+    "studentInfo": "بيانات الطالب الشخصية",
+    "studentInfoSub": "Student Personal Info",
+    "guardianInfo": "بيانات ولي الأمر",
+    "guardianInfoSub": "Guardian Details",
+    "rulesSign": "الإقرار والتوقيعات",
+    "rulesSignSub": "Rules & Signatures"
+  },
+  "success": {
+    "title": "تم إرسال نموذج القبول بنجاح",
+    "description": "لقد استلمنا نموذج طلبك بنجاح. يمكنك الآن معاينة وطباعة النسخة الورقية المعبأة رقمياً بمقاس A4. يرجى طباعة النموذج وتوقيعه وتقديمه مع المستندات الدراسية المعتمدة إلى مكتب إدارة الجامعة.",
+    "btnPreview": "معاينة الطباعة",
+    "btnAnother": "تعبئة نموذج آخر"
+  },
+  "draft": {
+    "status": "حفظ تلقائي للمسودة:",
+    "saving": "جاري حفظ المسودة...",
+    "saved": "آخر حفظ: {time}",
+    "noDraft": "لم يتم حفظ أي مسودة بعد"
+  },
+  "fields": {
+    "studentName": "اسم الطالب",
+    "studentNamePlaceholder": "أدخل الاسم الكامل للطالب",
+    "fatherName": "اسم الأب",
+    "fatherNamePlaceholder": "أدخل اسم الأب الكامل",
+    "dob": "تاريخ الميلاد",
+    "phone": "رقم الهاتف (المنزل)",
+    "phonePlaceholder": "051XXXXXXX",
+    "mobile": "رقم الجوال",
+    "mobilePlaceholder": "03XXXXXXXXX",
+    "studentCnic": "الرقم القومي / شهادة الميلاد",
+    "studentCnicPlaceholder": "XXXXX-YYYYYYY-Z",
+    "fatherCnic": "الرقم القومي للأب",
+    "fatherCnicPlaceholder": "XXXXX-YYYYYYY-Z",
+    "permanentAddress": "العنوان الدائم",
+    "permanentAddressPlaceholder": "أدخل العنوان السكني الدائم بالتفصيل",
+    "temporaryAddress": "العنوان المؤقت",
+    "temporaryAddressPlaceholder": "أدخل العنوان السكني المؤقت الحالي",
+    "photoUpload": "تحميل صورة الطالب",
+    "photoFormat": "الصيغة: JPG/PNG (الحد الأقصى: 2MB)",
+    "guardianName": "اسم ولي الأمر",
+    "guardianNamePlaceholder": "أدخل الاسم الكامل لولي الأمر",
+    "guardianRelation": "صلة القرابة",
+    "guardianRelationPlaceholder": "مثال: عم، أخ، خال، إلخ",
+    "guardianCnic": "الرقم القومي لولي الأمر",
+    "guardianCnicPlaceholder": "XXXXX-YYYYYYY-Z",
+    "guardianPhone": "هاتف ولي الأمر (المنزل/العمل)",
+    "guardianPhonePlaceholder": "رقم الاتصال لولي الأمر",
+    "guardianPermanentAddress": "العنوان الدائم لولي الأمر",
+    "guardianPermanentAddressPlaceholder": "أدخل عنوان ولي الأمر الدائم",
+    "guardianTemporaryAddress": "العنوان المؤقت لولي الأمر",
+    "guardianTemporaryAddressPlaceholder": "أدخل عنوان ولي الأمر المؤقت"
+  },
+  "affidavit": {
+    "title": "إقرار وتعهد بالالتزام بالسلوك",
+    "text": "أقر تعهداً صادقاً بأنني سألتزم التزاماً صارماً بجميع اللوائح والقوانين والضوابط الأخلاقية لجامعة إسلام آباد. وفي حال مخالفتي للإرشادات أو قيامي بسلوك غير لائق، يحق لإدارة الجامعة اتخاذ الإجراءات التأديبية المناسبة بما في ذلك فصلي من الدراسة.",
+    "studentSign": "توقيع الطالب",
+    "guardianSign": "توقيع ولي الأمر",
+    "clearSign": "مسح التوقيع",
+    "agreement": "أوافق على جميع الشروط والأحكام الواردة في التعهد."
+  },
+  "preview": {
+    "title": "معاينة ورقة الطباعة (مقاس A4)",
+    "btnEdit": "رجوع للتعديل",
+    "btnPrint": "طباعة النموذج (PDF)"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "title": "Admissions Guidelines",
+  "description": "Welcome to the admissions portal of Jamia Islamabad. Review our criteria, document checklists, and calendars to start your application.",
+  "eligibility": {
+    "title": "Eligibility & Criteria",
+    "generalTitle": "General:",
+    "generalDesc": "Admissions are open to all students regardless of regional origin, provided they pass the initial interview and entry test.",
+    "darsTitle": "Dars-e-Nizami:",
+    "darsDesc": "Candidates must have completed Middle school (Grade 8) or Matriculation for entry into the basic year.",
+    "hifzTitle": "Hifz-ul-Quran:",
+    "hifzDesc": "Open to younger candidates (ages 8-12) who have completed basic Qaida and Quran recitation training.",
+    "conductTitle": "Conduct:",
+    "conductDesc": "Applicants must agree to abide by all rules regarding uniforms (white shalwar kameez, cap, black waistcoat) and mobile phone usage limitations."
+  },
+  "documents": {
+    "title": "Required Documents Checklist",
+    "doc1": "Original CNIC or B-Form (plus copy)",
+    "doc2": "Father or Guardian's CNIC Copy",
+    "doc3": "Two (2) passport-size photos (1.5x2 size)",
+    "doc4": "Attested copies of previous educational certificates",
+    "doc5": "Character certificate from previous institution (if applicable)"
+  },
+  "fees": {
+    "title": "Fee Structure",
+    "program": "Program",
+    "admission": "Admission Fee",
+    "monthly": "Monthly Tuition",
+    "exam": "Exam Fee",
+    "hostel": "Hostel Fee (Optional)",
+    "note": "* Note: Scholarship and financial aid are available for deserving students upon request and evaluation."
+  },
+  "calendar": {
+    "title": "Academic Session Calendar",
+    "timeline1": "Jan 15 - Feb 28",
+    "timeline1Title": "Registration Window",
+    "timeline1Desc": "Submit digital applications online and print replicas.",
+    "timeline2": "Mar 01 - Mar 07",
+    "timeline2Title": "Interviews & Entry Tests",
+    "timeline2Desc": "Evaluations for theological knowledge, basic recitation, and academic fit.",
+    "timeline3": "Mar 10",
+    "timeline3Title": "Merit List Display",
+    "timeline3Desc": "Final list of selected candidates is displayed at admin office and directory.",
+    "timeline4": "Mar 15",
+    "timeline4Title": "Classes Commencement",
+    "timeline4Desc": "Commencement of the new academic session."
+  },
+  "enroll": {
+    "title": "Ready to Enroll?",
+    "desc": "Initialize your online profile draft now. Keep track of updates and prepare your documents for validation."
+  }
+}

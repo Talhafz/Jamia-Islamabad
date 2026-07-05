@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, Noto_Nastaliq_Urdu } from 'next/font/google';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { LanguageProvider } from '../context/LanguageContext';
 import './globals.css';
 
 const inter = Inter({
@@ -33,18 +34,22 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="ur"
+      dir="rtl"
       className={`${inter.variable} ${notoNastaliqUrdu.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-950 font-sans" suppressHydrationWarning>
-        <Navbar />
-        {/* Padding-top added to prevent navbar overlap on scrollable content */}
-        <main className="flex-grow pt-20">
-          {children}
-        </main>
-        <Footer />
+      <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-950 font-sans animate-fade-in" suppressHydrationWarning>
+        <LanguageProvider>
+          <Navbar />
+          {/* Padding-top added to prevent navbar overlap on scrollable content */}
+          <main className="flex-grow pt-20">
+            {children}
+          </main>
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );
 }
+

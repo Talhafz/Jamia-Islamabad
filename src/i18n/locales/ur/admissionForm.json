@@ -1,0 +1,68 @@
+{
+  "steps": {
+    "studentInfo": "طالب علم کی معلومات",
+    "studentInfoSub": "Student Personal Info",
+    "guardianInfo": "سرپرست کی معلومات",
+    "guardianInfoSub": "Guardian Details",
+    "rulesSign": "بیان حلفی و دستخط",
+    "rulesSignSub": "Rules & Signatures"
+  },
+  "success": {
+    "title": "داخلہ فارم کامیابی سے جمع ہو گیا ہے",
+    "description": "آپ کا فارم کامیابی سے وصول ہو گیا ہے۔ اب آپ ڈیجیٹل طور پر بھرے ہوئے فارم کا پرنٹ لے سکتے ہیں یا اسے محفوظ کر سکتے ہیں۔ براہ کرم اسے پرنٹ کر کے متعلقہ تعلیمی اسناد کے ساتھ جامعہ کے دفتر میں جمع کروائیں۔",
+    "btnPreview": "پرنٹ فارم کا معائنہ",
+    "btnAnother": "نیا فارم پُر کریں"
+  },
+  "draft": {
+    "status": "ڈرافٹ آٹو سیو:",
+    "saving": "ڈرافٹ محفوظ ہو رہا ہے...",
+    "saved": "آخری بار محفوظ کیا گیا: {time}",
+    "noDraft": "کوئی ڈرافٹ محفوظ نہیں ہے"
+  },
+  "fields": {
+    "studentName": "طالب علم کا نام",
+    "studentNamePlaceholder": "طالب علم کا پورا نام درج کریں",
+    "fatherName": "ولدیت / والد کا نام",
+    "fatherNamePlaceholder": "والد کا نام درج کریں",
+    "dob": "تاریخ پیدائش",
+    "phone": "فون نمبر (رہائش)",
+    "phonePlaceholder": "051XXXXXXX",
+    "mobile": "موبائل نمبر",
+    "mobilePlaceholder": "03XXXXXXXXX",
+    "studentCnic": "شناختی کارڈ نمبر/بے فارم",
+    "studentCnicPlaceholder": "XXXXX-YYYYYYY-Z",
+    "fatherCnic": "والد کا شناختی کارڈ نمبر",
+    "fatherCnicPlaceholder": "XXXXX-YYYYYYY-Z",
+    "permanentAddress": "مستقل پتہ",
+    "permanentAddressPlaceholder": "گھر کا مکمل مستقل پتہ درج کریں",
+    "temporaryAddress": "عارضی پتہ",
+    "temporaryAddressPlaceholder": "موجودہ عارضی پتہ درج کریں",
+    "photoUpload": "طالب علم کی تصویر اپلوڈ کریں",
+    "photoFormat": "تصویر کا فارمیٹ JPG/PNG ہونا چاہیے (زیادہ سے زیادہ 2MB)",
+    "guardianName": "سرپرست کا نام",
+    "guardianNamePlaceholder": "سرپرست کا پورا نام درج کریں",
+    "guardianRelation": "سرپرست سے رشتہ",
+    "guardianRelationPlaceholder": "مثلاً چچا، بھائی، ماموں وغیرہ",
+    "guardianCnic": "سرپرست کا شناختی کارڈ نمبر",
+    "guardianCnicPlaceholder": "XXXXX-YYYYYYY-Z",
+    "guardianPhone": "سرپرست کا فون نمبر (رہائش/دفتر)",
+    "guardianPhonePlaceholder": "موبائل یا دفتر کا فون نمبر",
+    "guardianPermanentAddress": "سرپرست کا مستقل پتہ",
+    "guardianPermanentAddressPlaceholder": "سرپرست کا مستقل پتہ درج کریں",
+    "guardianTemporaryAddress": "سرپرست کا عارضی پتہ",
+    "guardianTemporaryAddressPlaceholder": "سرپرست کا عارضی پتہ درج کریں"
+  },
+  "affidavit": {
+    "title": "حلف نامہ / بیان حلفی",
+    "text": "میں اقرار کرتا ہوں کہ میں جامعہ اسلام آباد کے تمام قواعد و ضوابط اور نظم و ضبط کی پابندی کروں گا۔ اگر میں کسی قسم کی خلاف ورزی یا غیر اخلاقی سرگرمی میں ملوث پایا گیا، تو جامعہ کی انتظامیہ کو مجھے خارج کرنے یا تادیبی کارروائی کا مکمل حق حاصل ہوگا۔",
+    "studentSign": "طالب علم کے دستخط",
+    "guardianSign": "سرپرست کے دستخط",
+    "clearSign": "دستخط صاف کریں",
+    "agreement": "میں حلف نامے کی تمام شرائط سے متفق ہوں۔"
+  },
+  "preview": {
+    "title": "پرنٹ پری ویو (A4 فارمیٹ)",
+    "btnEdit": "فارم میں ترمیم کریں",
+    "btnPrint": "ابھی پرنٹ کریں (PDF)"
+  }
+}

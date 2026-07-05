@@ -1,0 +1,68 @@
+{
+  "steps": {
+    "studentInfo": "Student Personal Info",
+    "studentInfoSub": "طالب علم کی معلومات",
+    "guardianInfo": "Guardian Details",
+    "guardianInfoSub": "سرپرست کی معلومات",
+    "rulesSign": "Rules & Signatures",
+    "rulesSignSub": "بیان حلفی و دستخط"
+  },
+  "success": {
+    "title": "Admission Form Submitted Successfully",
+    "description": "Your form has been successfully received. You can now preview and print the digitally filled A4 replica. Please print the form, sign it, and submit it along with attested educational documents to the Jamia administration office.",
+    "btnPreview": "Print Form Preview",
+    "btnAnother": "Fill Another Form"
+  },
+  "draft": {
+    "status": "Draft Autosave:",
+    "saving": "Saving draft...",
+    "saved": "Last saved: {time}",
+    "noDraft": "No draft saved yet"
+  },
+  "fields": {
+    "studentName": "Student Name",
+    "studentNamePlaceholder": "Enter student's full name",
+    "fatherName": "Father's Name",
+    "fatherNamePlaceholder": "Enter father's name",
+    "dob": "Date of Birth",
+    "phone": "Phone Number (Residence)",
+    "phonePlaceholder": "051XXXXXXX",
+    "mobile": "Mobile Number",
+    "mobilePlaceholder": "03XXXXXXXXX",
+    "studentCnic": "Student CNIC / B-Form",
+    "studentCnicPlaceholder": "XXXXX-YYYYYYY-Z",
+    "fatherCnic": "Father's CNIC Number",
+    "fatherCnicPlaceholder": "XXXXX-YYYYYYY-Z",
+    "permanentAddress": "Permanent Address",
+    "permanentAddressPlaceholder": "Enter complete permanent residential address",
+    "temporaryAddress": "Temporary Address",
+    "temporaryAddressPlaceholder": "Enter current temporary residential address",
+    "photoUpload": "Upload Student Photo",
+    "photoFormat": "Format: JPG/PNG (Max Size: 2MB)",
+    "guardianName": "Guardian Name",
+    "guardianNamePlaceholder": "Enter guardian's full name",
+    "guardianRelation": "Relation to Guardian",
+    "guardianRelationPlaceholder": "e.g., Uncle, Brother, Mother",
+    "guardianCnic": "Guardian's CNIC Number",
+    "guardianCnicPlaceholder": "XXXXX-YYYYYYY-Z",
+    "guardianPhone": "Guardian's Phone (Res/Office)",
+    "guardianPhonePlaceholder": "Mobile or office contact number",
+    "guardianPermanentAddress": "Guardian's Permanent Address",
+    "guardianPermanentAddressPlaceholder": "Enter guardian's permanent address",
+    "guardianTemporaryAddress": "Guardian's Temporary Address",
+    "guardianTemporaryAddressPlaceholder": "Enter guardian's temporary address"
+  },
+  "affidavit": {
+    "title": "Affidavit / Declaration of Conduct",
+    "text": "I solemnly declare that I will strictly abide by all rules, regulations, and moral codes of Jamia Islamabad. If I am found violating any institute guidelines or engaging in misconduct, the administration reserves the absolute right to take disciplinary action, including expulsion.",
+    "studentSign": "Student Signature",
+    "guardianSign": "Guardian Signature",
+    "clearSign": "Clear Signature",
+    "agreement": "I agree to all terms and conditions listed in the affidavit."
+  },
+  "preview": {
+    "title": "Print Preview (A4 Replica)",
+    "btnEdit": "Back to Edit",
+    "btnPrint": "Print Form (PDF)"
+  }
+}
