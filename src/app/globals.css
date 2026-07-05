@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fafafa;
+  --foreground: #09090b;
+  
+  --emerald-primary: #047857;
+  --emerald-hover: #065f46;
+  --gold-accent: #d97706;
+  --gold-hover: #b45309;
+}
+
+@theme {
+  --color-primary-emerald: var(--emerald-primary);
+  --color-hover-emerald: var(--emerald-hover);
+  --color-accent-gold: var(--gold-accent);
+  --color-hover-gold: var(--gold-hover);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* RTL Helpers for Urdu */
+[dir="rtl"] {
+  text-align: right;
+}
+
+.font-urdu {
+  font-family: var(--font-noto-urdu), "Jameel Noori Nastaliq", "Noto Nasta'liq Urdu", serif;
+  line-height: 2.2;
+}
+
+/* Glassmorphism Card Style */
+.glass-card {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(4, 120, 87, 0.04);
+}
+
+.glass-card-dark {
+  background: rgba(10, 10, 10, 0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Custom Micro-Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-scale-up {
+  animation: scaleUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* ------------------------------------------------------------- */
+/* PRINT STYLESHEET (CRITICAL FOR PIXEL-PERFECT FORM PRINTING) */
+/* ------------------------------------------------------------- */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  html, body {
+    width: 210mm;
+    height: 297mm;
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 11pt !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* Hide everything except the PrintLayout element and its children */
+  nav, 
+  footer, 
+  button, 
+  select, 
+  input, 
+  textarea,
+  .print\:hidden,
+  .autosave-status,
+  [role="alert"] {
+    display: none !important;
+  }
+
+  /* Reset layout borders for screen styling constraints */
+  .bg-zinc-100 {
+    background: none !important;
+    padding: 0 !important;
+  }
+
+  .shadow-xl, .shadow-2xl {
+    box-shadow: none !important;
+  }
+
+  .border {
+    border-color: #000000 !important;
+  }
+
+  /* Break pages properly */
+  .page-break-after-always {
+    page-break-after: always !important;
+    break-after: always !important;
+    margin: 0 !important;
+    padding: 10mm !important;
+    border: none !important;
+    box-shadow: none !important;
+    height: 100vh !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Ensure background watermarks show when printing */
+  .opacity-\[0\.06\] {
+    opacity: 0.07 !important;
+  }
+}
