@@ -27,7 +27,18 @@
     "monthly": "Monthly Tuition",
     "exam": "Exam Fee",
     "hostel": "Hostel Fee (Optional)",
-    "note": "* Note: Scholarship and financial aid are available for deserving students upon request and evaluation."
+    "note": "* Education, accommodation, and meals are provided at no cost. The PKR 3,000 admission fee is a one-time registration charge applicable to all programmes.",
+    "oneTimeLabel": "One-Time Payment",
+    "admissionAmount": "PKR 3,000",
+    "admissionDesc": "Admission Fee — charged once at enrollment, for all courses",
+    "admissionBadge": "Only charge ever",
+    "otherFeesLabel": "All Other Fees",
+    "otherFeesDesc": "Tuition · Hostel · Meals · Exams — all completely waived",
+    "freeLabel": "Free",
+    "benefit1": "Monthly Tuition",
+    "benefit2": "3 Daily Meals",
+    "benefit3": "Boarding / Hostel",
+    "benefit4": "Exam Fees"
   },
   "calendar": {
     "title": "Academic Session Calendar",

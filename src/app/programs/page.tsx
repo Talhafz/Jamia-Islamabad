@@ -1,6 +1,8 @@
 import React from 'react';
 import { BookOpen, Compass, Award, Star } from 'lucide-react';
 
+import { PageBanner } from '../../components/PageBanner';
+
 export const metadata = {
   title: 'Academic Programs | Jamia Islamabad',
   description: 'Detailed curriculum and program guides for Dars-e-Nizami, Hifz, Tajweed, and Secondary School certifications.',
@@ -39,47 +41,42 @@ export default function ProgramsPage() {
   ];
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 select-none">
-      
-      {/* Hero Header */}
-      <div className="text-center flex flex-col items-center gap-4 mb-16 animate-fade-in">
-        <h1 className="text-4xl font-extrabold text-zinc-950 tracking-tight leading-none">
-          Academic Offerings
-        </h1>
-        <p className="text-zinc-500 text-xs max-w-xl leading-relaxed">
-          Jamia Islamabad provides structured and certified pathways for both sacred and contemporary educational goals.
-        </p>
-      </div>
+    <div className="w-full flex flex-col items-center">
+      <PageBanner 
+        title="Academic Offerings" 
+        description="Jamia Islamabad provides structured and certified pathways for both sacred and contemporary educational goals." 
+      />
 
-      {/* Program Details List */}
-      <div className="flex flex-col gap-10">
-        {courses.map((c, idx) => {
-          const Icon = c.icon;
-          return (
-            <div 
-              key={idx} 
-              className="p-8 rounded-2xl bg-white border border-zinc-200/80 shadow-md flex flex-col md:flex-row gap-6 items-start hover:shadow-lg transition-all duration-300"
-            >
-              <div className="p-4 rounded-xl bg-emerald-50 text-emerald-800 flex-shrink-0">
-                <Icon className="w-8 h-8" />
-              </div>
-              <div className="flex-grow flex flex-col gap-3">
-                <div className="flex flex-wrap items-center justify-between gap-4 border-b border-zinc-150 pb-2">
-                  <div>
-                    <h2 className="text-lg font-bold text-zinc-950">{c.title}</h2>
-                    <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-wider">{c.focus}</span>
-                  </div>
-                  <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-[10px] font-bold font-mono">
-                    Duration: {c.duration}
-                  </span>
+      <div className="max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-16 select-none">
+        {/* Program Details List */}
+        <div className="flex flex-col gap-10">
+          {courses.map((c, idx) => {
+            const Icon = c.icon;
+            return (
+              <div 
+                key={idx} 
+                className="p-8 rounded-2xl bg-white border border-zinc-200/80 shadow-md flex flex-col md:flex-row gap-6 items-start hover:shadow-lg transition-all duration-300"
+              >
+                <div className="p-4 rounded-xl bg-emerald-50 text-emerald-800 flex-shrink-0">
+                  <Icon className="w-8 h-8" />
                 </div>
-                <p className="text-zinc-600 text-xs leading-relaxed text-justify">{c.desc}</p>
+                <div className="flex-grow flex flex-col gap-3">
+                  <div className="flex flex-wrap items-center justify-between gap-4 border-b border-zinc-150 pb-2">
+                    <div>
+                      <h2 className="text-lg font-bold text-zinc-950">{c.title}</h2>
+                      <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-wider">{c.focus}</span>
+                    </div>
+                    <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-[10px] font-bold font-mono">
+                      Duration: {c.duration}
+                    </span>
+                  </div>
+                  <p className="text-zinc-600 text-xs leading-relaxed text-justify">{c.desc}</p>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
-
     </div>
   );
 }

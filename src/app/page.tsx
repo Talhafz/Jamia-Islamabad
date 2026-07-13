@@ -161,13 +161,13 @@ export default function Home() {
                 <div className="absolute -top-3 left-6 px-3 py-1 bg-red-600 text-white text-[9px] font-bold tracking-widest uppercase rounded">
                   {t('home:principal.label')}
                 </div>
-                <div className="w-24 h-24 rounded-full border-2 border-red-500/40 bg-zinc-100 mx-auto mb-4 flex items-center justify-center overflow-hidden">
-                  <Users className="w-12 h-12 text-red-500/30" />
+                <div className="w-40 h-40 md:w-48 md:h-48 rounded-full border-4 border-red-500/40 bg-zinc-100 mx-auto mb-6 flex items-center justify-center overflow-hidden shadow-lg">
+                  <img src="/assets/doctor_sahib.jpeg" alt={t('about:biography.name')} className="w-full h-full object-cover object-top" />
                 </div>
-                <h3 className="text-red-700 font-extrabold text-lg block mb-0.5">پروفیسر ڈاکٹر مفتی</h3>
-                <h2 className="text-zinc-950 font-extrabold text-2xl tracking-tight mb-2">محمد ظفر اقبال جلالی</h2>
-                <p className="text-zinc-500 text-xs leading-relaxed mb-4">
-                  Sheikh-ul-Hadith, Ustad-ul-Asatiza, and a leading Islamic academician dedicated to modeling modern platforms for holistic moral and theological education.
+                <h3 className="text-red-700 font-bold text-sm block mb-1">{t('about:biography.namePrefix')}</h3>
+                <h2 className="text-zinc-950 font-extrabold text-2xl tracking-tight mb-3 leading-snug">{t('about:biography.name')}</h2>
+                <p className="text-zinc-600 text-xs sm:text-sm leading-relaxed mb-4 font-medium border-t border-red-100 pt-3">
+                  {t('about:biography.subtitle')}
                 </p>
                 <div className="border-t border-red-100 pt-3 flex justify-between items-center text-[10px] font-bold text-red-800">
                   <span>ESTABLISHED 1992</span>

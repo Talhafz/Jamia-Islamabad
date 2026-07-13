@@ -8,6 +8,9 @@
   --emerald-hover: #065f46;
   --gold-accent: #d97706;
   --gold-hover: #b45309;
+  
+  --brand-near-black: #09090b;
+  --brand-dark-green: #022c22;
 }
 
 @theme {
@@ -15,6 +18,8 @@
   --color-hover-emerald: var(--emerald-hover);
   --color-accent-gold: var(--gold-accent);
   --color-hover-gold: var(--gold-hover);
+  --color-brand-near-black: var(--brand-near-black);
+  --color-brand-dark-green: var(--brand-dark-green);
 }
 
 body {

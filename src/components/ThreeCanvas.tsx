@@ -3,7 +3,7 @@
 import React, { useRef, useEffect } from 'react';
 import * as THREE from 'three';
 
-export function ThreeCanvas() {
+export function ThreeCanvas({ variant = 'hero' }: { variant?: 'hero' | 'subtle' }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export function ThreeCanvas() {
     container.appendChild(renderer.domElement);
 
     // 1. PARTICLES (Floating Dust)
-    const particleCount = 200;
+    const particleCount = variant === 'hero' ? 200 : 100;
     const particleGeometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
@@ -58,7 +58,7 @@ export function ThreeCanvas() {
       size: 0.12,
       vertexColors: true,
       transparent: true,
-      opacity: 0.6,
+      opacity: variant === 'hero' ? 0.6 : 0.3,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
@@ -66,41 +66,46 @@ export function ThreeCanvas() {
     const particles = new THREE.Points(particleGeometry, particleMaterial);
     scene.add(particles);
 
-    // 2. CENTRAL GEOMETRY (Islamic-Inspired Star Wireframe)
-    // We can simulate an 8-pointed star by intersecting two cubes rotated 45 degrees
+    // 2. CENTRAL GEOMETRY (Islamic-Inspired Star Wireframe) - ONLY FOR HERO
     const starGroup = new THREE.Group();
+    let cubeGeo: THREE.BoxGeometry | undefined;
+    let edgeGeo1: THREE.EdgesGeometry | undefined;
+    let wireframeMat: THREE.MeshBasicMaterial | undefined;
+    let edgeMat: THREE.LineBasicMaterial | undefined;
 
-    const cubeGeo = new THREE.BoxGeometry(2.5, 2.5, 2.5);
-    const wireframeMat = new THREE.MeshBasicMaterial({
-      color: 0x059669, // Emerald
-      wireframe: true,
-      transparent: true,
-      opacity: 0.35,
-    });
+    if (variant === 'hero') {
+      cubeGeo = new THREE.BoxGeometry(2.5, 2.5, 2.5);
+      wireframeMat = new THREE.MeshBasicMaterial({
+        color: 0x059669, // Emerald
+        wireframe: true,
+        transparent: true,
+        opacity: 0.35,
+      });
 
-    const cube1 = new THREE.Mesh(cubeGeo, wireframeMat);
-    const cube2 = new THREE.Mesh(cubeGeo, wireframeMat);
-    cube2.rotation.y = Math.PI / 4; // 45 degrees rotation
-    cube2.rotation.x = Math.PI / 4;
+      const cube1 = new THREE.Mesh(cubeGeo, wireframeMat);
+      const cube2 = new THREE.Mesh(cubeGeo, wireframeMat);
+      cube2.rotation.y = Math.PI / 4; // 45 degrees rotation
+      cube2.rotation.x = Math.PI / 4;
 
-    // Add gold edges to highlight outline
-    const edgeGeo1 = new THREE.EdgesGeometry(cubeGeo);
-    const edgeMat = new THREE.LineBasicMaterial({ 
-      color: 0xd97706, // Gold
-      transparent: true,
-      opacity: 0.45 
-    });
-    
-    const edge1 = new THREE.LineSegments(edgeGeo1, edgeMat);
-    const edge2 = new THREE.LineSegments(edgeGeo1, edgeMat);
-    edge2.rotation.y = Math.PI / 4;
-    edge2.rotation.x = Math.PI / 4;
+      // Add gold edges to highlight outline
+      edgeGeo1 = new THREE.EdgesGeometry(cubeGeo);
+      edgeMat = new THREE.LineBasicMaterial({ 
+        color: 0xd97706, // Gold
+        transparent: true,
+        opacity: 0.45 
+      });
+      
+      const edge1 = new THREE.LineSegments(edgeGeo1, edgeMat);
+      const edge2 = new THREE.LineSegments(edgeGeo1, edgeMat);
+      edge2.rotation.y = Math.PI / 4;
+      edge2.rotation.x = Math.PI / 4;
 
-    starGroup.add(cube1);
-    starGroup.add(cube2);
-    starGroup.add(edge1);
-    starGroup.add(edge2);
-    scene.add(starGroup);
+      starGroup.add(cube1);
+      starGroup.add(cube2);
+      starGroup.add(edge1);
+      starGroup.add(edge2);
+      scene.add(starGroup);
+    }
 
     // Light source for highlights
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
@@ -141,9 +146,11 @@ export function ThreeCanvas() {
 
       const elapsedTime = clock.getElapsedTime();
 
-      // Rotate central geometry
-      starGroup.rotation.y = elapsedTime * 0.12;
-      starGroup.rotation.x = elapsedTime * 0.08;
+      // Rotate central geometry if hero
+      if (variant === 'hero') {
+        starGroup.rotation.y = elapsedTime * 0.12;
+        starGroup.rotation.x = elapsedTime * 0.08;
+      }
 
       // Rotate particle cloud slowly
       particles.rotation.y = elapsedTime * 0.02;
@@ -167,22 +174,22 @@ export function ThreeCanvas() {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
       renderer.dispose();
-      cubeGeo.dispose();
-      edgeGeo1.dispose();
+      if (cubeGeo) cubeGeo.dispose();
+      if (edgeGeo1) edgeGeo1.dispose();
       particleGeometry.dispose();
-      wireframeMat.dispose();
-      edgeMat.dispose();
+      if (wireframeMat) wireframeMat.dispose();
+      if (edgeMat) edgeMat.dispose();
       particleMaterial.dispose();
       if (container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
       }
     };
-  }, []);
+  }, [variant]);
 
   return (
     <div 
       ref={containerRef} 
-      className="absolute inset-0 z-0 pointer-events-none w-full h-full opacity-60"
+      className={`absolute inset-0 z-0 pointer-events-none w-full h-full ${variant === 'hero' ? 'opacity-60' : 'opacity-30'}`}
     />
   );
 }

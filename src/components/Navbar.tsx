@@ -20,8 +20,10 @@ export function Navbar() {
   const { currentLanguage, setLanguage, t } = useLanguage();
   const pathname = usePathname();
 
-  // Single ref for the language dropdown container (desktop only)
+  // Refs for language dropdown containers
   const desktopLangRef = useRef<HTMLDivElement>(null);
+  const mobileLangRef = useRef<HTMLDivElement>(null);
+  const [mobileLangOpen, setMobileLangOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -29,11 +31,14 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Close dropdown when clicking outside
+  // Close dropdowns when clicking outside
   useEffect(() => {
     const onMouseDown = (e: MouseEvent) => {
       if (desktopLangRef.current && !desktopLangRef.current.contains(e.target as Node)) {
         setLangOpen(false);
+      }
+      if (mobileLangRef.current && !mobileLangRef.current.contains(e.target as Node)) {
+        setMobileLangOpen(false);
       }
     };
     document.addEventListener('mousedown', onMouseDown);
@@ -43,6 +48,7 @@ export function Navbar() {
   const handleLangSelect = (code: Language) => {
     setLanguage(code);
     setLangOpen(false);
+    setMobileLangOpen(false);
     setIsOpen(false);
   };
 
@@ -149,23 +155,38 @@ export function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile: Globe + Hamburger */}
+          {/* Mobile: Globe Dropdown + Hamburger */}
           <div className="lg:hidden flex items-center gap-2">
-            {/* Mobile Language Picker — inline buttons, no dropdown */}
-            <div className="flex items-center gap-1 border border-zinc-800 rounded-full px-2 py-1 bg-zinc-900/60">
-              {LANGUAGES.map((lang) => (
-                <button
-                  key={lang.code}
-                  onClick={() => handleLangSelect(lang.code)}
-                  className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full transition-all ${
-                    currentLanguage === lang.code
-                      ? 'bg-emerald-700 text-white'
-                      : 'text-zinc-400 hover:text-white'
-                  }`}
-                >
-                  {lang.code.toUpperCase()}
-                </button>
-              ))}
+            {/* Mobile Language Dropdown — mirrors desktop design */}
+            <div className="relative" ref={mobileLangRef}>
+              <button
+                id="lang-toggle-mobile"
+                onClick={() => setMobileLangOpen(prev => !prev)}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-zinc-700 bg-zinc-900/60 hover:bg-zinc-800 text-zinc-300 hover:text-white text-xs font-bold transition-all duration-200"
+              >
+                <Globe className="w-3.5 h-3.5 text-emerald-400" />
+                {currentLangLabel}
+                <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${mobileLangOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {mobileLangOpen && (
+                <div className="absolute top-full mt-2 right-0 w-36 rounded-xl border border-zinc-800 bg-zinc-950 p-1.5 shadow-2xl z-50">
+                  {LANGUAGES.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => handleLangSelect(lang.code)}
+                      className={`flex w-full items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition-all ${
+                        currentLanguage === lang.code
+                          ? 'bg-emerald-950 text-emerald-400'
+                          : 'text-zinc-400 hover:bg-zinc-900 hover:text-white'
+                      }`}
+                    >
+                      {lang.label}
+                      {currentLanguage === lang.code && <Check className="w-3.5 h-3.5" />}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             <button
