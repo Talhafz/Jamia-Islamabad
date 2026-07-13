@@ -1,11 +1,11 @@
 {
   "steps": {
     "studentInfo": "Student Personal Info",
-    "studentInfoSub": "طالب علم کی معلومات",
+    "studentInfoSub": "Personal & Contact Details",
     "guardianInfo": "Guardian Details",
-    "guardianInfoSub": "سرپرست کی معلومات",
+    "guardianInfoSub": "Parent / Guardian Contact",
     "rulesSign": "Rules & Signatures",
-    "rulesSignSub": "بیان حلفی و دستخط"
+    "rulesSignSub": "Affidavit & Declaration"
   },
   "success": {
     "title": "Admission Form Submitted Successfully",

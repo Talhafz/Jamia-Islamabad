@@ -1,11 +1,11 @@
 {
   "steps": {
     "studentInfo": "طالب علم کی معلومات",
-    "studentInfoSub": "Student Personal Info",
+    "studentInfoSub": "ذاتی اور رابطہ کی تفصیلات",
     "guardianInfo": "سرپرست کی معلومات",
-    "guardianInfoSub": "Guardian Details",
+    "guardianInfoSub": "والدین یا سرپرست کا رابطہ",
     "rulesSign": "بیان حلفی و دستخط",
-    "rulesSignSub": "Rules & Signatures"
+    "rulesSignSub": "اقرار نامہ اور اعلان"
   },
   "success": {
     "title": "داخلہ فارم کامیابی سے جمع ہو گیا ہے",

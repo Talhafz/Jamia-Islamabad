@@ -1,11 +1,11 @@
 {
   "steps": {
     "studentInfo": "بيانات الطالب الشخصية",
-    "studentInfoSub": "Student Personal Info",
+    "studentInfoSub": "التفاصيل الشخصية وبيانات التواصل",
     "guardianInfo": "بيانات ولي الأمر",
-    "guardianInfoSub": "Guardian Details",
+    "guardianInfoSub": "تواصل ولي الأمر أو المربي",
     "rulesSign": "الإقرار والتوقيعات",
-    "rulesSignSub": "Rules & Signatures"
+    "rulesSignSub": "تعهد الالتزام والإعلان"
   },
   "success": {
     "title": "تم إرسال نموذج القبول بنجاح",
