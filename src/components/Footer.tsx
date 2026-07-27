@@ -37,11 +37,11 @@ export function Footer() {
               <div className="w-12 h-12 rounded-full border border-emerald-500/50 bg-emerald-950/40 flex items-center justify-center overflow-hidden p-[2px]">
                 <img src="/assets/Logo.png" alt="Jamia Islamabad Logo" className="w-full h-full object-contain drop-shadow-sm" />
               </div>
-              <div className="flex flex-col">
-                <span className="text-white font-extrabold text-base tracking-tight leading-none">
+              <div className="flex flex-col justify-center">
+                <span lang="ur" className="text-white font-extrabold text-xl sm:text-2xl tracking-tight leading-snug font-urdu pb-1">
                   جامعہ اسلام آباد
                 </span>
-                <span className="text-emerald-500/80 text-[10px] font-mono font-bold tracking-wider leading-none mt-1">
+                <span className="text-emerald-500/90 text-[10px] font-mono font-bold tracking-wider leading-none">
                   JAMIA ISLAMABAD
                 </span>
               </div>

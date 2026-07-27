@@ -101,17 +101,19 @@ export default function Home() {
 
             <motion.h1 
               variants={itemVariants} 
-              className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-none max-w-4xl"
+              className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white max-w-4xl flex flex-col gap-3 my-2 leading-relaxed"
             >
-              <span className="font-urdu text-emerald-400 block text-4xl sm:text-5xl mb-3">
+              <span className="font-urdu text-emerald-400 block text-2xl sm:text-4xl md:text-5xl font-extrabold leading-relaxed">
                 {t('home:hero.subtitle')}
               </span>
-              {t('home:hero.title')}
+              <span className="block leading-relaxed">
+                {t('home:hero.title')}
+              </span>
             </motion.h1>
 
             <motion.p 
               variants={itemVariants} 
-              className="text-zinc-400 text-sm sm:text-base max-w-2xl leading-relaxed"
+              className="text-zinc-400 text-sm sm:text-base max-w-2xl leading-relaxed mt-2"
             >
               {t('home:hero.description')}
             </motion.p>
