@@ -1,0 +1,23 @@
+{
+  "banner": {
+    "title": "Events & Ceremonies",
+    "description": "A chronicle of Jamia Islamabad's most memorable academic, spiritual, and community events."
+  },
+  "categories": {
+    "all": "All Events",
+    "convocation": "Convocation",
+    "conferences": "Conferences",
+    "assemblies": "Assemblies",
+    "rallies": "Rallies"
+  },
+  "search": "Search events…",
+  "viewDetails": "View Details",
+  "close": "Close",
+  "noResults": "No events found matching your search.",
+  "location": "Location",
+  "date": "Date",
+  "category": "Category",
+  "readMore": "Read More",
+  "photoGallery": "Photo Gallery",
+  "allEvents": "All Events"
+}

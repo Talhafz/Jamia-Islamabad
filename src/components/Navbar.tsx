@@ -61,6 +61,7 @@ export function Navbar() {
     { name: t('navbar.studentsDirectory'), path: '/students' },
     { name: t('navbar.faculty'), path: '/faculty' },
     { name: t('navbar.gallery'), path: '/gallery' },
+    { name: t('navbar.events'), path: '/events' },
     { name: t('navbar.contact'), path: '/contact' },
   ];
 
@@ -80,29 +81,33 @@ export function Navbar() {
         <div className="flex justify-between items-center h-14">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-full border border-emerald-500/50 bg-emerald-950/40 flex items-center justify-center transition-all duration-300 group-hover:scale-105 group-hover:border-emerald-400 overflow-hidden p-[2px]">
+          <Link href="/" className="flex items-center gap-3 group shrink-0">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-emerald-500/50 bg-emerald-950/40 flex items-center justify-center transition-all duration-300 group-hover:scale-105 group-hover:border-emerald-400 overflow-hidden p-[2px]">
               <img src="/assets/Logo.png" alt="Jamia Islamabad" className="w-full h-full object-contain" />
             </div>
-            <div className="flex flex-col">
-              <span className="text-white font-extrabold text-sm tracking-tight leading-none group-hover:text-emerald-400 transition-colors">
+            <div className="flex flex-col justify-center">
+              <span lang="ur" className="text-white font-extrabold text-lg sm:text-xl tracking-tight leading-snug group-hover:text-emerald-400 transition-colors font-urdu pb-1">
                 جامعہ اسلام آباد
               </span>
-              <span className="text-emerald-500/80 text-[10px] font-mono font-bold tracking-wider leading-none mt-1">
+              <span className="text-emerald-500/90 text-[10px] font-mono font-bold tracking-wider leading-none">
                 JAMIA ISLAMABAD
               </span>
             </div>
           </Link>
 
           {/* Desktop Nav Links */}
-          <div className="hidden lg:flex items-center gap-5">
+          <div className="hidden lg:flex items-center gap-3 xl:gap-5">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 href={link.path}
-                className={`text-xs font-bold tracking-wide transition-all duration-200 hover:text-emerald-400 ${
+                className={`whitespace-nowrap transition-all duration-200 hover:text-emerald-400 ${
+                  currentLanguage === 'en'
+                    ? 'text-xs xl:text-[13px] font-semibold tracking-wide'
+                    : 'text-sm xl:text-base font-bold'
+                } ${
                   pathname === link.path
-                    ? 'text-emerald-400 border-b-2 border-emerald-500 pb-1'
+                    ? 'text-emerald-400 border-b-2 border-emerald-500 pb-0.5'
                     : 'text-zinc-300'
                 }`}
               >

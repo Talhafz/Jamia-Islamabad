@@ -1,7 +1,35 @@
 {
-  "title": "Photo Gallery",
-  "description": "Visual highlights of academic events, student activities, and the beautiful campus architecture of Jamia Islamabad.",
-  "campusLife": "Campus Life",
-  "events": "Seminars & Events",
-  "classes": "Academic Classes"
+  "title": "Campus Gallery",
+  "description": "A visual journey through the learning spaces, prestigious conferences, student ceremonies, and the spirit of Jamia Islamabad.",
+  "banner": {
+    "title": "Campus Gallery",
+    "desc": "Explore the vibrant life, grand ceremonies, and heritage of Jamia Islamabad through our official photo archive."
+  },
+  "search": {
+    "placeholder": "Search photos by title or category...",
+    "noResults": "No photos found matching your search.",
+    "showing": "Showing",
+    "of": "of",
+    "photos": "photos"
+  },
+  "categories": {
+    "all": "All Photos",
+    "infrastructure": "Infrastructure",
+    "convocation": "Convocation",
+    "conferences": "Conferences",
+    "assemblies": "Student Assemblies",
+    "rallies": "Rallies & Community"
+  },
+  "lightbox": {
+    "close": "Close",
+    "prev": "Previous",
+    "next": "Next",
+    "photo": "Photo",
+    "location": "Location"
+  },
+  "stats": {
+    "totalPhotos": "Total Photos",
+    "categories": "Categories",
+    "years": "Years of Legacy"
+  }
 }

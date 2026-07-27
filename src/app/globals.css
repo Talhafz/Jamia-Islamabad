@@ -25,19 +25,73 @@
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-inter), system-ui, sans-serif;
+  font-family: var(--font-inter), 'Nafees Nastaleeq', 'Nafees Nastaleeq v1.02', system-ui, sans-serif;
   overflow-x: hidden;
 }
 
-/* RTL Helpers for Urdu */
+/* ─── Nafees Nastaleeq Font Setup ─────────────────────────────────────────── */
+@font-face {
+  font-family: 'Nafees Nastaleeq';
+  src: url('/fonts/NafeesNastaleeq.ttf') format('truetype'),
+       url('/fonts/Nafees%20Nastaleeq%20v1.02.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nafees Nastaleeq v1.02';
+  src: url('/fonts/NafeesNastaleeq.ttf') format('truetype'),
+       url('/fonts/Nafees%20Nastaleeq%20v1.02.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* RTL Helpers & Spacing for Arabic / Urdu */
 [dir="rtl"] {
   text-align: right;
 }
 
+/* ─── Universal Arabic & Urdu Nafees Nastaleeq Typography Rules ───────────── */
+html[lang="ur"],
+html[lang="ar"],
+html[dir="rtl"],
+[lang="ur"],
+[lang="ar"],
+[dir="rtl"],
 .font-urdu {
-  font-family: var(--font-noto-urdu), "Jameel Noori Nastaliq", "Noto Nasta'liq Urdu", serif;
-  line-height: 2.2;
+  font-family: 'Nafees Nastaleeq', 'Nafees Nastaleeq v1.02', serif !important;
 }
+
+/* Force Nafees Nastaleeq on ALL child elements in Arabic & Urdu modes */
+html[lang="ur"] *,
+html[lang="ar"] *,
+html[dir="rtl"] *,
+[lang="ur"] *,
+[lang="ar"] *,
+[dir="rtl"] *,
+.font-urdu * {
+  font-family: 'Nafees Nastaleeq', 'Nafees Nastaleeq v1.02', serif !important;
+  letter-spacing: 0 !important;
+  word-spacing: 0 !important;
+}
+
+/* Ensure headings in Arabic/Urdu/RTL modes have generous line height to prevent overlap */
+html[lang="ur"] h1, html[lang="ar"] h1, [dir="rtl"] h1,
+html[lang="ur"] h2, html[lang="ar"] h2, [dir="rtl"] h2,
+html[lang="ur"] h3, html[lang="ar"] h3, [dir="rtl"] h3,
+html[lang="ur"] h4, html[lang="ar"] h4, [dir="rtl"] h4 {
+  line-height: 1.8;
+}
+
+/* Explicit Line-Height Overrides for Tight Layouts (e.g. Logo headers, buttons) */
+.leading-none, .leading-none * { line-height: 1 !important; }
+.leading-tight, .leading-tight * { line-height: 1.25 !important; }
+.leading-snug, .leading-snug * { line-height: 1.375 !important; }
+.leading-normal, .leading-normal * { line-height: 1.6 !important; }
+.leading-relaxed, .leading-relaxed * { line-height: 1.9 !important; }
+.leading-loose, .leading-loose * { line-height: 2.2 !important; }
 
 /* Glassmorphism Card Style */
 .glass-card {

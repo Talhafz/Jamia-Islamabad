@@ -7,6 +7,7 @@ import studentsUr from './locales/ur/students.json';
 import contactUr from './locales/ur/contact.json';
 import facultyUr from './locales/ur/faculty.json';
 import galleryUr from './locales/ur/gallery.json';
+import eventsUr from './locales/ur/events.json';
 import faqsUr from './locales/ur/faqs.json';
 import termsUr from './locales/ur/terms.json';
 import privacyUr from './locales/ur/privacy.json';
@@ -20,6 +21,7 @@ import studentsEn from './locales/en/students.json';
 import contactEn from './locales/en/contact.json';
 import facultyEn from './locales/en/faculty.json';
 import galleryEn from './locales/en/gallery.json';
+import eventsEn from './locales/en/events.json';
 import faqsEn from './locales/en/faqs.json';
 import termsEn from './locales/en/terms.json';
 import privacyEn from './locales/en/privacy.json';
@@ -33,6 +35,7 @@ import studentsAr from './locales/ar/students.json';
 import contactAr from './locales/ar/contact.json';
 import facultyAr from './locales/ar/faculty.json';
 import galleryAr from './locales/ar/gallery.json';
+import eventsAr from './locales/ar/events.json';
 import faqsAr from './locales/ar/faqs.json';
 import termsAr from './locales/ar/terms.json';
 import privacyAr from './locales/ar/privacy.json';
@@ -50,6 +53,7 @@ export const translations = {
     contact: contactUr,
     faculty: facultyUr,
     gallery: galleryUr,
+    events: eventsUr,
     faqs: faqsUr,
     terms: termsUr,
     privacy: privacyUr,
@@ -64,6 +68,7 @@ export const translations = {
     contact: contactEn,
     faculty: facultyEn,
     gallery: galleryEn,
+    events: eventsEn,
     faqs: faqsEn,
     terms: termsEn,
     privacy: privacyEn,
@@ -78,6 +83,7 @@ export const translations = {
     contact: contactAr,
     faculty: facultyAr,
     gallery: galleryAr,
+    events: eventsAr,
     faqs: faqsAr,
     terms: termsAr,
     privacy: privacyAr,

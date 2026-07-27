@@ -20,7 +20,7 @@ export function PageBanner({ title, description }: PageBannerProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, type: 'spring', stiffness: 100 }}
-          className="text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-none"
+          className="text-3xl md:text-5xl font-extrabold text-white tracking-tight leading-relaxed py-1"
         >
           {title}
         </motion.h1>
