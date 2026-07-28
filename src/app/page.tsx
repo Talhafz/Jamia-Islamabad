@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import { 
   Award, 
@@ -12,8 +13,13 @@ import {
   Sparkles, 
   Users 
 } from 'lucide-react';
-import { ThreeCanvas } from '../components/ThreeCanvas';
 import { useLanguage } from '../context/LanguageContext';
+
+// Lazy-load ThreeCanvas — keeps Three.js off the critical JS path
+const ThreeCanvasLazy = dynamic(
+  () => import('../components/ThreeCanvas').then((m) => m.ThreeCanvas),
+  { ssr: false, loading: () => null }
+);
 
 export default function Home() {
   const { t } = useLanguage();
@@ -83,7 +89,7 @@ export default function Home() {
       
       {/* HERO SECTION */}
       <section className="relative w-full min-h-[100vh] flex items-center justify-center bg-zinc-950 overflow-hidden pt-36 pb-16 select-none -mt-20">
-        <ThreeCanvas />
+        <ThreeCanvasLazy />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(4,120,87,0.15)_0%,transparent_70%)] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
@@ -134,7 +140,7 @@ export default function Home() {
                 {t('home:hero.ctaExplore')}
               </Link>
               <Link
-                href="/admissions"
+                href="/admission-form"
                 className="px-6 py-3 rounded-full bg-emerald-950/30 hover:bg-emerald-950/50 text-emerald-400 border border-emerald-500/20 text-xs font-bold transition-all duration-300"
               >
                 {t('home:hero.ctaRequirements')}

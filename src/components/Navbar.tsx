@@ -45,17 +45,16 @@ export function Navbar() {
     return () => document.removeEventListener('mousedown', onMouseDown);
   }, []);
 
-  const handleLangSelect = (code: Language) => {
+  const handleLangSelect = React.useCallback((code: Language) => {
     setLanguage(code);
     setLangOpen(false);
     setMobileLangOpen(false);
     setIsOpen(false);
-  };
+  }, [setLanguage]);
 
-  const navLinks = [
+  const navLinks = React.useMemo(() => [
     { name: t('navbar.home'), path: '/' },
     { name: t('navbar.about'), path: '/about' },
-    { name: t('navbar.admissions'), path: '/admissions' },
     { name: t('navbar.admissionForm'), path: '/admission-form' },
     { name: t('navbar.programs'), path: '/programs' },
     { name: t('navbar.studentsDirectory'), path: '/students' },
@@ -63,7 +62,7 @@ export function Navbar() {
     { name: t('navbar.gallery'), path: '/gallery' },
     { name: t('navbar.events'), path: '/events' },
     { name: t('navbar.contact'), path: '/contact' },
-  ];
+  ], [t]);
 
   const currentLangLabel = LANGUAGES.find(l => l.code === currentLanguage)?.label ?? 'اردو';
   const isHome = pathname === '/';
@@ -73,20 +72,24 @@ export function Navbar() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 select-none print:hidden ${
         isDark
-          ? 'bg-zinc-950/95 backdrop-blur-md border-b border-zinc-800 py-3 shadow-lg'
+          ? 'bg-zinc-950/95 backdrop-blur-md border-b border-zinc-800/80 py-3 shadow-lg'
           : 'bg-transparent py-5'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-10">
         <div className="flex justify-between items-center h-14">
 
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group shrink-0">
+          {/* Logo with explicit RTL direction to preserve Urdu character connections */}
+          <Link href="/" className="flex items-center gap-3 group shrink-0 me-4 lg:me-8">
             <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-emerald-500/50 bg-emerald-950/40 flex items-center justify-center transition-all duration-300 group-hover:scale-105 group-hover:border-emerald-400 overflow-hidden p-[2px]">
               <img src="/assets/Logo.png" alt="Jamia Islamabad" className="w-full h-full object-contain" />
             </div>
             <div className="flex flex-col justify-center">
-              <span lang="ur" className="text-white font-extrabold text-lg sm:text-xl tracking-tight leading-snug group-hover:text-emerald-400 transition-colors font-urdu pb-1">
+              <span 
+                dir="rtl" 
+                lang="ur" 
+                className="text-white font-extrabold text-lg sm:text-xl leading-snug group-hover:text-emerald-400 transition-colors font-urdu pb-0.5 tracking-normal"
+              >
                 جامعہ اسلام آباد
               </span>
               <span className="text-emerald-500/90 text-[10px] font-mono font-bold tracking-wider leading-none">
@@ -95,29 +98,32 @@ export function Navbar() {
             </div>
           </Link>
 
-          {/* Desktop Nav Links */}
-          <div className="hidden lg:flex items-center gap-3 xl:gap-5">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                href={link.path}
-                className={`whitespace-nowrap transition-all duration-200 hover:text-emerald-400 ${
-                  currentLanguage === 'en'
-                    ? 'text-xs xl:text-[13px] font-semibold tracking-wide'
-                    : 'text-sm xl:text-base font-bold'
-                } ${
-                  pathname === link.path
-                    ? 'text-emerald-400 border-b-2 border-emerald-500 pb-0.5'
-                    : 'text-zinc-300'
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
+          {/* Desktop Nav Links — refined subtle active indicator and generous spacing */}
+          <div className="hidden lg:flex items-center gap-1.5 xl:gap-3 mx-auto">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.path;
+              return (
+                <Link
+                  key={link.path}
+                  href={link.path}
+                  className={`whitespace-nowrap px-3 py-1.5 rounded-md transition-all duration-200 relative ${
+                    currentLanguage === 'en'
+                      ? 'text-xs xl:text-[13px] font-semibold tracking-wide'
+                      : 'text-sm xl:text-base font-bold'
+                  } ${
+                    isActive
+                      ? 'text-emerald-400 font-bold bg-emerald-950/40 border-b-2 border-emerald-400'
+                      : 'text-zinc-300 hover:text-white hover:bg-zinc-900/40'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
           </div>
 
-          {/* Desktop: Language Switcher + CTA */}
-          <div className="hidden lg:flex items-center gap-3">
+          {/* Desktop: Language Switcher + CTA — with distinct margin from links */}
+          <div className="hidden lg:flex items-center gap-3 ms-4 lg:ms-8 shrink-0">
 
             {/* ── Language Dropdown ── */}
             <div className="relative" ref={desktopLangRef}>
