@@ -230,7 +230,7 @@ export default function EventsPage() {
         <style>{`body { overflow: hidden; }`}</style>
       )}
 
-      <div className="w-full flex flex-col items-center bg-zinc-950 min-h-screen">
+      <div className="w-full flex flex-col items-center">
         {/* Banner */}
         <PageBanner
           title={t('events:banner.title')}
@@ -238,7 +238,7 @@ export default function EventsPage() {
         />
 
         {/* ── Controls ────────────────────────────────────────────────────── */}
-        <section className="w-full bg-zinc-950 border-b border-zinc-800/60 sticky top-14 z-30 shadow-xl shadow-zinc-950/50">
+        <section className="w-full bg-white/90 backdrop-blur-xl border-b border-zinc-200 sticky top-14 z-30 shadow-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
 
             {/* Category pills */}
@@ -258,14 +258,14 @@ export default function EventsPage() {
                           ? 'bg-emerald-600 border-emerald-500 text-white shadow-lg shadow-emerald-900/30'
                           : `${token!.pill} border-opacity-100 shadow-md`
                         : id === 'all'
-                        ? 'border-zinc-700 bg-zinc-900 text-zinc-400 hover:text-white hover:bg-zinc-800'
-                        : `border-zinc-700/60 bg-zinc-900/60 text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/60`
+                        ? 'border-zinc-300 bg-zinc-100 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-200'
+                        : `border-zinc-200 bg-zinc-50 text-zinc-500 hover:text-zinc-700 hover:bg-zinc-100`
                     }`}
                   >
                     {Icon && <Icon className="w-3 h-3" />}
                     {t(`events:categories.${id}`)}
                     <span className={`ml-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-extrabold ${
-                      isActive ? 'bg-white/20 text-white' : 'bg-zinc-800 text-zinc-500'
+                      isActive ? 'bg-white/20 text-white' : 'bg-zinc-200 text-zinc-500'
                     }`}>
                       {count}
                     </span>
@@ -283,7 +283,7 @@ export default function EventsPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={t('events:search')}
-                className="w-full pl-9 pr-4 py-2 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-300 placeholder-zinc-600 text-xs font-medium focus:outline-none focus:border-emerald-600/60 focus:ring-1 focus:ring-emerald-600/30 transition-all duration-200"
+                className="w-full pl-9 pr-4 py-2 rounded-full bg-zinc-50 border border-zinc-200 text-zinc-700 placeholder-zinc-400 text-xs font-medium focus:outline-none focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/30 transition-all duration-200"
               />
             </div>
           </div>
