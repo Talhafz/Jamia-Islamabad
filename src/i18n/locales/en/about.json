@@ -18,6 +18,79 @@
     "desc1": "Prof. Dr. Mufti Muhammad Zafar Iqbal Jalali is the founding principal and academic director of Jamia Islamabad. With a doctorate in Islamic studies and over three decades of teaching, counseling, and theological writing, Dr. Jalali has shaped the careers of hundreds of graduates who now serve as researchers, teachers, and lawyers.",
     "desc2": "Under his direct guidance, the faculty maintain strict standards of research, citation, and grammar. This ensures that classical training in Arabic grammar (Sarf and Nahw), Logic (Mantiq), Jurisprudence (Fiqh), and Prophetic Narrations (Hadith) is preserved at its highest fidelity."
   },
+  "timeline": {
+    "title": "Historical Journey of the Institution",
+    "subtitle": "25+ Years of Academic Milestones & Perseverance",
+    "item1": {
+      "year": "1992",
+      "title": "Foundation & Humble Origins",
+      "desc": "Under the guidance and prayers of Allama Al-Haj Pir Abu Dawood Muhammad Sadiq Qadri Rizvi (RA), Al-Haj Faqeer Muhammad Anwar Rizvi initiated this sacred learning journey at Khanna Dak, Islamabad under the name 'Madrasa Ghousia Rizvia Ta'leem-ul-Quran'. Initially, the academy served 26 local and resident students in Nazra and Hifz."
+    },
+    "item2": {
+      "year": "2001",
+      "title": "Establishment of Ahle Sunnat Center (Sector I-8/4)",
+      "desc": "A major turning point occurred in January 2001 when the foundation stone of 'Jamia Masjid Noor-e-Madina' was laid in Sector I-8/4, Islamabad. The institution was upgraded to 'Jamia Ghousia Rizvia (Jamia Islamabad)', launching formal degree programs in classical Dars-e-Nizami."
+    },
+    "item3": {
+      "year": "2011",
+      "title": "Launch of Dawra-e-Hadith Sharif (Final Degree)",
+      "desc": "To complete the highest academic curriculum, the sixth final-year Dawra-e-Hadith Sharif program was formally instituted, graduating scholars who serve across national and international educational fields."
+    },
+    "item4": {
+      "year": "2017",
+      "title": "Silver Jubilee & International Recognition",
+      "desc": "Jamia Islamabad celebrated 25 successful years of academic service with Silver Jubilee celebrations, culminating in a historic National Madaris Conference at the Jinnah Convention Center, Islamabad. The institution was ranked among the Top 10 Islamic Higher Learning Institutes under Tanzeem-ul-Madaris Ahle Sunnat Pakistan."
+    }
+  },
+  "stats": {
+    "title": "Institutional Statistics & Scale",
+    "subtitle": "Academic Impact & Operational Volume",
+    "card1": {
+      "stat": "40+",
+      "label": "Academic Branches & Sub-Campuses",
+      "desc": "Over 40 active sub-branches and affiliated campuses operate nationwide to promote traditional and modern education."
+    },
+    "card2": {
+      "stat": "133",
+      "label": "Network of Mosques",
+      "desc": "Under the 'Nizam-ul-Masajid Council', 133 mosques across the federal capital and surrounding regions are administered, maintained, and staffed with qualified imams."
+    },
+    "card3": {
+      "stat": "5,454+",
+      "label": "Graduates & Beneficiaries",
+      "desc": "According to the ten-year institutional report, thousands of students have graduated across various academic levels, specialized workshops, and short courses."
+    },
+    "card4": {
+      "stat": "30+",
+      "label": "M.Phil & Ph.D Scholars",
+      "desc": "Over 30 highly educated alumni currently serve as research scholars pursuing M.Phil and Ph.D degrees at top national and international universities."
+    }
+  },
+  "departments": {
+    "title": "Specialized Academic Departments",
+    "subtitle": "Educational & Research Capabilities",
+    "dep1": {
+      "title": "Department of Dars-e-Nizami (Al-Alamiyyah Degree)",
+      "desc": "Comprehensive curriculum spanning intermediate tiers up to the final Dawra-e-Hadith Sharif year, recognized by the Higher Education Commission (HEC) of Pakistan as equivalent to an M.A. in Islamic Studies."
+    },
+    "dep2": {
+      "title": "Central Dar-ul-Ifta & Shariah Board",
+      "desc": "Established 'Al-Majlis Al-Shar'i Al-Islami (Shariah Board Pakistan)' to address contemporary fatwa queries, where scholars specializing in Islamic Jurisprudence (Takhassus Fil Fiqh) issue rulings daily."
+    },
+    "dep3": {
+      "title": "Modern Education & Computer Lab",
+      "desc": "Integrating modern academics alongside Islamic sciences via the 'Islamabad International School System', offering advanced computer diplomas, and specialized English and Arabic language courses."
+    },
+    "dep4": {
+      "title": "Defense of Prophet's Honor & Publishing House",
+      "desc": "Leading ideological guidance, hosting All-Pakistan speech competitions, publishing 'Madinat-ul-Ilm' journal, and authoring 5 flagship scholarly books including 'Fatawa Jamia Islamabad'."
+    }
+  },
+  "welfare": {
+    "title": "Welfare & Social Services",
+    "subtitle": "Social Responsibility & Humanitarian Aid",
+    "text": "Jamia Islamabad is not only an academic institution but an active pillar of social welfare. Under its administration, the 'Jalalia Free Dispensary' provides free medical care to underprivileged families. Furthermore, during natural disasters, earthquakes, and floods, Jamia's welfare division stands at the forefront of relief efforts."
+  },
   "coreValues": {
     "title": "Our Core Foundations",
     "subtitle": "Core Pillars",
