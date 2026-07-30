@@ -32,7 +32,7 @@ export default function RootLayout({
       className={`${inter.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-950 animate-fade-in" suppressHydrationWarning>
+      <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-950" suppressHydrationWarning>
         <LanguageProvider>
           <Navbar />
           {/* Padding-top added to prevent navbar overlap on scrollable content */}

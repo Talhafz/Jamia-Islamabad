@@ -112,11 +112,9 @@ html[lang="ur"] h4, html[lang="ar"] h4, [dir="rtl"] h4 {
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(8px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 

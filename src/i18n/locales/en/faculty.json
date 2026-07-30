@@ -1,9 +1,38 @@
 {
   "title": "Our Faculty & Scholars",
-  "description": "Meet the esteemed Islamic scholars and academic educators of Jamia Islamabad dedicated to sacred instruction and mentorship.",
-  "sheikhUlHadith": "Sheikh-ul-Hadith",
-  "principal": "Principal",
-  "vicePrincipal": "Vice Principal",
-  "professor": "Professor",
-  "lecturer": "Lecturer"
+  "description": "Our academic leadership consists of certified academicians and traditional theologians dedicated to educational rigor and mentorship.",
+  "contactLabel": "info@jamiaislamabad.net",
+  "brandLabel": "JAMIA ISLAMABAD",
+  "deptLabel": "Department",
+  "qualLabel": "Qualification",
+  "members": {
+    "m1": {
+      "name": "Eminent Islamic Scholar & Educationist, Professor Dr. Mufti Muhammad Zafar Iqbal Jalali",
+      "title": "Principal & Shaykh al-Hadith, Jamia Islamabad | Chancellor, IIUP | Chairman, IERF",
+      "dept": "Hadith Studies & Administration",
+      "qual": "PhD in Islamic Studies, Alimiyah (Gold Medalist)",
+      "bio": "Leading scholar with over 30 years of research and teaching experience in Hadith syntax, logic, and Islamic law."
+    },
+    "m2": {
+      "name": "Mufti Ahmad Raza Qadri",
+      "title": "Senior Mufti & Lecturer",
+      "dept": "Fiqh & Islamic Jurisprudence",
+      "qual": "Takhassus fil-Ifta (Mufti Course), MA Islamic Studies",
+      "bio": "Directs the Fatwa and legal inquiry center, lecturing on Islamic commercial contracts and jurisprudence principles."
+    },
+    "m3": {
+      "name": "Qari Muhammad Bilal Siddique",
+      "title": "Head Qari / Director of Tajweed Department",
+      "dept": "Hifz & Tajweed School",
+      "qual": "Sanad of Tajweed and Qira'at (Ashara Mutawatirah), Hafiz-ul-Quran",
+      "bio": "Supervises correct sound articulation, Qaida instruction, and structured revision timelines for memorization cycles."
+    },
+    "m4": {
+      "name": "Professor Shabbir Ahmed",
+      "title": "Senior Instructor / Modern Curriculum Educator",
+      "dept": "Modern Secondary Schooling",
+      "qual": "MSc Mathematics, BEd",
+      "bio": "Coordinates board-affiliated science classes, ensuring secondary students meet federal matric and college standards."
+    }
+  }
 }

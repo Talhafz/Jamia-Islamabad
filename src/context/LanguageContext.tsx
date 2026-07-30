@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
-import { Language, translations } from '../i18n/translations';
+import { Language, flatTranslations } from '../i18n/translations';
 
 interface LanguageContextType {
   currentLanguage: Language;
@@ -37,28 +37,31 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     setCurrentLanguage(lang);
   }, []);
 
-  // Build t() as a stable callback that closes over currentLanguage
+  // O(1) constant-time translation lookup callback with English fallback & fast interpolation
   const t = useCallback(
     (key: string, variables?: Record<string, string>): string => {
-      const [namespace, path] = key.includes(':')
-        ? key.split(':')
-        : ['common', key];
+      const activeDict = flatTranslations[currentLanguage];
+      const enDict = flatTranslations['en'];
 
-      const ns = (translations[currentLanguage] as any)[namespace];
-      if (!ns) return key;
+      let value = activeDict?.[key] ?? enDict?.[key];
 
-      const value = path.split('.').reduce((obj: any, part: string) => {
-        return obj !== null && obj !== undefined ? obj[part] : undefined;
-      }, ns);
+      if (!value && !key.includes(':')) {
+        const commonKey = `common:${key}`;
+        value = activeDict?.[commonKey] ?? enDict?.[commonKey];
+      }
 
       if (typeof value !== 'string') return key;
 
       if (variables) {
-        return Object.entries(variables).reduce(
-          (str, [k, v]) => str.replace(new RegExp(`\\{${k}\\}`, 'g'), v),
-          value
-        );
+        let interpolated = value;
+        for (const k in variables) {
+          if (Object.prototype.hasOwnProperty.call(variables, k)) {
+            interpolated = interpolated.replaceAll(`{${k}}`, variables[k]);
+          }
+        }
+        return interpolated;
       }
+
       return value;
     },
     [currentLanguage]

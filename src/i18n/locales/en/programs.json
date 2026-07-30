@@ -1,0 +1,31 @@
+{
+  "title": "Academic Offerings",
+  "description": "Jamia Islamabad provides structured and certified pathways for both sacred and contemporary educational goals.",
+  "durationLabel": "Duration",
+  "courses": {
+    "c1": {
+      "title": "Dars-e-Nizami (درس نظامی)",
+      "focus": "Theological Leadership",
+      "duration": "8 Years",
+      "desc": "Our flagship theological program. Includes exhaustive studies in Arabic morphology (Sarf), Syntax (Nahw), Logic (Mantiq), Islamic Jurisprudence (Fiqh), Principles of Fiqh (Usul al-Fiqh), Quranic Exegesis (Tafsir), and Prophetic Narrations (Hadith). Graduates receive the Alimiyah degree, equivalent to a Master's in Islamic Studies (HEC recognised)."
+    },
+    "c2": {
+      "title": "Hifz-ul-Quran (حفظ القرآن)",
+      "focus": "Sacred Memorization",
+      "duration": "3 Years (Avg)",
+      "desc": "Dedicated school for Quranic memorization. Combines daily revision tracking, correct Tajweed articulation, and character grooming. Under direct guidance of certified Qaris, students memorize the entire Quran with strong retention structures."
+    },
+    "c3": {
+      "title": "Tajweed-o-Qira'at (تجوید و قراءت)",
+      "focus": "Recitation Articulation",
+      "duration": "1 Year",
+      "desc": "Specialized certificate program focusing on the pronunciation keys of classical Arabic script, linguistic sounds, and the different classical recitation methodologies (Qira'at). Highly recommended for teachers and Quranic instructors."
+    },
+    "c4": {
+      "title": "Matric / FA (مٹرک / ایف اے)",
+      "focus": "Modern Schooling",
+      "duration": "2 Years each",
+      "desc": "Federal/Provincial board affiliated sciences and humanities certificates. Run concurrently with our intermediate theological programs, allowing students to transition seamlessly into national universities or legal schools (LLB)."
+    }
+  }
+}

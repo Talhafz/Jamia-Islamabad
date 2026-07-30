@@ -89,3 +89,59 @@ export const translations = {
     privacy: privacyAr,
   },
 };
+
+// ---------------------------------------------------------------------------
+// High-Performance Flattened Translation Dictionary (O(1) Hash Map)
+// Eliminates runtime object path splitting and reducer iteration overhead.
+// ---------------------------------------------------------------------------
+type FlatTranslationMap = Record<string, string>;
+type FlatLanguageMap = Record<Language, FlatTranslationMap>;
+
+function flattenObject(obj: Record<string, any>, prefix = ''): FlatTranslationMap {
+  const result: FlatTranslationMap = {};
+  for (const key in obj) {
+    if (!Object.prototype.hasOwnProperty.call(obj, key)) continue;
+    const value = obj[key];
+    const newPrefix = prefix ? `${prefix}.${key}` : key;
+    if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+      Object.assign(result, flattenObject(value, newPrefix));
+    } else if (typeof value === 'string') {
+      result[newPrefix] = value;
+    }
+  }
+  return result;
+}
+
+function buildFlatTranslations(): FlatLanguageMap {
+  const flatLanguages: FlatLanguageMap = {
+    ur: {},
+    en: {},
+    ar: {},
+  };
+
+  (Object.keys(translations) as Language[]).forEach((lang) => {
+    const langObj = translations[lang];
+    const flatMap: FlatTranslationMap = {};
+
+    for (const ns in langObj) {
+      const nsContent = (langObj as any)[ns];
+      if (typeof nsContent === 'object' && nsContent !== null) {
+        const flatNs = flattenObject(nsContent);
+        for (const pathKey in flatNs) {
+          const fullKey = `${ns}:${pathKey}`;
+          flatMap[fullKey] = flatNs[pathKey];
+          // Convenience mapping: if namespace is 'common', also map directly to key
+          if (ns === 'common') {
+            flatMap[pathKey] = flatNs[pathKey];
+          }
+        }
+      }
+    }
+    flatLanguages[lang] = flatMap;
+  });
+
+  return flatLanguages;
+}
+
+export const flatTranslations: FlatLanguageMap = buildFlatTranslations();
+

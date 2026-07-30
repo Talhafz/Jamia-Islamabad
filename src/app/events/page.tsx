@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, MapPin, Calendar, Tag, Search, ChevronRight, Award, Mic2, Users, Flag } from 'lucide-react';
 import { PageBanner } from '../../components/PageBanner';
@@ -86,112 +87,138 @@ const modalVariants = {
   exit: { opacity: 0, scale: 0.94, y: 24, transition: { duration: 0.2 } },
 };
 
-// ── Event Detail Modal ─────────────────────────────────────────────────────────
+// ── Event Detail Modal (Rendered via Portal directly to document.body) ────────
 function EventModal({
   item,
   onClose,
   lang,
+  dir,
   t,
 }: {
   item: GalleryItem;
   onClose: () => void;
   lang: string;
+  dir: 'rtl' | 'ltr';
   t: (key: string) => string;
 }) {
+  const [mounted, setMounted] = useState(false);
   const token = getToken(item.category);
 
-  // Close on backdrop click
-  const onBackdrop = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) onClose();
-  };
+  useEffect(() => {
+    setMounted(true);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
 
-  return (
-    <AnimatePresence>
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
+  if (!mounted) return null;
+
+  return createPortal(
+    <motion.div
+      key="events-modal-overlay"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      className="fixed inset-0 top-0 left-0 right-0 bottom-0 w-screen h-[100dvh] z-[9999] flex items-center justify-center p-3 sm:p-6 overflow-hidden"
+    >
+      {/* Semi-transparent Backdrop Overlay */}
+      <div
+        className="absolute inset-0 bg-zinc-950/90 backdrop-blur-md cursor-pointer"
+        onClick={onClose}
+      />
+
+      {/* Centered Viewport Card Container */}
       <motion.div
-        key="backdrop"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-zinc-950/80 backdrop-blur-md"
-        onClick={onBackdrop}
+        key="events-modal-card"
+        variants={modalVariants}
+        initial="hidden"
+        animate="show"
+        exit="exit"
+        className="relative z-10 w-full max-w-2xl max-h-[85vh] sm:max-h-[90vh] bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col my-auto"
+        onClick={(e) => e.stopPropagation()}
+        dir={dir}
       >
-        <motion.div
-          key="modal"
-          variants={modalVariants}
-          initial="hidden"
-          animate="show"
-          exit="exit"
-          className="relative w-full max-w-2xl bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl"
-        >
-          {/* Image */}
-          <div className="relative w-full h-64 sm:h-72 overflow-hidden">
-            <img
-              src={item.src}
-              alt={getLoc(item.title, lang)}
-              className="w-full h-full object-cover object-center"
-            />
-            {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/40 to-transparent" />
+        {/* Image Header — Responsive Fixed Height */}
+        <div className="relative w-full h-44 sm:h-64 md:h-72 shrink-0 overflow-hidden bg-zinc-950">
+          <img
+            src={item.src}
+            alt={getLoc(item.title, lang)}
+            className="w-full h-full object-cover object-center"
+          />
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/30 to-transparent" />
 
-            {/* Close button */}
-            <button
-              onClick={onClose}
-              className="absolute top-4 right-4 w-9 h-9 rounded-full bg-zinc-950/70 hover:bg-zinc-900 border border-zinc-700 flex items-center justify-center text-zinc-300 hover:text-white transition-all duration-200 backdrop-blur-sm"
-            >
-              <X className="w-4 h-4" />
-            </button>
+          {/* Close Button */}
+          <button
+            onClick={onClose}
+            aria-label={t('events:close')}
+            className={`absolute top-4 ${dir === 'rtl' ? 'left-4' : 'right-4'} w-9 h-9 rounded-full bg-zinc-950/80 hover:bg-zinc-800 border border-zinc-700/80 flex items-center justify-center text-zinc-300 hover:text-white transition-all duration-200 backdrop-blur-md z-20 shadow-lg`}
+          >
+            <X className="w-4 h-4" />
+          </button>
 
-            {/* Category badge on image */}
-            <div className="absolute bottom-4 left-4">
-              <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${token.badge}`}>
-                <Tag className="w-3 h-3" />
-                {t(`events:categories.${item.category}`)}
-              </span>
-            </div>
+          {/* Category Badge */}
+          <div className={`absolute bottom-4 ${dir === 'rtl' ? 'right-4' : 'left-4'} z-10`}>
+            <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${token.badge}`}>
+              <Tag className="w-3 h-3" />
+              {t(`events:categories.${item.category}`)}
+            </span>
+          </div>
+        </div>
+
+        {/* Vertically Scrollable Content Body */}
+        <div className="p-5 sm:p-6 flex flex-col gap-4 overflow-y-auto flex-1">
+          <h2 className="text-white font-extrabold text-lg sm:text-2xl leading-tight tracking-tight">
+            {getLoc(item.title, lang)}
+          </h2>
+
+          <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed whitespace-pre-line">
+            {getLoc(item.desc, lang)}
+          </p>
+
+          {/* Meta Details Row */}
+          <div className="flex flex-wrap gap-4 pt-3 mt-auto border-t border-zinc-800/80">
+            {item.location && (
+              <div className="flex items-center gap-2 text-zinc-400 text-xs font-medium">
+                <MapPin className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span>{item.location}</span>
+              </div>
+            )}
+            {item.date && (
+              <div className="flex items-center gap-2 text-zinc-400 text-xs font-medium">
+                <Calendar className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span>{item.date}</span>
+              </div>
+            )}
           </div>
 
-          {/* Content */}
-          <div className="p-6 flex flex-col gap-4">
-            <h2 className="text-white font-extrabold text-xl sm:text-2xl leading-tight tracking-tight">
-              {getLoc(item.title, lang)}
-            </h2>
-
-            <p className="text-zinc-400 text-sm leading-relaxed">
-              {getLoc(item.desc, lang)}
-            </p>
-
-            {/* Meta row */}
-            <div className="flex flex-wrap gap-4 pt-2 border-t border-zinc-800">
-              {item.location && (
-                <div className="flex items-center gap-2 text-zinc-500 text-xs font-medium">
-                  <MapPin className="w-3.5 h-3.5 text-emerald-500/70 shrink-0" />
-                  <span>{item.location}</span>
-                </div>
-              )}
-              {item.date && (
-                <div className="flex items-center gap-2 text-zinc-500 text-xs font-medium">
-                  <Calendar className="w-3.5 h-3.5 text-emerald-500/70 shrink-0" />
-                  <span>{item.date}</span>
-                </div>
-              )}
-            </div>
-
-            <button
-              onClick={onClose}
-              className="self-end mt-2 px-5 py-2 rounded-full bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white text-xs font-bold transition-all duration-200 border border-zinc-700"
-            >
-              {t('events:close')}
-            </button>
-          </div>
-        </motion.div>
+          {/* Close Action */}
+          <button
+            onClick={onClose}
+            className="self-end mt-2 px-6 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all duration-200 shadow-md border border-emerald-500/50"
+          >
+            {t('events:close')}
+          </button>
+        </div>
       </motion.div>
-    </AnimatePresence>
+    </motion.div>,
+    document.body
   );
 }
 
 // ── Main Page ──────────────────────────────────────────────────────────────────
 export default function EventsPage() {
-  const { t, currentLanguage } = useLanguage();
+  const { t, currentLanguage, direction } = useLanguage();
   const [activeCategory, setActiveCategory] = useState<EventCategoryId>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedEvent, setSelectedEvent] = useState<GalleryItem | null>(null);
@@ -225,11 +252,6 @@ export default function EventsPage() {
 
   return (
     <>
-      {/* Block body scroll when modal is open */}
-      {selectedEvent && (
-        <style>{`body { overflow: hidden; }`}</style>
-      )}
-
       <div className="w-full flex flex-col items-center">
         {/* Banner */}
         <PageBanner
@@ -391,6 +413,7 @@ export default function EventsPage() {
             item={selectedEvent}
             onClose={() => setSelectedEvent(null)}
             lang={currentLanguage}
+            dir={direction}
             t={t}
           />
         )}
