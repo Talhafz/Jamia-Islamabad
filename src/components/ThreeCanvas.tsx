@@ -72,7 +72,7 @@ export function ThreeCanvas({ variant = 'hero' }: { variant?: 'hero' | 'subtle' 
     let edgeMat: THREE.LineBasicMaterial | undefined;
 
     if (variant === 'hero') {
-      cubeGeo = new THREE.BoxGeometry(2.5, 2.5, 2.5);
+      cubeGeo = new THREE.BoxGeometry(2.8, 2.8, 2.8);
       wireframeMat = new THREE.MeshBasicMaterial({
         color: 0x059669,
         wireframe: true,

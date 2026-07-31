@@ -88,7 +88,7 @@ export default function Home() {
     <div className="w-full flex flex-col items-center">
       
       {/* HERO SECTION */}
-      <section className="relative w-full min-h-[100vh] flex items-center justify-center bg-zinc-950 overflow-hidden pt-36 pb-16 select-none -mt-20">
+      <section className="relative w-full min-h-screen flex items-center justify-center bg-zinc-950 overflow-hidden py-12 select-none -mt-20">
         <ThreeCanvasLazy />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(4,120,87,0.15)_0%,transparent_70%)] pointer-events-none" />
 
@@ -97,35 +97,48 @@ export default function Home() {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="flex flex-col items-center gap-6"
+            className="flex flex-col items-center gap-4"
           >
-            <motion.div variants={itemVariants} className="flex justify-center mb-1">
-              <div className="relative w-28 h-28 flex items-center justify-center border-2 border-emerald-500/60 rounded-full bg-emerald-950/40 p-2 shadow-lg shadow-emerald-500/10 overflow-hidden">
+            <motion.div variants={itemVariants} className="flex justify-center mb-1 translate-y-[80px]">
+              <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center border-2 border-emerald-500/60 rounded-full bg-emerald-950/40 p-1.5 shadow-lg shadow-emerald-500/10 overflow-hidden">
                 <img src="/assets/Logo.png" alt="Jamia Islamabad Logo" className="w-full h-full object-contain drop-shadow-md animate-pulse-slow" />
               </div>
             </motion.div>
 
-            <motion.h1 
-              variants={itemVariants} 
-              className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white max-w-4xl flex flex-col gap-3 my-2 leading-relaxed"
-            >
-              <span className="font-urdu text-emerald-400 block text-2xl sm:text-4xl md:text-5xl font-extrabold leading-relaxed">
-                {t('home:hero.subtitle')}
-              </span>
-              <span className="block leading-relaxed">
-                {t('home:hero.title')}
-              </span>
-            </motion.h1>
+            <motion.div variants={itemVariants} className="flex flex-col items-center gap-1 max-w-4xl w-full text-center">
+              <div className="relative flex items-center justify-center w-[min(80vw,26rem)] h-[min(80vw,26rem)] sm:w-[30rem] sm:h-[30rem] md:w-[32rem] md:h-[32rem] lg:w-[34rem] lg:h-[34rem] -mt-2">
+                <div className="absolute inset-0 flex flex-col items-center justify-center px-4 text-center gap-2">
+                  
+                  {/* Foundation Supporting Text - Shifted upward by 50px more */}
+                  <p className="font-urdu text-emerald-300 text-[0.72rem] sm:text-[0.82rem] md:text-[0.9rem] leading-relaxed tracking-[0.16em] max-w-[22rem] -translate-y-[50px]">
+                    اسلام آباد ایجوکیشن اینڈ ریلیف فاؤنڈیشن کے زیرِ اہتمام
+                  </p>
 
-            <motion.p 
-              variants={itemVariants} 
-              className="text-zinc-400 text-sm sm:text-base max-w-2xl leading-relaxed mt-2"
-            >
-              {t('home:hero.description')}
-            </motion.p>
+                  {/* Location Supporting Text - Shifted upward by 50px more */}
+                  <p className="font-urdu text-zinc-200 text-[0.88rem] sm:text-[1rem] md:text-[1.1rem] max-w-[24rem] leading-[1.7] tracking-[0.01em] -translate-y-[50px]">
+                    وفاقی دارالحکومت کے خوبصورت ترین سیکٹر I-8/4 میں واقع دینی و عصری تعلیم کا عظیم مرکز۔
+                  </p>
+
+                  <span className="font-urdu text-white text-[1.9rem] sm:text-[2.35rem] md:text-[2.65rem] lg:text-[2.95rem] xl:text-[3.15rem] font-black leading-none tracking-[-0.04em] max-w-[calc(100%-2rem)] mt-2">
+                    جامعہ اسلام آباد
+                  </span>
+                </div>
+              </div>
+
+              <p className="font-urdu text-emerald-200 text-base sm:text-lg md:text-xl max-w-[700px] leading-[1.7] tracking-[0.01em] -translate-y-[30px]">
+                دسترس کی آسانی، روحانی تربیت اور علمی برتری
+              </p>
+
+              <motion.p 
+                  variants={itemVariants} 
+                  className="text-zinc-400 text-sm sm:text-base max-w-2xl leading-relaxed -translate-y-[30px]"
+                >
+                  {t('home:hero.description')}
+                </motion.p>
+            </motion.div>
 
             {/* CTAs */}
-            <motion.div variants={itemVariants} className="flex flex-wrap justify-center gap-4 mt-4">
+            <motion.div variants={itemVariants} className="flex flex-wrap justify-center gap-4 mt-3">
               <Link
                 href="/admission-form"
                 className="px-6 py-3 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white text-xs font-extrabold shadow-lg shadow-emerald-950/20 transform hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-1.5"
@@ -361,7 +374,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
     </div>
   );
 }
