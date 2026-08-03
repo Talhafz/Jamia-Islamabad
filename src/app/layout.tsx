@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Noto_Nastaliq_Urdu } from 'next/font/google';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { LanguageProvider } from '../context/LanguageContext';
@@ -8,6 +8,13 @@ import './globals.css';
 const inter = Inter({
   variable: '--font-inter',
   subsets: ['latin'],
+  display: 'swap',
+});
+
+const notoNastaliqUrdu = Noto_Nastaliq_Urdu({
+  variable: '--font-noto-nastaliq',
+  subsets: ['arabic'],
+  weight: ['400', '700'],
   display: 'swap',
 });
 
@@ -29,7 +36,7 @@ export default function RootLayout({
     <html
       lang="ur"
       dir="rtl"
-      className={`${inter.variable} h-full antialiased`}
+      className={`${inter.variable} ${notoNastaliqUrdu.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-950" suppressHydrationWarning>

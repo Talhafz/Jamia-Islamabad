@@ -1,59 +1,102 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fafafa;
-  --foreground: #09090b;
-  
-  --emerald-primary: #047857;
-  --emerald-hover: #065f46;
-  --gold-accent: #d97706;
-  --gold-hover: #b45309;
-  
-  --brand-near-black: #09090b;
-  --brand-dark-green: #022c22;
-}
+  /* Primary Greens */
+  --color-emerald-deep: #0E3B2E;
+  --color-emerald-mid: #145C46;
+  --color-emerald-bg: #0A1210;
+  --color-panel: #12281F;
 
-@theme {
-  --color-primary-emerald: var(--emerald-primary);
-  --color-hover-emerald: var(--emerald-hover);
-  --color-accent-gold: var(--gold-accent);
-  --color-hover-gold: var(--gold-hover);
-  --color-brand-near-black: var(--brand-near-black);
-  --color-brand-dark-green: var(--brand-dark-green);
+  /* Gold Family */
+  --color-gold-primary: #D4A017;
+  --color-gold-bright: #E8B93D;
+  --color-gold-muted: #A97C1F;
+
+  /* Teal / Mint — ACCENT ONLY, never dominant */
+  --color-teal-accent: #1FBF8F;
+  --color-teal-soft: #2ED9A8;
+
+  /* Traditional Accent */
+  --color-maroon: #7A1E1E;
+  --color-ivory: #F0EAD6;
+
+  /* Text */
+  --color-text-heading: var(--color-gold-primary);
+  --color-text-body: #E8E6E1;
+  --color-text-muted: #9A968C;
+
+  /* Buttons */
+  --color-btn-primary-bg: var(--color-gold-primary);
+  --color-btn-primary-hover: var(--color-gold-bright);
+  --color-btn-primary-text: #0A2A20;
+  --color-btn-secondary-border: var(--color-teal-accent);
+
+  /* Legacy fallback aliases */
+  --background: var(--color-emerald-bg);
+  --foreground: var(--color-text-body);
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-inter), 'Nafees Nastaleeq', 'Nafees Nastaleeq v1.02', system-ui, sans-serif;
+  background-color: var(--color-emerald-bg);
+  color: var(--color-text-body);
+  font-family: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   overflow-x: hidden;
 }
 
-/* ─── Nafees Nastaleeq Font Setup ─────────────────────────────────────────── */
-@font-face {
-  font-family: 'Nafees Nastaleeq';
-  src: url('/fonts/NafeesNastaleeq.ttf') format('truetype'),
-       url('/fonts/Nafees%20Nastaleeq%20v1.02.ttf') format('truetype');
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
+/* ── Geometric Diagonal Pattern Overlay ── */
+.bg-diagonal-pattern {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(212, 160, 23, 0.02) 0px,
+    rgba(212, 160, 23, 0.02) 2px,
+    transparent 2px,
+    transparent 12px
+  );
 }
 
-@font-face {
-  font-family: 'Nafees Nastaleeq v1.02';
-  src: url('/fonts/NafeesNastaleeq.ttf') format('truetype'),
-       url('/fonts/Nafees%20Nastaleeq%20v1.02.ttf') format('truetype');
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
+/* ── Primary & Secondary Button Utility Classes ── */
+.btn-primary-gold {
+  background-color: var(--color-btn-primary-bg);
+  color: var(--color-btn-primary-text);
+  border: 1px solid var(--color-gold-primary);
+  font-weight: 600;
+  letter-spacing: 1px;
+  border-radius: 3px;
+  transition: all 0.3s ease;
 }
+
+.btn-primary-gold:hover {
+  background-color: var(--color-btn-primary-hover);
+  box-shadow: 0 0 18px rgba(212, 160, 23, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-secondary-teal {
+  background-color: transparent;
+  color: var(--color-teal-soft);
+  border: 1px solid var(--color-teal-accent);
+  font-weight: 600;
+  letter-spacing: 1px;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary-teal:hover {
+  background-color: rgba(31, 191, 143, 0.1);
+  box-shadow: 0 0 15px rgba(31, 191, 143, 0.2);
+  transform: translateY(-1px);
+}
+
+/* ─── Noto Nastaliq Urdu (Google Fonts via next/font) ─────────────────────── */
+/* Loaded via layout.tsx as --font-noto-nastaliq CSS variable.                  */
+/* Nafees Nastaleeq .ttf files kept in /public/fonts/ as offline fallback.       */
 
 /* RTL Helpers & Spacing for Arabic / Urdu */
 [dir="rtl"] {
   text-align: right;
 }
 
-/* ─── Universal Arabic & Urdu Nafees Nastaleeq Typography Rules ───────────── */
+/* ─── Universal Arabic & Urdu Noto Nastaliq Typography Rules ──────────────── */
 html[lang="ur"],
 html[lang="ar"],
 html[dir="rtl"],
@@ -61,10 +104,10 @@ html[dir="rtl"],
 [lang="ar"],
 [dir="rtl"],
 .font-urdu {
-  font-family: 'Nafees Nastaleeq', 'Nafees Nastaleeq v1.02', serif !important;
+  font-family: var(--font-noto-nastaliq), 'Noto Nastaliq Urdu', 'Nafees Nastaleeq', 'Jameel Noori Nastaleeq', 'Alvi Nastaleeq', serif !important;
 }
 
-/* Force Nafees Nastaleeq on ALL child elements in Arabic & Urdu modes */
+/* Force Noto Nastaliq fallback stack on ALL child elements in Arabic & Urdu modes */
 html[lang="ur"] *,
 html[lang="ar"] *,
 html[dir="rtl"] *,
@@ -72,7 +115,7 @@ html[dir="rtl"] *,
 [lang="ar"] *,
 [dir="rtl"] *,
 .font-urdu * {
-  font-family: 'Nafees Nastaleeq', 'Nafees Nastaleeq v1.02', serif !important;
+  font-family: var(--font-noto-nastaliq), 'Noto Nastaliq Urdu', 'Nafees Nastaleeq', 'Jameel Noori Nastaleeq', 'Alvi Nastaleeq', serif !important;
   letter-spacing: 0 !important;
   word-spacing: 0 !important;
 }
@@ -82,7 +125,7 @@ html[lang="ur"] h1, html[lang="ar"] h1, [dir="rtl"] h1,
 html[lang="ur"] h2, html[lang="ar"] h2, [dir="rtl"] h2,
 html[lang="ur"] h3, html[lang="ar"] h3, [dir="rtl"] h3,
 html[lang="ur"] h4, html[lang="ar"] h4, [dir="rtl"] h4 {
-  line-height: 1.8;
+  line-height: 2.0;
 }
 
 /* Explicit Line-Height Overrides for Tight Layouts (e.g. Logo headers, buttons) */

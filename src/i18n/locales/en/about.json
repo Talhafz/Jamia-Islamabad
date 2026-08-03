@@ -46,24 +46,24 @@
     "title": "Institutional Statistics & Scale",
     "subtitle": "Academic Impact & Operational Volume",
     "card1": {
-      "stat": "40+",
-      "label": "Academic Branches & Sub-Campuses",
-      "desc": "Over 40 active sub-branches and affiliated campuses operate nationwide to promote traditional and modern education."
+      "stat": "52",
+      "label": "Branches",
+      "desc": "Over 52 active sub-branches and affiliated campuses operate nationwide to promote traditional and modern education."
     },
     "card2": {
-      "stat": "133",
-      "label": "Network of Mosques",
-      "desc": "Under the 'Nizam-ul-Masajid Council', 133 mosques across the federal capital and surrounding regions are administered, maintained, and staffed with qualified imams."
+      "stat": "300",
+      "label": "Mosques",
+      "desc": "Under the 'Nizam-ul-Masajid Council', 300 mosques across the federal capital and surrounding regions are administered, maintained, and staffed with qualified imams."
     },
     "card3": {
-      "stat": "5,454+",
-      "label": "Graduates & Beneficiaries",
-      "desc": "According to the ten-year institutional report, thousands of students have graduated across various academic levels, specialized workshops, and short courses."
+      "stat": "52,340",
+      "label": "Beneficiary Students & Graduates",
+      "desc": "According to the institutional report, thousands of students have graduated across various academic levels, specialized workshops, and short courses."
     },
     "card4": {
-      "stat": "30+",
+      "stat": "120",
       "label": "M.Phil & Ph.D Scholars",
-      "desc": "Over 30 highly educated alumni currently serve as research scholars pursuing M.Phil and Ph.D degrees at top national and international universities."
+      "desc": "Over 120 highly educated alumni currently serve as research scholars pursuing M.Phil and Ph.D degrees at top national and international universities."
     }
   },
   "departments": {
@@ -89,7 +89,7 @@
   "welfare": {
     "title": "Welfare & Social Services",
     "subtitle": "Social Responsibility & Humanitarian Aid",
-    "text": "Jamia Islamabad is not only an academic institution but an active pillar of social welfare. Under its administration, the 'Jalalia Free Dispensary' provides free medical care to underprivileged families. Furthermore, during natural disasters, earthquakes, and floods, Jamia's welfare division stands at the forefront of relief efforts."
+    "text": "Welfare and social services are ongoing in various departments through the platforms of Islamabad Education and Relief Foundation and Jamia Islamabad Trust. This includes scholarships and financial assistance for deserving and talented students, free or subsidized education for poor students, food aid and ration provision, medical aid and health-related welfare activities, establishment and support of mosques and madrasas, sponsorship of orphans, destitute and needy families, and organizing international academic conferences, seminars, and training programs."
   },
   "coreValues": {
     "title": "Our Core Foundations",

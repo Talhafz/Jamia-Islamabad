@@ -4,9 +4,12 @@
   "viewDetails": "View Details",
   "principal": {
     "label": "Principal & Founder",
-    "title": "Preserving Sacred Knowledge, Shaping Future Leaders",
-    "desc1": "Jamia Islamabad is a beacon of Islamic learning, established to nurture scholarly intelligence alongside practical modern competencies. Our curriculum provides a solid foundation in the Islamic sciences (Hadith, Tafseer, Fiqh, Arabic Calligraphy) coupled with formal board education.",
-    "desc2": "Through this Education Management System, we streamline our admissions, academic performance, and student tracking, moving towards a modern digital workspace while remaining grounded in our fundamental values.",
+    "title": "Prof. Dr. Muhammad Zafar Iqbal Jalali - Biography & Services",
+    "p1": "Prof. Dr. Muhammad Zafar Iqbal Jalali is counted among those few eminent personalities of the contemporary era who beautifully blend classical and modern sciences. He has rendered invaluable services in the fields of knowledge and practice, teaching and research, and preaching and reform. His personality is a manifestation of sincerity, piety, love for knowledge, and profound wisdom, serving as a beacon of light for people of scholarship. He is not only a Ph.D. scholar but also a maker of scholars; under his guidance, hundreds of students have benefited from Jamia Islamabad and obtained M.Phil and Ph.D. degrees from various universities.",
+    "p2": "He serves as the Chairman of the Islamabad Education and Relief Foundation and the Islamabad Research Board. He is the Chancellor of Islamabad International University Pakistan (IIUP) and the Chief Editor of the trilingual, bi-annual academic and research journal 'Islamabad Islamics'. Furthermore, he admirably fulfills the responsibilities of Principal and Shaykh-ul-Hadith at Jamia Islamabad. He is also the custodian of the spiritual lineage of the Mashaykh of Bhikhi Sharif, quenching the thirst of seekers of knowledge according to their methodology of spiritual training.",
+    "p3": "His academic and research endeavors are incredibly vast and multi-dimensional. His authored works include 'Purity of Character', 'Armaghan-e-Mazhari', 'Arbaeen-e-Mazhari', 'Fatawa Jamia Islamabad', 'The Impact of Arabic Culture on Urdu Prophetic Praises by Shaykh Ahmad Raza Khan', and 'The Impact of the Quran and Sunnah on the Poetry of Imam Ahmad Raza Khan (An Analytical and Critical Study)'. These works are highly esteemed in academic circles. His column has been regularly published in the Friday edition of the Daily Ausaf for the past five years, earning wide acclaim.",
+    "p4": "He regularly participates as a religious scholar in various programs on national channels, including PTV News. He has also rendered outstanding services for the National Curriculum Council and Paigham-e-Pakistan. Dozens of his research papers in Urdu and Arabic have been published in HEC-recognized journals, attesting to his research expertise and academic depth. He has presented papers in Urdu and Arabic at various national and international conferences and seminars. He has trained thousands of scholars who are currently serving the nation in various capacities inside and outside the country. Thus, he is not just a lamp of knowledge himself but the custodian of an academic tradition that is being passed on to future generations.",
+    "poem": "Nigah buland, sukhan dilnawaz, jaan pur-soz\nYahi hai rakht-e-safar meer-e-karwan ke liye",
     "readMore": "Read More About Our Mission"
   },
   "testimonials": {
@@ -39,21 +42,25 @@
   "programs": {
     "title": "Our Academic Programs",
     "subtitle": "Explore the diverse courses offered at Jamia Islamabad",
-    "dars": {
-      "title": "Dars-e-Nizami (Islamic Theology)",
-      "desc": "A comprehensive 8-year course covering classical Arabic grammar, Fiqh, Tafseer, and Hadith literature."
+    "c1": {
+      "title": "Tajweed-o-Qira'at",
+      "desc": "Specialized training to recite the Holy Quran with correct pronunciation and articulation."
     },
-    "hifz": {
-      "title": "Hifz-ul-Quran (Memorization)",
-      "desc": "A structured memorization curriculum taught by experienced Qaris with focus on revision and correct Tajweed."
+    "c2": {
+      "title": "Hifz-ul-Quran",
+      "desc": "A structured memorization program focusing on strong retention and proper Tajweed."
     },
-    "tajweed": {
-      "title": "Tajweed & Qira'at",
-      "desc": "Specialized certification in the classical rules of Quranic recitation and reading methodologies."
+    "c3": {
+      "title": "Dars-e-Nizami",
+      "desc": "A comprehensive 9-year Islamic theology course covering Arabic grammar, Fiqh, Tafseer, and Hadith."
     },
-    "matricFa": {
-      "title": "Matric / F.A. (High School)",
-      "desc": "Board-affiliated science and arts education running concurrently with secondary Islamic theological courses."
+    "c4": {
+      "title": "Specialization in Fiqh",
+      "desc": "An advanced 2-year post-graduate course in Islamic Jurisprudence and Fatwa drafting."
+    },
+    "c5": {
+      "title": "Computer Course",
+      "desc": "Practical training in modern technology and essential computer skills."
     }
   },
   "process": {

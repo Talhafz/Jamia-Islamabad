@@ -108,7 +108,7 @@ export default function GalleryPage() {
               variants={containerVariants}
               initial="hidden"
               animate="show"
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 auto-rows-[220px]"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 auto-rows-[260px]"
             >
               {infraItems.map((item, idx) => {
                 const title = getLocalised(item.title, currentLanguage);
@@ -177,10 +177,10 @@ export default function GalleryPage() {
 
                     {/* Bottom: title + desc + location */}
                     <div
-                      className="absolute bottom-0 left-0 right-0 p-4 z-10 translate-y-1 group-hover:translate-y-0 transition-transform duration-300"
+                      className="absolute bottom-0 left-0 right-0 p-5 pb-5 z-10 translate-y-1 group-hover:translate-y-0 transition-transform duration-300"
                       dir={direction}
                     >
-                      <h3 className="text-white font-extrabold text-sm leading-snug mb-1 line-clamp-2 drop-shadow">
+                      <h3 className="text-white font-extrabold text-sm leading-normal mb-1 line-clamp-3 drop-shadow">
                         {title}
                       </h3>
                       <p className="text-zinc-400 text-[10px] leading-relaxed line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">

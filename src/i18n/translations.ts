@@ -11,6 +11,7 @@ import eventsUr from './locales/ur/events.json';
 import faqsUr from './locales/ur/faqs.json';
 import termsUr from './locales/ur/terms.json';
 import privacyUr from './locales/ur/privacy.json';
+import programsUr from './locales/ur/programs.json';
 
 import commonEn from './locales/en/common.json';
 import homeEn from './locales/en/home.json';
@@ -25,6 +26,7 @@ import eventsEn from './locales/en/events.json';
 import faqsEn from './locales/en/faqs.json';
 import termsEn from './locales/en/terms.json';
 import privacyEn from './locales/en/privacy.json';
+import programsEn from './locales/en/programs.json';
 
 import commonAr from './locales/ar/common.json';
 import homeAr from './locales/ar/home.json';
@@ -39,6 +41,7 @@ import eventsAr from './locales/ar/events.json';
 import faqsAr from './locales/ar/faqs.json';
 import termsAr from './locales/ar/terms.json';
 import privacyAr from './locales/ar/privacy.json';
+import programsAr from './locales/ar/programs.json';
 
 export type Language = 'ur' | 'en' | 'ar';
 
@@ -57,6 +60,7 @@ export const translations = {
     faqs: faqsUr,
     terms: termsUr,
     privacy: privacyUr,
+    programs: programsUr,
   },
   en: {
     common: commonEn,
@@ -72,6 +76,7 @@ export const translations = {
     faqs: faqsEn,
     terms: termsEn,
     privacy: privacyEn,
+    programs: programsEn,
   },
   ar: {
     common: commonAr,
@@ -87,6 +92,7 @@ export const translations = {
     faqs: faqsAr,
     terms: termsAr,
     privacy: privacyAr,
+    programs: programsAr,
   },
 };
 
