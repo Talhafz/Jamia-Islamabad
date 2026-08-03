@@ -81,7 +81,7 @@ export default function GalleryPage() {
   }, [infraItems]);
 
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="w-full flex flex-col items-center bg-[var(--color-emerald-bg)] min-h-screen">
       {/* Lightbox */}
       <GalleryLightbox
         item={lightboxItem}
@@ -113,7 +113,6 @@ export default function GalleryPage() {
               {infraItems.map((item, idx) => {
                 const title = getLocalised(item.title, currentLanguage);
                 const desc = getLocalised(item.desc, currentLanguage);
-                const token = CAT_TOKENS[item.category];
                 // Featured images get a taller row span
                 const isTall = item.featured && idx % 5 === 0;
 
@@ -125,7 +124,7 @@ export default function GalleryPage() {
                     initial="hidden"
                     animate="show"
                     exit="exit"
-                    className={`group relative overflow-hidden rounded-2xl cursor-pointer border border-white/5 shadow-lg shadow-black/10 ${
+                    className={`group relative overflow-hidden rounded-2xl cursor-pointer card-standard ${
                       isTall ? 'sm:row-span-2' : 'row-span-1'
                     }`}
                     onClick={() => openLightbox(item)}
@@ -143,17 +142,15 @@ export default function GalleryPage() {
                     />
 
                     {/* Always-on gradient scrim */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/90 via-zinc-950/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-emerald-bg)]/95 via-[var(--color-panel)]/40 to-transparent" />
 
                     {/* Hover glow tint */}
-                    <div className="absolute inset-0 bg-emerald-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute inset-0 bg-[var(--color-gold-primary)]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                     {/* Top-right: Category badge */}
                     <div className="absolute top-3 right-3 z-10">
                       <span
-                        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider border backdrop-blur-sm ${
-                          token?.badge ?? 'bg-zinc-700/60 text-zinc-300 border-zinc-600'
-                        }`}
+                        className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider border border-[var(--color-gold-muted)]/40 bg-[var(--color-gold-primary)]/20 text-[var(--color-gold-bright)] backdrop-blur-sm"
                       >
                         {t(`gallery:categories.${item.category}`)}
                       </span>
@@ -162,7 +159,7 @@ export default function GalleryPage() {
                     {/* Top-left: Featured indicator */}
                     {item.featured && (
                       <div className="absolute top-3 left-3 z-10">
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 backdrop-blur-sm uppercase tracking-wider">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[9px] font-bold bg-[var(--color-gold-primary)]/30 text-[var(--color-gold-bright)] border border-[var(--color-gold-muted)]/40 backdrop-blur-sm uppercase tracking-wider">
                           ★ Featured
                         </span>
                       </div>
@@ -170,7 +167,7 @@ export default function GalleryPage() {
 
                     {/* Zoom overlay on hover */}
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                      <div className="w-11 h-11 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white shadow-lg scale-90 group-hover:scale-100 transition-transform duration-300">
+                      <div className="w-11 h-11 rounded-full bg-[var(--color-gold-primary)]/20 backdrop-blur-md border border-[var(--color-gold-primary)]/40 flex items-center justify-center text-[var(--color-gold-bright)] shadow-lg scale-90 group-hover:scale-100 transition-transform duration-300">
                         <ZoomIn className="w-5 h-5" />
                       </div>
                     </div>
@@ -180,13 +177,13 @@ export default function GalleryPage() {
                       className="absolute bottom-0 left-0 right-0 p-5 pb-5 z-10 translate-y-1 group-hover:translate-y-0 transition-transform duration-300"
                       dir={direction}
                     >
-                      <h3 className="text-white font-extrabold text-sm leading-normal mb-1 line-clamp-3 drop-shadow">
+                      <h3 className="text-[var(--color-gold-primary)] font-extrabold text-sm leading-normal mb-1 line-clamp-3 drop-shadow">
                         {title}
                       </h3>
-                      <p className="text-zinc-400 text-[10px] leading-relaxed line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <p className="text-[var(--color-text-body)] text-[10px] leading-relaxed line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         {desc}
                       </p>
-                      <div className="flex items-center gap-1 mt-2 text-emerald-400/80 text-[9px] font-bold font-mono">
+                      <div className="flex items-center gap-1 mt-2 text-[var(--color-teal-soft)] text-[9px] font-bold font-mono">
                         <MapPin className="w-3 h-3 flex-shrink-0" />
                         <span className="truncate">I-8/4 ISLAMABAD</span>
                       </div>

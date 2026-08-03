@@ -87,6 +87,20 @@ body {
   transform: translateY(-1px);
 }
 
+/* ── Standard Card Component Enforced Site-Wide ── */
+.card-standard {
+  background-color: var(--color-panel);
+  border: 1px solid rgba(212, 160, 23, 0.25);
+  border-radius: 4px;
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+
+.card-standard:hover {
+  border-color: var(--color-gold-primary);
+  box-shadow: 0 0 20px rgba(212, 160, 23, 0.08);
+}
+
 /* ─── Noto Nastaliq Urdu (Google Fonts via next/font) ─────────────────────── */
 /* Loaded via layout.tsx as --font-noto-nastaliq CSS variable.                  */
 /* Nafees Nastaleeq .ttf files kept in /public/fonts/ as offline fallback.       */

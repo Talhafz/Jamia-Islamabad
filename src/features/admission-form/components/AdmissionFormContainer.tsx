@@ -142,22 +142,22 @@ export function AdmissionFormContainer() {
     <div className="w-full flex flex-col gap-6">
       
       {/* Draft Saving Status Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-xl bg-white/50 backdrop-blur-md border border-zinc-200 shadow-sm text-xs font-semibold select-none print:hidden">
-        <div className="flex items-center gap-2 text-zinc-600">
-          <Save className="w-4 h-4 text-emerald-600" />
+      <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-xl bg-[var(--color-panel)] border border-[var(--color-gold-muted)]/30 shadow-md text-xs font-semibold select-none print:hidden">
+        <div className="flex items-center gap-2 text-[var(--color-text-body)]">
+          <Save className="w-4 h-4 text-[var(--color-teal-accent)]" />
           <span>Draft Autosave:</span>
           {isSaving ? (
-            <span className="text-amber-600 animate-pulse">Saving draft...</span>
+            <span className="text-[var(--color-gold-bright)] animate-pulse">Saving draft...</span>
           ) : lastSaved ? (
-            <span className="text-emerald-700">Last saved at {lastSaved}</span>
+            <span className="text-[var(--color-teal-soft)]">Last saved at {lastSaved}</span>
           ) : (
-            <span className="text-zinc-400">No active draft</span>
+            <span className="text-[var(--color-text-muted)]">No active draft</span>
           )}
         </div>
         <div className="flex gap-2">
           <button
             onClick={() => setViewMode(viewMode === 'edit' ? 'preview' : 'edit')}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 transition-all duration-200"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--color-emerald-deep)] hover:bg-[var(--color-emerald-mid)] text-[var(--color-gold-bright)] border border-[var(--color-gold-muted)]/30 transition-all duration-200"
           >
             {viewMode === 'edit' ? (
               <>
@@ -174,7 +174,7 @@ export function AdmissionFormContainer() {
           {viewMode === 'preview' && (
             <button
               onClick={handlePrint}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-medium shadow-sm transition-all duration-200"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--color-gold-primary)] hover:bg-[var(--color-gold-bright)] text-[var(--color-emerald-deep)] font-extrabold shadow-sm transition-all duration-200"
             >
               <Printer className="w-3.5 h-3.5" />
               Print / Save as PDF
@@ -185,9 +185,9 @@ export function AdmissionFormContainer() {
 
       {viewMode === 'preview' && previewData ? (
         <div className="w-full">
-          <div className="bg-amber-50 border border-amber-200 text-amber-900 rounded-xl p-4 mb-6 text-xs text-center select-none print:hidden">
+          <div className="bg-[var(--color-panel)] border border-[var(--color-gold-muted)] text-[var(--color-gold-bright)] rounded-xl p-4 mb-6 text-xs text-center select-none print:hidden">
             <p className="font-bold flex items-center justify-center gap-1">
-              <AlertCircle className="w-4 h-4 text-amber-600" />
+              <AlertCircle className="w-4 h-4 text-[var(--color-gold-primary)]" />
               This is the official printed view layout. Press "Print / Save as PDF" at the top to download or print.
             </p>
           </div>
@@ -195,14 +195,14 @@ export function AdmissionFormContainer() {
         </div>
       ) : (
         <FormProvider {...methods}>
-          <div className="w-full max-w-4xl mx-auto bg-white/70 backdrop-blur-md rounded-2xl shadow-xl border border-zinc-200/80 overflow-hidden print:hidden select-none">
+          <div className="w-full max-w-4xl mx-auto bg-[var(--color-panel)] rounded-2xl shadow-2xl border border-[var(--color-gold-muted)]/30 overflow-hidden print:hidden select-none">
             
             {/* Steps Progress Indicator */}
-            <div className="bg-zinc-50 border-b border-zinc-200 p-6 select-none">
+            <div className="bg-[var(--color-emerald-deep)] border-b border-[var(--color-emerald-mid)] p-6 select-none">
               <div className="flex justify-between items-center relative max-w-2xl mx-auto">
-                <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-zinc-200 -translate-y-1/2 z-0" />
+                <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-[var(--color-emerald-mid)] -translate-y-1/2 z-0" />
                 <div 
-                  className="absolute top-1/2 left-0 h-0.5 bg-emerald-600 -translate-y-1/2 z-0 transition-all duration-300"
+                  className="absolute top-1/2 left-0 h-0.5 bg-[var(--color-gold-primary)] -translate-y-1/2 z-0 transition-all duration-300"
                   style={{ width: `${(activeStep / (steps.length - 1)) * 100}%` }}
                 />
                 
@@ -216,19 +216,19 @@ export function AdmissionFormContainer() {
                       <div
                         className={`w-10 h-10 rounded-full flex items-center justify-center font-bold transition-all duration-300 ${
                           isCompleted
-                            ? 'bg-emerald-600 text-white'
+                            ? 'bg-[var(--color-teal-accent)] text-[var(--color-emerald-deep)]'
                             : isActive
-                            ? 'bg-emerald-800 text-white ring-4 ring-emerald-100 shadow-md scale-110'
-                            : 'bg-white border-2 border-zinc-200 text-zinc-400'
+                            ? 'bg-[var(--color-gold-primary)] text-[var(--color-emerald-deep)] ring-4 ring-[var(--color-gold-primary)]/30 shadow-md scale-110'
+                            : 'bg-[var(--color-panel)] border-2 border-[var(--color-emerald-mid)] text-[var(--color-text-muted)]'
                         }`}
                       >
                         {isCompleted ? <CheckCircle className="w-5 h-5" /> : <StepIcon className="w-4 h-4" />}
                       </div>
                       <div className="text-center">
-                        <p className={`text-[11px] font-bold ${isActive ? 'text-emerald-950 font-extrabold' : 'text-zinc-500'}`}>
+                        <p className={`text-[11px] font-bold ${isActive ? 'text-[var(--color-gold-bright)] font-extrabold' : 'text-[var(--color-text-muted)]'}`}>
                           {step.label}
                         </p>
-                        <p className="text-[9px] font-medium text-zinc-400">
+                        <p className="text-[9px] font-medium text-[var(--color-teal-soft)]">
                           {step.subLabel}
                         </p>
                       </div>

@@ -11,7 +11,7 @@ export const metadata = {
 
 export default function StudentsDirectoryPage() {
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="w-full flex flex-col items-center bg-[var(--color-emerald-bg)] min-h-screen">
       <PageBanner 
         title="Current Enrolled Students" 
         description="حالیہ زیرِ تعلیم طلباء کا دفتری ریکارڈ۔ شعبہ جات اور رول نمبر کے حساب سے تلاش کریں۔" 

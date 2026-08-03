@@ -35,52 +35,54 @@ export default function FaqsPage() {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 select-none">
-      
-      {/* Hero Header */}
-      <div className="text-center flex flex-col items-center gap-4 mb-12 animate-fade-in">
-        <h1 className="text-4xl font-extrabold text-zinc-950 tracking-tight leading-none">
-          Frequently Asked Questions
-        </h1>
-        <p className="text-zinc-500 text-xs max-w-xl leading-relaxed">
-          Quickly inspect answers regarding our admission procedures, boarding guidelines, and portal capabilities.
-        </p>
-      </div>
+    <div className="w-full bg-[var(--color-emerald-bg)] min-h-screen py-16">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 select-none">
+        
+        {/* Hero Header */}
+        <div className="text-center flex flex-col items-center gap-4 mb-12 animate-fade-in">
+          <h1 className="text-4xl font-extrabold text-[var(--color-gold-primary)] tracking-tight leading-none">
+            Frequently Asked Questions
+          </h1>
+          <p className="text-[var(--color-text-body)] text-xs max-w-xl leading-relaxed">
+            Quickly inspect answers regarding our admission procedures, boarding guidelines, and portal capabilities.
+          </p>
+        </div>
 
-      {/* Accordions */}
-      <div className="flex flex-col gap-4">
-        {items.map((item, idx) => {
-          const isOpen = openIdx === idx;
-          return (
-            <div 
-              key={idx} 
-              className="p-5 rounded-2xl bg-white border border-zinc-200/85 shadow-sm transition-all duration-300"
-            >
-              <button
-                onClick={() => setOpenIdx(isOpen ? null : idx)}
-                className="w-full flex justify-between items-center text-left text-zinc-950 hover:text-emerald-800 transition-colors"
+        {/* Accordions */}
+        <div className="flex flex-col gap-4">
+          {items.map((item, idx) => {
+            const isOpen = openIdx === idx;
+            return (
+              <div 
+                key={idx} 
+                className="card-standard p-5 rounded-2xl bg-[var(--color-panel)] shadow-sm transition-all duration-300"
               >
-                <span className="text-xs font-extrabold flex items-center gap-2">
-                  <HelpCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  {item.q}
-                </span>
-                {isOpen ? (
-                  <ChevronUp className="w-4 h-4 text-zinc-400" />
-                ) : (
-                  <ChevronDown className="w-4 h-4 text-zinc-400" />
+                <button
+                  onClick={() => setOpenIdx(isOpen ? null : idx)}
+                  className="w-full flex justify-between items-center text-left text-[var(--color-gold-bright)] hover:text-[var(--color-gold-primary)] transition-colors"
+                >
+                  <span className="text-xs font-extrabold flex items-center gap-2">
+                    <HelpCircle className="w-4 h-4 text-[var(--color-teal-accent)] flex-shrink-0" />
+                    {item.q}
+                  </span>
+                  {isOpen ? (
+                    <ChevronUp className="w-4 h-4 text-[var(--color-gold-primary)]" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4 text-[var(--color-text-muted)]" />
+                  )}
+                </button>
+
+                {isOpen && (
+                  <div className="mt-3 pl-6 border-t border-[var(--color-emerald-mid)] pt-3 text-xs text-[var(--color-text-body)] leading-relaxed text-justify animate-fade-in">
+                    {item.a}
+                  </div>
                 )}
-              </button>
+              </div>
+            );
+          })}
+        </div>
 
-              {isOpen && (
-                <div className="mt-3 pl-6 border-t border-zinc-100 pt-3 text-xs text-zinc-500 leading-relaxed text-justify animate-fade-in">
-                  {item.a}
-                </div>
-              )}
-            </div>
-          );
-        })}
       </div>
-
     </div>
   );
 }

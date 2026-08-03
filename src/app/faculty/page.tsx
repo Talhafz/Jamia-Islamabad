@@ -41,7 +41,7 @@ export default function FacultyPage() {
   ];
 
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="w-full flex flex-col items-center bg-[var(--color-emerald-bg)] min-h-screen">
       <PageBanner 
         title="Our Faculty & Scholars" 
         description="Our academic leadership consists of certified academicians and traditional theologians dedicated to educational rigor." 
@@ -50,47 +50,54 @@ export default function FacultyPage() {
       <div className="max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-16 select-none">
         {/* Faculty Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {members.map((m, idx) => (
-            <div 
-              key={idx} 
-              className="p-6 rounded-2xl bg-white border border-zinc-200/80 shadow-md flex flex-col justify-between gap-5 hover:shadow-lg transition-all duration-300"
-            >
-              <div className="flex flex-col gap-3">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h2 className="text-base font-extrabold text-zinc-950">{m.name}</h2>
-                    <span className="text-[10px] text-emerald-800 font-extrabold uppercase block mt-0.5">{m.title}</span>
+          {members.map((m, idx) => {
+            const isGoldCircle = idx % 2 === 0;
+            return (
+              <div 
+                key={idx} 
+                className="card-standard flex flex-col justify-between gap-5 shadow-xl"
+              >
+                <div className="flex flex-col gap-3">
+                  <div className="flex justify-between items-start gap-3">
+                    <div>
+                      <h2 className="text-base font-extrabold text-[var(--color-gold-primary)] leading-snug">{m.name}</h2>
+                      <span className="text-xs text-[var(--color-teal-soft)] font-bold block mt-1">{m.title}</span>
+                    </div>
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
+                      isGoldCircle
+                        ? 'bg-[var(--color-gold-primary)]/12 text-[var(--color-gold-bright)] border border-[var(--color-gold-primary)]/20'
+                        : 'bg-[var(--color-teal-accent)]/12 text-[var(--color-teal-soft)] border border-[var(--color-teal-accent)]/20'
+                    }`}>
+                      <Users className="w-5 h-5" />
+                    </div>
                   </div>
-                  <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-800 flex items-center justify-center shrink-0">
-                    <Users className="w-5 h-5" />
+
+                  <div className="text-xs text-[var(--color-text-body)] flex flex-col gap-2 mt-2 bg-[var(--color-emerald-deep)] p-4 rounded-xl border border-[var(--color-emerald-mid)]">
+                    <div className="flex items-center gap-2">
+                      <GraduationCap className="w-4 h-4 text-[var(--color-gold-muted)] shrink-0" />
+                      <span><strong className="text-[var(--color-gold-bright)]">Department:</strong> {m.dept}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Award className="w-4 h-4 text-[var(--color-teal-accent)] shrink-0" />
+                      <span><strong className="text-[var(--color-gold-bright)]">Qualification:</strong> {m.qual}</span>
+                    </div>
                   </div>
+
+                  <p className="text-[var(--color-text-body)] text-xs sm:text-sm leading-relaxed mt-2 text-justify">
+                    {m.bio}
+                  </p>
                 </div>
 
-                <div className="text-xs text-zinc-650 flex flex-col gap-1.5 mt-2 bg-zinc-50 p-3.5 rounded-xl border border-zinc-100">
-                  <div className="flex items-center gap-1.5">
-                    <GraduationCap className="w-4 h-4 text-zinc-400" />
-                    <span><strong>Department:</strong> {m.dept}</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <Award className="w-4 h-4 text-zinc-400" />
-                    <span><strong>Qualification:</strong> {m.qual}</span>
-                  </div>
+                <div className="border-t border-[var(--color-emerald-mid)] pt-3 flex justify-between items-center text-[10px] font-bold text-[var(--color-text-muted)] font-mono">
+                  <span className="flex items-center gap-1.5">
+                    <Mail className="w-3.5 h-3.5 text-[var(--color-teal-accent)]" />
+                    info@jamiaislamabad.net
+                  </span>
+                  <span className="text-[var(--color-gold-muted)]">JAMIA ISLAMABAD</span>
                 </div>
-
-                <p className="text-zinc-500 text-xs leading-relaxed mt-2 text-justify">
-                  {m.bio}
-                </p>
               </div>
-
-              <div className="border-t border-zinc-100 pt-3 flex justify-between items-center text-[10px] font-bold text-zinc-500 font-mono">
-                <span className="flex items-center gap-1">
-                  <Mail className="w-3.5 h-3.5 text-zinc-450" />
-                  info@jamiaislamabad.net
-                </span>
-                <span>JAMIA ISLAMABAD</span>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
