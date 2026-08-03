@@ -4,28 +4,34 @@
   "durationLabel": "Duration",
   "courses": {
     "c1": {
-      "title": "Dars-e-Nizami (درس نظامی)",
-      "focus": "Theological Leadership",
-      "duration": "8 Years",
-      "desc": "Our flagship theological program. Includes exhaustive studies in Arabic morphology (Sarf), Syntax (Nahw), Logic (Mantiq), Islamic Jurisprudence (Fiqh), Principles of Fiqh (Usul al-Fiqh), Quranic Exegesis (Tafsir), and Prophetic Narrations (Hadith). Graduates receive the Alimiyah degree, equivalent to a Master's in Islamic Studies (HEC recognised)."
-    },
-    "c2": {
-      "title": "Hifz-ul-Quran (حفظ القرآن)",
-      "focus": "Sacred Memorization",
-      "duration": "3 Years (Avg)",
-      "desc": "Dedicated school for Quranic memorization. Combines daily revision tracking, correct Tajweed articulation, and character grooming. Under direct guidance of certified Qaris, students memorize the entire Quran with strong retention structures."
-    },
-    "c3": {
-      "title": "Tajweed-o-Qira'at (تجوید و قراءت)",
+      "title": "Tajweed-o-Qira'at",
       "focus": "Recitation Articulation",
       "duration": "1 Year",
-      "desc": "Specialized certificate program focusing on the pronunciation keys of classical Arabic script, linguistic sounds, and the different classical recitation methodologies (Qira'at). Highly recommended for teachers and Quranic instructors."
+      "desc": "Tajweed and Qira'at is an important religious department for learning the correct and beautiful recitation of the Holy Quran, in which practical training is given on the proper articulation of letters, Makharij, and rules of Tajweed. This course introduces various modes of recitation (Qira'at-e-Sab'ah and Asharah). Students practice reading the Holy Quran with the correct tone, pronunciation, and pacing. Students are also given religious upbringing and taught respect for the Quran."
+    },
+    "c2": {
+      "title": "Hifz-ul-Quran",
+      "focus": "Sacred Memorization",
+      "duration": "Flexible",
+      "desc": "In Hifz-ul-Quran, students are made to memorize the Holy Quran with correct pronunciation, articulation points (Makharij), and tone. Special attention is given to the student's daily lesson, recent revision, total revision, and periodic review. Prayers, supplications, Islamic declarations of faith, and other essential religious matters are also taught. Special emphasis is placed on education, upbringing, and morals, so that they become strong Huffaz and righteous Muslims."
+    },
+    "c3": {
+      "title": "Dars-e-Nizami",
+      "focus": "Theological Leadership",
+      "duration": "9 Years",
+      "desc": "Dars-e-Nizami is a comprehensive religious course designed to prepare an authentic Islamic scholar, spanning approximately nine years. It includes the levels of Mutawassitah, Aammah, Khassah, Aaliyah, and Aalamiyyah. Its curriculum comprises Quranic Exegesis (Tafsir), Hadith, Jurisprudence (Fiqh), Arabic Morphology (Sarf), Syntax (Nahw), Logic (Mantiq), Philosophy, and more. This course is recognized by the HEC as equivalent to an M.A. in Islamic and Arabic Studies."
     },
     "c4": {
-      "title": "Matric / FA (مٹرک / ایف اے)",
-      "focus": "Modern Schooling",
-      "duration": "2 Years each",
-      "desc": "Federal/Provincial board affiliated sciences and humanities certificates. Run concurrently with our intermediate theological programs, allowing students to transition seamlessly into national universities or legal schools (LLB)."
+      "title": "Specialization in Islamic Jurisprudence (Fiqh)",
+      "focus": "Advanced Jurisprudence",
+      "duration": "2 Years",
+      "desc": "Specialization in Islamic Jurisprudence (Fiqh) is an advanced religious course undertaken after the completion of Dars-e-Nizami, aimed at preparing expert and authentic Muftis. Its curriculum includes Principles of Ifta, Jurisprudential Maxims, Fiqh of Beliefs, Marriage and Divorce, Transactions, Rulings of the Quran and Hadith, Wills and Inheritance, a research thesis, and an oral examination. Through this, a student acquires the ability to resolve complex religious issues and issue Fatwas."
+    },
+    "c5": {
+      "title": "Computer Course",
+      "focus": "Modern Technology",
+      "duration": "Flexible",
+      "desc": "The Computer Course is a fundamental and beneficial educational program in which students are given practical training in using modern technology. This course includes basic computer knowledge, InPage, MS Word, Excel, PowerPoint, effective use of the internet, and can also include important courses like Graphic Designing, Web Development, Digital Marketing, and IT Basics. Its purpose is to make students skillful, confident, and self-sufficient."
     }
   }
 }

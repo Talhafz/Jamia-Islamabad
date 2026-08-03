@@ -326,7 +326,7 @@ export default function EventsPage() {
                 variants={gridVariants}
                 initial="hidden"
                 animate="show"
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-start"
               >
                 <AnimatePresence mode="popLayout">
                   {filtered.map((item) => {
@@ -343,7 +343,7 @@ export default function EventsPage() {
                         id={`event-card-${item.id}`}
                       >
                         {/* Thumbnail */}
-                        <div className="relative w-full h-52 overflow-hidden">
+                        <div className="relative w-full h-44 overflow-hidden">
                           <img
                             src={item.src}
                             alt={title}
@@ -372,8 +372,8 @@ export default function EventsPage() {
                         </div>
 
                         {/* Card body */}
-                        <div className="flex flex-col flex-1 p-4 gap-3">
-                          <h3 className="text-white font-bold text-sm leading-snug line-clamp-2 group-hover:text-emerald-400 transition-colors duration-200">
+                        <div className="flex flex-col p-5 gap-3">
+                          <h3 className="text-white font-bold text-sm leading-loose group-hover:text-emerald-400 transition-colors duration-200">
                             {title}
                           </h3>
 
@@ -385,7 +385,7 @@ export default function EventsPage() {
                           )}
 
                           {/* Click-to-read CTA */}
-                          <div className="mt-auto pt-2 border-t border-zinc-800/60 flex items-center justify-between">
+                          <div className="pt-2 border-t border-zinc-800/60 flex items-center justify-between mt-2">
                             <span className="text-emerald-500/80 text-[11px] font-bold group-hover:text-emerald-400 transition-colors duration-200 flex items-center gap-1">
                               {t('events:viewDetails')}
                               <ChevronRight className="w-3 h-3 transform group-hover:translate-x-0.5 transition-transform" />
