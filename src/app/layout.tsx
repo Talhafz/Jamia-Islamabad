@@ -39,7 +39,7 @@ export default function RootLayout({
       className={`${inter.variable} ${notoNastaliqUrdu.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-950" suppressHydrationWarning>
+      <body className="min-h-full flex flex-col bg-[var(--color-emerald-bg)] text-[var(--color-text-body)]" suppressHydrationWarning>
         <LanguageProvider>
           <Navbar />
           {/* Padding-top added to prevent navbar overlap on scrollable content */}

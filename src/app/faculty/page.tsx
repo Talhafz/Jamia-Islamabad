@@ -41,7 +41,7 @@ export default function FacultyPage() {
   ];
 
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="w-full flex flex-col items-center bg-[var(--color-emerald-bg)] text-[var(--color-text-body)]">
       <PageBanner 
         title="Our Faculty & Scholars" 
         description="Our academic leadership consists of certified academicians and traditional theologians dedicated to educational rigor." 
@@ -53,38 +53,38 @@ export default function FacultyPage() {
           {members.map((m, idx) => (
             <div 
               key={idx} 
-              className="p-6 rounded-2xl bg-white border border-zinc-200/80 shadow-md flex flex-col justify-between gap-5 hover:shadow-lg transition-all duration-300"
+              className="p-6 rounded-[4px] card-standard flex flex-col justify-between gap-5 hover:border-[var(--color-gold-primary)] transition-all duration-300"
             >
               <div className="flex flex-col gap-3">
                 <div className="flex justify-between items-start">
                   <div>
-                    <h2 className="text-base font-extrabold text-zinc-950">{m.name}</h2>
-                    <span className="text-[10px] text-emerald-800 font-extrabold uppercase block mt-0.5">{m.title}</span>
+                    <h2 className="text-base font-extrabold text-[var(--color-gold-bright)]">{m.name}</h2>
+                    <span className="text-[10px] text-[var(--color-teal-accent)] font-extrabold uppercase block mt-0.5">{m.title}</span>
                   </div>
-                  <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-800 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-sm bg-[var(--color-emerald-deep)] border border-[var(--color-gold-primary)]/30 text-[var(--color-gold-primary)] flex items-center justify-center shrink-0">
                     <Users className="w-5 h-5" />
                   </div>
                 </div>
 
-                <div className="text-xs text-zinc-650 flex flex-col gap-1.5 mt-2 bg-zinc-50 p-3.5 rounded-xl border border-zinc-100">
+                <div className="text-xs text-[var(--color-text-body)] flex flex-col gap-1.5 mt-2 bg-[var(--color-emerald-deep)]/70 p-3.5 rounded-sm border border-[var(--color-emerald-mid)]/40">
                   <div className="flex items-center gap-1.5">
-                    <GraduationCap className="w-4 h-4 text-zinc-400" />
+                    <GraduationCap className="w-4 h-4 text-[var(--color-teal-soft)]" />
                     <span><strong>Department:</strong> {m.dept}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <Award className="w-4 h-4 text-zinc-400" />
+                    <Award className="w-4 h-4 text-[var(--color-gold-primary)]" />
                     <span><strong>Qualification:</strong> {m.qual}</span>
                   </div>
                 </div>
 
-                <p className="text-zinc-500 text-xs leading-relaxed mt-2 text-justify">
+                <p className="text-[var(--color-text-body)] text-xs leading-relaxed mt-2 text-justify">
                   {m.bio}
                 </p>
               </div>
 
-              <div className="border-t border-zinc-100 pt-3 flex justify-between items-center text-[10px] font-bold text-zinc-500 font-mono">
+              <div className="border-t border-[var(--color-emerald-mid)]/40 pt-3 flex justify-between items-center text-[10px] font-bold text-[var(--color-text-muted)] font-mono">
                 <span className="flex items-center gap-1">
-                  <Mail className="w-3.5 h-3.5 text-zinc-450" />
+                  <Mail className="w-3.5 h-3.5 text-[var(--color-teal-accent)]" />
                   info@jamiaislamabad.net
                 </span>
                 <span>JAMIA ISLAMABAD</span>

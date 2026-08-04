@@ -83,7 +83,7 @@ export function Navbar() {
 
           {/* Logo with explicit RTL direction to preserve Urdu character connections */}
           <Link href="/" className="flex items-center gap-3 group shrink-0 me-4 lg:me-8">
-            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-[var(--color-gold-primary)] bg-[var(--color-panel)] shadow-lg shadow-[var(--color-gold-primary)]/10 flex items-center justify-center transition-all duration-300 group-hover:scale-105 group-hover:border-[var(--color-gold-bright)] overflow-hidden p-[3px]">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-sm border-2 border-[var(--color-gold-primary)] bg-[var(--color-panel)] shadow-lg shadow-[var(--color-gold-primary)]/10 flex items-center justify-center transition-all duration-300 group-hover:scale-105 group-hover:border-[var(--color-gold-bright)] overflow-hidden p-[3px]">
               <img src="/assets/Logo.png" alt="Jamia Islamabad" className="w-full h-full object-contain drop-shadow-sm" />
             </div>
             <LogoBrand size="sm" />
@@ -121,7 +121,7 @@ export function Navbar() {
               <button
                 id="lang-toggle-desktop"
                 onClick={() => setLangOpen(prev => !prev)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[var(--color-emerald-mid)] bg-[var(--color-panel)]/80 hover:bg-[var(--color-emerald-mid)] text-[var(--color-text-body)] hover:text-[var(--color-gold-bright)] text-xs font-bold transition-all duration-200"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm border border-[var(--color-emerald-mid)] bg-[var(--color-panel)]/80 hover:bg-[var(--color-emerald-mid)] text-[var(--color-text-body)] hover:text-[var(--color-gold-bright)] text-xs font-bold transition-all duration-200"
               >
                 <Globe className="w-3.5 h-3.5 text-[var(--color-teal-accent)]" />
                 {currentLangLabel}
@@ -129,12 +129,12 @@ export function Navbar() {
               </button>
 
               {langOpen && (
-                <div className="absolute top-full mt-2 right-0 w-36 rounded-xl border border-[var(--color-gold-muted)]/40 bg-[var(--color-panel)] p-1.5 shadow-2xl z-50">
+                <div className="absolute top-full mt-2 right-0 w-36 rounded-sm border border-[var(--color-gold-muted)]/40 bg-[var(--color-panel)] p-1.5 shadow-2xl z-50">
                   {LANGUAGES.map((lang) => (
                     <button
                       key={lang.code}
                       onClick={() => handleLangSelect(lang.code)}
-                      className={`flex w-full items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition-all ${
+                      className={`flex w-full items-center justify-between px-3 py-2 rounded-sm text-xs font-semibold transition-all ${
                         currentLanguage === lang.code
                           ? 'bg-[var(--color-emerald-deep)] text-[var(--color-gold-bright)] font-bold'
                           : 'text-[var(--color-text-body)] hover:bg-[var(--color-emerald-mid)]/50 hover:text-[var(--color-teal-soft)]'
@@ -163,7 +163,7 @@ export function Navbar() {
               <button
                 id="lang-toggle-mobile"
                 onClick={() => setMobileLangOpen(prev => !prev)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[var(--color-emerald-mid)] bg-[var(--color-panel)]/80 hover:bg-[var(--color-emerald-mid)] text-[var(--color-text-body)] text-xs font-bold transition-all duration-200"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm border border-[var(--color-emerald-mid)] bg-[var(--color-panel)]/80 hover:bg-[var(--color-emerald-mid)] text-[var(--color-text-body)] text-xs font-bold transition-all duration-200"
               >
                 <Globe className="w-3.5 h-3.5 text-[var(--color-teal-accent)]" />
                 {currentLangLabel}
@@ -171,12 +171,12 @@ export function Navbar() {
               </button>
 
               {mobileLangOpen && (
-                <div className="absolute top-full mt-2 right-0 w-36 rounded-xl border border-[var(--color-gold-muted)]/40 bg-[var(--color-panel)] p-1.5 shadow-2xl z-50">
+                <div className="absolute top-full mt-2 right-0 w-36 rounded-sm border border-[var(--color-gold-muted)]/40 bg-[var(--color-panel)] p-1.5 shadow-2xl z-50">
                   {LANGUAGES.map((lang) => (
                     <button
                       key={lang.code}
                       onClick={() => handleLangSelect(lang.code)}
-                      className={`flex w-full items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition-all ${
+                      className={`flex w-full items-center justify-between px-3 py-2 rounded-sm text-xs font-semibold transition-all ${
                         currentLanguage === lang.code
                           ? 'bg-[var(--color-emerald-deep)] text-[var(--color-gold-bright)] font-bold'
                           : 'text-[var(--color-text-body)] hover:bg-[var(--color-emerald-mid)]/50 hover:text-[var(--color-teal-soft)]'
