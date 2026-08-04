@@ -151,6 +151,14 @@ html[lang="ur"] h4, html[lang="ar"] h4, [dir="rtl"] h4 {
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
 }
 
+/* ─── Institutional Card Standard ──────────────────────────────── */
+/* Apply to any card container to enforce the emerald/gold palette  */
+.card-standard {
+  background-color: var(--color-panel);
+  border: 1px solid rgba(169, 124, 31, 0.30); /* --color-gold-muted at 30% */
+  border-radius: 4px;
+}
+
 /* Custom Micro-Animations */
 @keyframes fadeIn {
   from {

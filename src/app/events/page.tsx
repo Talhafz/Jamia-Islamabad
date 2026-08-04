@@ -260,7 +260,7 @@ export default function EventsPage() {
         />
 
         {/* ── Controls ────────────────────────────────────────────────────── */}
-        <section className="w-full bg-white/90 backdrop-blur-xl border-b border-zinc-200 sticky top-14 z-30 shadow-sm">
+        <section className="w-full bg-[var(--color-panel)]/90 backdrop-blur-xl border-b border-[var(--color-emerald-mid)]/40 sticky top-14 z-30 shadow-md">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
 
             {/* Category pills */}
@@ -268,26 +268,21 @@ export default function EventsPage() {
               {EVENT_CATEGORIES.map(({ id, icon: Icon }) => {
                 const isActive = activeCategory === id;
                 const count = categoryCounts[id] ?? 0;
-                const token = id !== 'all' ? getToken(id) : null;
                 return (
                   <button
                     key={id}
                     id={`events-cat-${id}`}
                     onClick={() => setActiveCategory(id)}
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-bold transition-all duration-200 ${
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm border text-xs font-bold transition-all duration-200 ${
                       isActive
-                        ? id === 'all'
-                          ? 'bg-emerald-600 border-emerald-500 text-white shadow-lg shadow-emerald-900/30'
-                          : `${token!.pill} border-opacity-100 shadow-md`
-                        : id === 'all'
-                        ? 'border-zinc-300 bg-zinc-100 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-200'
-                        : `border-zinc-200 bg-zinc-50 text-zinc-500 hover:text-zinc-700 hover:bg-zinc-100`
+                        ? 'bg-[var(--color-gold-primary)] border-[var(--color-gold-bright)] text-[var(--color-emerald-bg)] shadow-lg'
+                        : 'border-[var(--color-emerald-mid)] bg-[var(--color-emerald-deep)] text-[var(--color-text-body)] hover:text-[var(--color-gold-bright)] hover:border-[var(--color-gold-primary)]/50'
                     }`}
                   >
                     {Icon && <Icon className="w-3 h-3" />}
                     {t(`events:categories.${id}`)}
-                    <span className={`ml-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-extrabold ${
-                      isActive ? 'bg-white/20 text-white' : 'bg-zinc-200 text-zinc-500'
+                    <span className={`ml-0.5 px-1.5 py-0.5 rounded-sm text-[10px] font-extrabold ${
+                      isActive ? 'bg-[var(--color-emerald-bg)]/20 text-[var(--color-emerald-bg)]' : 'bg-[var(--color-panel)] text-[var(--color-text-muted)]'
                     }`}>
                       {count}
                     </span>
@@ -298,14 +293,14 @@ export default function EventsPage() {
 
             {/* Search */}
             <div className="relative w-full sm:w-56">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-500 pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--color-teal-accent)] pointer-events-none" />
               <input
                 id="events-search"
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={t('events:search')}
-                className="w-full pl-9 pr-4 py-2 rounded-full bg-zinc-50 border border-zinc-200 text-zinc-700 placeholder-zinc-400 text-xs font-medium focus:outline-none focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/30 transition-all duration-200"
+                className="w-full pl-9 pr-4 py-2 rounded-sm bg-[var(--color-emerald-deep)] border border-[var(--color-emerald-mid)] text-[var(--color-text-body)] placeholder-[var(--color-text-muted)] text-xs font-medium focus:outline-none focus:border-[var(--color-gold-primary)] transition-all duration-200"
               />
             </div>
           </div>
@@ -338,7 +333,7 @@ export default function EventsPage() {
                         layout
                         variants={cardVariants}
                         exit="exit"
-                        className={`group relative flex flex-col rounded-2xl overflow-hidden cursor-pointer bg-zinc-900 border border-zinc-800/80 hover:border-zinc-700 shadow-lg hover:shadow-2xl ${token.glow} transition-all duration-300 hover:-translate-y-1`}
+                        className={`group relative flex flex-col rounded-[4px] overflow-hidden cursor-pointer bg-zinc-900 border border-zinc-800/80 hover:border-zinc-700 shadow-lg hover:shadow-2xl ${token.glow} transition-all duration-300 hover:-translate-y-1`}
                         onClick={() => setSelectedEvent(item)}
                         id={`event-card-${item.id}`}
                       >
@@ -355,7 +350,7 @@ export default function EventsPage() {
 
                           {/* Category badge */}
                           <div className="absolute top-3 left-3">
-                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold ${token.badge}`}>
+                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-sm text-[10px] font-bold ${token.badge}`}>
                               <Tag className="w-2.5 h-2.5" />
                               {t(`events:categories.${item.category}`)}
                             </span>
@@ -364,7 +359,7 @@ export default function EventsPage() {
                           {/* Featured star */}
                           {item.featured && (
                             <div className="absolute top-3 right-3">
-                              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/30 text-amber-300 border border-amber-500/30 backdrop-blur-sm">
+                              <span className="inline-flex items-center px-2 py-0.5 rounded-sm text-[10px] font-bold bg-amber-500/30 text-amber-300 border border-amber-500/30 backdrop-blur-sm">
                                 ★
                               </span>
                             </div>
@@ -390,7 +385,7 @@ export default function EventsPage() {
                               {t('events:viewDetails')}
                               <ChevronRight className="w-3 h-3 transform group-hover:translate-x-0.5 transition-transform" />
                             </span>
-                            <span className="w-7 h-7 rounded-full bg-zinc-800 group-hover:bg-emerald-900/40 flex items-center justify-center transition-colors duration-200">
+                            <span className="w-7 h-7 rounded-sm bg-zinc-800 group-hover:bg-emerald-900/40 flex items-center justify-center transition-colors duration-200">
                               <ChevronRight className="w-3.5 h-3.5 text-zinc-500 group-hover:text-emerald-400 transition-colors duration-200" />
                             </span>
                           </div>

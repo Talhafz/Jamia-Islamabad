@@ -125,7 +125,7 @@ export default function GalleryPage() {
                     initial="hidden"
                     animate="show"
                     exit="exit"
-                    className={`group relative overflow-hidden rounded-2xl cursor-pointer border border-white/5 shadow-lg shadow-black/10 ${
+                    className={`group relative overflow-hidden rounded-[4px] cursor-pointer border border-white/5 shadow-lg shadow-black/10 ${
                       isTall ? 'sm:row-span-2' : 'row-span-1'
                     }`}
                     onClick={() => openLightbox(item)}

@@ -91,7 +91,7 @@ export function GalleryLightbox({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.94, y: 20 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="relative z-10 w-full max-w-5xl flex flex-col lg:flex-row bg-zinc-900/80 border border-white/10 rounded-2xl overflow-hidden shadow-2xl shadow-black/60 backdrop-blur-md"
+            className="relative z-10 w-full max-w-5xl flex flex-col lg:flex-row bg-zinc-900/80 border border-white/10 rounded-[4px] overflow-hidden shadow-2xl shadow-black/60 backdrop-blur-md"
             onClick={(e) => e.stopPropagation()}
           >
             {/* IMAGE PANEL */}
@@ -113,7 +113,7 @@ export function GalleryLightbox({
               <button
                 onClick={(e) => { e.stopPropagation(); onPrev(); }}
                 aria-label={t('gallery:lightbox.prev')}
-                className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 border border-white/10 text-white flex items-center justify-center transition-all duration-200 backdrop-blur-sm hover:scale-110 active:scale-95"
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-sm bg-black/40 hover:bg-black/70 border border-white/10 text-white flex items-center justify-center transition-all duration-200 backdrop-blur-sm hover:scale-110 active:scale-95"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
@@ -122,13 +122,13 @@ export function GalleryLightbox({
               <button
                 onClick={(e) => { e.stopPropagation(); onNext(); }}
                 aria-label={t('gallery:lightbox.next')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 border border-white/10 text-white flex items-center justify-center transition-all duration-200 backdrop-blur-sm hover:scale-110 active:scale-95"
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-sm bg-black/40 hover:bg-black/70 border border-white/10 text-white flex items-center justify-center transition-all duration-200 backdrop-blur-sm hover:scale-110 active:scale-95"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
 
               {/* Counter badge */}
-              <div className="absolute top-4 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-black/40 backdrop-blur-sm text-white/70 text-[11px] font-mono font-bold border border-white/10 select-none">
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 px-3 py-1 rounded-sm bg-black/40 backdrop-blur-sm text-white/70 text-[11px] font-mono font-bold border border-white/10 select-none">
                 {t('gallery:lightbox.photo')} {currentIndex + 1} / {totalCount}
               </div>
             </div>
@@ -141,7 +141,7 @@ export function GalleryLightbox({
               {/* Close button */}
               <div className="flex justify-between items-center">
                 <span
-                  className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
+                  className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-sm text-[10px] font-bold uppercase tracking-wider border ${
                     CATEGORY_COLORS[item.category] || 'bg-zinc-700/40 text-zinc-300 border-zinc-600'
                   }`}
                 >
@@ -151,7 +151,7 @@ export function GalleryLightbox({
                 <button
                   onClick={onClose}
                   aria-label={t('gallery:lightbox.close')}
-                  className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white/70 hover:text-white flex items-center justify-center transition-all duration-200 hover:scale-110"
+                  className="w-8 h-8 rounded-sm bg-white/10 hover:bg-white/20 border border-white/10 text-white/70 hover:text-white flex items-center justify-center transition-all duration-200 hover:scale-110"
                 >
                   <X className="w-4 h-4" />
                 </button>

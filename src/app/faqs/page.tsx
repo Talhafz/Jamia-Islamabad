@@ -39,10 +39,10 @@ export default function FaqsPage() {
       
       {/* Hero Header */}
       <div className="text-center flex flex-col items-center gap-4 mb-12 animate-fade-in">
-        <h1 className="text-4xl font-extrabold text-zinc-950 tracking-tight leading-none">
+        <h1 className="text-4xl font-extrabold text-[var(--color-gold-primary)] tracking-tight leading-none">
           Frequently Asked Questions
         </h1>
-        <p className="text-zinc-500 text-xs max-w-xl leading-relaxed">
+        <p className="text-[var(--color-text-muted)] text-xs max-w-xl leading-relaxed">
           Quickly inspect answers regarding our admission procedures, boarding guidelines, and portal capabilities.
         </p>
       </div>
@@ -54,25 +54,25 @@ export default function FaqsPage() {
           return (
             <div 
               key={idx} 
-              className="p-5 rounded-2xl bg-white border border-zinc-200/85 shadow-sm transition-all duration-300"
+              className="p-5 rounded-[4px] card-standard transition-all duration-300"
             >
               <button
                 onClick={() => setOpenIdx(isOpen ? null : idx)}
-                className="w-full flex justify-between items-center text-left text-zinc-950 hover:text-emerald-800 transition-colors"
+                className="w-full flex justify-between items-center text-left text-[var(--color-text-body)] hover:text-[var(--color-gold-bright)] transition-colors"
               >
                 <span className="text-xs font-extrabold flex items-center gap-2">
-                  <HelpCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                  <HelpCircle className="w-4 h-4 text-[var(--color-teal-accent)] flex-shrink-0" />
                   {item.q}
                 </span>
                 {isOpen ? (
-                  <ChevronUp className="w-4 h-4 text-zinc-400" />
+                  <ChevronUp className="w-4 h-4 text-[var(--color-gold-primary)]" />
                 ) : (
-                  <ChevronDown className="w-4 h-4 text-zinc-400" />
+                  <ChevronDown className="w-4 h-4 text-[var(--color-text-muted)]" />
                 )}
               </button>
 
               {isOpen && (
-                <div className="mt-3 pl-6 border-t border-zinc-100 pt-3 text-xs text-zinc-500 leading-relaxed text-justify animate-fade-in">
+                <div className="mt-3 pl-6 border-t border-[var(--color-emerald-mid)]/40 pt-3 text-xs text-[var(--color-text-body)] leading-relaxed text-justify animate-fade-in">
                   {item.a}
                 </div>
               )}

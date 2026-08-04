@@ -188,11 +188,11 @@ export default function Home() {
 
             {/* Stamp Card Frame with Maroon Accent */}
             <div className="lg:col-span-5 flex justify-center">
-              <div className="relative p-6 rounded-2xl border border-[var(--color-gold-muted)]/40 bg-[var(--color-emerald-deep)] text-center max-w-sm shadow-2xl">
-                <div className="absolute -top-3 left-6 px-3 py-1 bg-[var(--color-maroon)] text-[var(--color-ivory)] text-[9px] font-bold tracking-widest uppercase rounded shadow-md">
+              <div className="relative p-6 rounded-[4px] border border-[var(--color-gold-muted)]/40 bg-[var(--color-emerald-deep)] text-center max-w-sm shadow-2xl">
+                <div className="absolute -top-3 left-6 px-3 py-1 bg-[var(--color-maroon)] text-[var(--color-ivory)] text-[9px] font-bold tracking-widest uppercase rounded-sm shadow-md">
                   {t('home:principal.label')}
                 </div>
-                <div className="w-40 h-40 md:w-48 md:h-48 rounded-full border-4 border-[var(--color-gold-primary)] bg-[var(--color-panel)] mx-auto mb-6 flex items-center justify-center overflow-hidden shadow-xl">
+                <div className="w-40 h-40 md:w-48 md:h-48 rounded-sm border-2 border-[var(--color-gold-primary)] bg-[var(--color-panel)] mx-auto mb-6 flex items-center justify-center overflow-hidden shadow-xl">
                   <img src="/assets/doctor_sahib.jpeg" alt={t('about:biography.name')} className="w-full h-full object-cover object-top" />
                 </div>
                 <h3 className="text-[var(--color-teal-soft)] font-bold text-sm block mb-1">{t('about:biography.namePrefix')}</h3>
@@ -224,7 +224,7 @@ export default function Home() {
               <p className="text-[var(--color-text-body)] text-sm leading-relaxed text-justify">
                 {t('home:principal.p4')}
               </p>
-              <div className="text-[var(--color-gold-bright)] font-urdu text-lg leading-relaxed text-center font-bold my-4 bg-[var(--color-emerald-deep)]/80 border border-[var(--color-gold-muted)]/30 p-5 rounded-xl shadow-inner">
+              <div className="text-[var(--color-gold-bright)] font-urdu text-lg leading-relaxed text-center font-bold my-4 bg-[var(--color-emerald-deep)]/80 border border-[var(--color-gold-muted)]/30 p-5 rounded-[4px] shadow-inner">
                 {t('home:principal.poem').split('\n').map((line, i) => (
                   <span key={i} className="block">{line}</span>
                 ))}
@@ -251,17 +251,17 @@ export default function Home() {
               return (
                 <div
                   key={idx}
-                  className="bg-[var(--color-panel)] rounded-2xl border border-[var(--color-emerald-mid)] p-6 flex flex-col justify-between items-start gap-4 hover:border-[var(--color-gold-primary)] hover:-translate-y-1 transition-all duration-300 text-left shadow-lg"
+                  className="card-standard rounded-[4px] p-6 flex flex-col justify-between items-start gap-4 hover:border-[var(--color-gold-primary)] hover:-translate-y-1 transition-all duration-300 text-left shadow-lg"
                 >
                   <div className="flex flex-col gap-3">
-                    <div className="p-3 rounded-xl bg-[var(--color-emerald-deep)] text-[var(--color-teal-accent)] border border-[var(--color-teal-accent)]/20">
+                    <div className="p-3 rounded-sm bg-[var(--color-emerald-deep)] text-[var(--color-teal-accent)] border border-[var(--color-teal-accent)]/20">
                       <Icon className="w-6 h-6" />
                     </div>
                     <div>
                       <h3 className="text-[var(--color-gold-bright)] font-extrabold text-sm block mb-1">
                         {prog.title}
                       </h3>
-                      <span className="inline-flex px-2 py-0.5 rounded-full bg-[var(--color-emerald-deep)] text-[var(--color-teal-soft)] text-[10px] font-bold font-mono border border-[var(--color-teal-accent)]/20">
+                      <span className="inline-flex px-2 py-0.5 rounded-sm bg-[var(--color-emerald-deep)] text-[var(--color-teal-soft)] text-[10px] font-bold font-mono border border-[var(--color-teal-accent)]/20">
                         {prog.duration}
                       </span>
                     </div>
@@ -299,9 +299,9 @@ export default function Home() {
                   {idx < steps.length - 1 && (
                     <div className="hidden md:block absolute top-12 left-2/3 right-0 h-0.5 bg-[var(--color-emerald-mid)]" />
                   )}
-                  <div className="w-14 h-14 rounded-full border-2 border-[var(--color-gold-primary)] bg-[var(--color-emerald-deep)] text-[var(--color-gold-bright)] flex items-center justify-center shadow-lg relative z-10">
+                  <div className="w-14 h-14 rounded-sm border-2 border-[var(--color-gold-primary)] bg-[var(--color-emerald-deep)] text-[var(--color-gold-bright)] flex items-center justify-center shadow-lg relative z-10">
                     <Icon className="w-6 h-6" />
-                    <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[var(--color-maroon)] text-[var(--color-ivory)] font-bold text-[10px] flex items-center justify-center shadow-md">
+                    <span className="absolute -top-1 -right-1 w-5 h-5 rounded-sm bg-[var(--color-maroon)] text-[var(--color-ivory)] font-bold text-[10px] flex items-center justify-center shadow-md">
                       {idx + 1}
                     </span>
                   </div>
@@ -341,12 +341,12 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {testimonials.map((t_item, idx) => (
-              <div key={idx} className="rounded-2xl p-6 border border-[var(--color-emerald-mid)] bg-[var(--color-panel)] text-left flex flex-col justify-between gap-4 shadow-md hover:border-[var(--color-gold-primary)] transition-all duration-300">
+              <div key={idx} className="card-standard rounded-[4px] p-6 text-left flex flex-col justify-between gap-4 shadow-md hover:border-[var(--color-gold-primary)] transition-all duration-300">
                 <p className="text-[var(--color-text-body)] italic text-xs leading-relaxed">
                   &ldquo;{t_item.text}&rdquo;
                 </p>
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-[var(--color-emerald-deep)] border border-[var(--color-teal-accent)]/30 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-sm bg-[var(--color-emerald-deep)] border border-[var(--color-teal-accent)]/30 flex items-center justify-center">
                     <Users className="w-4 h-4 text-[var(--color-teal-accent)]" />
                   </div>
                   <div>

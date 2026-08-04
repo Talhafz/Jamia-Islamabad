@@ -31,7 +31,7 @@ export function ProgramsClient() {
   ];
 
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="w-full flex flex-col items-center bg-[var(--color-emerald-bg)] text-[var(--color-text-body)]">
       <PageBanner 
         title={t('programs:title')} 
         description={t('programs:description')} 
@@ -45,23 +45,23 @@ export function ProgramsClient() {
             return (
               <div 
                 key={idx} 
-                className="p-8 rounded-2xl bg-white border border-zinc-200/80 shadow-md flex flex-col md:flex-row gap-6 items-start hover:shadow-lg transition-all duration-300"
+                className="p-8 rounded-[4px] card-standard flex flex-col md:flex-row gap-6 items-start hover:border-[var(--color-gold-primary)] transition-all duration-300"
               >
-                <div className="p-4 rounded-xl bg-emerald-50 text-emerald-800 flex-shrink-0">
+                <div className="p-4 rounded-sm bg-[var(--color-emerald-deep)] text-[var(--color-gold-primary)] border border-[var(--color-gold-primary)]/20 flex-shrink-0">
                   <Icon className="w-8 h-8" />
                 </div>
                 <div className="flex-grow flex flex-col gap-4">
-                  <div className="flex flex-wrap items-center justify-between gap-4 border-b border-zinc-150 pb-2">
+                  <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[var(--color-emerald-mid)]/40 pb-2">
                     <div>
-                      <h2 className="text-lg font-bold text-zinc-950">{t(`programs:courses.${c.id}.title`)}</h2>
-                      <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-wider">{t(`programs:courses.${c.id}.focus`)}</span>
+                      <h2 className="text-lg font-bold text-[var(--color-gold-bright)]">{t(`programs:courses.${c.id}.title`)}</h2>
+                      <span className="text-[10px] text-[var(--color-teal-accent)] font-bold uppercase tracking-wider">{t(`programs:courses.${c.id}.focus`)}</span>
                     </div>
-                    <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-[10px] font-bold font-mono">
+                    <span className="px-3 py-1 rounded-sm bg-[var(--color-emerald-deep)] text-[var(--color-gold-primary)] text-[10px] font-bold font-mono border border-[var(--color-gold-primary)]/30">
                       {t('programs:durationLabel')}: {t(`programs:courses.${c.id}.duration`)}
                     </span>
                   </div>
                   <div className="flex flex-col gap-4">
-                    <p className="text-zinc-600 text-sm leading-relaxed text-justify whitespace-pre-line">{t(`programs:courses.${c.id}.desc`)}</p>
+                    <p className="text-[var(--color-text-body)] text-sm leading-relaxed text-justify whitespace-pre-line">{t(`programs:courses.${c.id}.desc`)}</p>
                   </div>
                 </div>
               </div>
