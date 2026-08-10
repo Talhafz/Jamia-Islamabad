@@ -21,9 +21,9 @@ export function Footer() {
   const resources = [
     { name: t('navbar.gallery'), path: '/gallery' },
     { name: t('navbar.faculty'), path: '/faculty' },
-    { name: 'FAQs', path: '/faqs' },
-    { name: 'Privacy Policy', path: '/privacy' },
-    { name: 'Terms', path: '/terms' },
+    { name: t('footer.faqs'), path: '/faqs' },
+    { name: t('footer.privacy'), path: '/privacy' },
+    { name: t('footer.terms'), path: '/terms' },
   ];
 
   return (
@@ -49,7 +49,7 @@ export function Footer() {
                 href="https://facebook.com/Jamiaislamabaad" 
                 target="_blank" 
                 rel="noreferrer"
-                className="w-8 h-8 rounded-full bg-[var(--color-panel)] border border-[var(--color-emerald-mid)] hover:border-[var(--color-teal-accent)] text-[var(--color-teal-soft)] hover:text-white flex items-center justify-center transition-all duration-200"
+                className="w-8 h-8 rounded-sm bg-[var(--color-panel)] border border-[var(--color-emerald-mid)] hover:border-[var(--color-teal-accent)] text-[var(--color-teal-soft)] hover:text-white flex items-center justify-center transition-all duration-200"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                   <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z"/>
@@ -75,7 +75,7 @@ export function Footer() {
           {/* Legal / Resources */}
           <div className="md:col-span-2 flex flex-col gap-4">
             <h4 className="text-[var(--color-gold-primary)] font-extrabold text-sm tracking-wider uppercase border-l-2 border-[var(--color-teal-accent)] pl-2">
-              Resources
+              {t('footer.resources')}
             </h4>
             <div className="flex flex-col gap-2.5 font-medium">
               {resources.map((link) => (
@@ -95,7 +95,7 @@ export function Footer() {
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 mt-0.5 text-[var(--color-teal-accent)] flex-shrink-0" />
                 <span className="text-[var(--color-text-body)]">
-                  Adjacent Central Jamia Masjid Noor-e-Madina, Street No. B-85, I-8/4, Islamabad, Pakistan
+                  {t('footer.address')}
                 </span>
               </div>
               <div className="flex items-center gap-2.5">
@@ -119,7 +119,7 @@ export function Footer() {
             {t('footer.rights', { year: new Date().getFullYear().toString() })}
           </span>
           <span className="flex items-center gap-1 text-[var(--color-gold-muted)]">
-            Engineered for Jamia Islamabad EMS
+            {t('footer.engineered')}
             <GraduationCap className="w-3.5 h-3.5 text-[var(--color-teal-accent)]" />
           </span>
         </div>

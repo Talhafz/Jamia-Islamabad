@@ -35,7 +35,7 @@ export default function FaqsPage() {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 select-none">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-12 select-none">
       
       {/* Hero Header */}
       <div className="text-center flex flex-col items-center gap-4 mb-12 animate-fade-in">

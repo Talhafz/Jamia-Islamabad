@@ -6,10 +6,10 @@ import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import {
   Award,
-  BookOpen,
+  ChevronDown,
   ChevronRight,
-  Compass,
   FileText,
+  Quote,
   Sparkles,
   Users
 } from 'lucide-react';
@@ -22,7 +22,8 @@ const ThreeCanvasLazy = dynamic(
 );
 
 export default function Home() {
-  const { t } = useLanguage();
+  const { t, currentLanguage } = useLanguage();
+  const [isBioExpanded, setIsBioExpanded] = React.useState(false);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -41,65 +42,68 @@ export default function Home() {
     },
   };
 
-  const programs = [
-    {
-      title: t('home:programs.c1.title'),
-      desc: t('home:programs.c1.desc'),
-      duration: t('programs:courses.c1.duration'),
-      icon: Compass,
-      color: 'from-emerald-500/10 to-emerald-600/10',
-    },
-    {
-      title: t('home:programs.c2.title'),
-      desc: t('home:programs.c2.desc'),
-      duration: t('programs:courses.c2.duration'),
-      icon: Sparkles,
-      color: 'from-amber-500/10 to-amber-600/10',
-    },
-    {
-      title: t('home:programs.c3.title'),
-      desc: t('home:programs.c3.desc'),
-      duration: t('programs:courses.c3.duration'),
-      icon: BookOpen,
-      color: 'from-emerald-500/10 to-emerald-600/10',
-    },
-    {
-      title: t('home:programs.c4.title'),
-      desc: t('home:programs.c4.desc'),
-      duration: t('programs:courses.c4.duration'),
-      icon: BookOpen,
-      color: 'from-amber-500/10 to-amber-600/10',
-    },
-    {
-      title: t('home:programs.c5.title'),
-      desc: t('home:programs.c5.desc'),
-      duration: t('programs:courses.c5.duration'),
-      icon: Award,
-      color: 'from-emerald-500/10 to-emerald-600/10',
-    },
-  ];
-
   const steps = [
     { title: t('home:process.step1.title'), desc: t('home:process.step1.desc'), icon: FileText },
     { title: t('home:process.step2.title'), desc: t('home:process.step2.desc'), icon: Award },
     { title: t('home:process.step3.title'), desc: t('home:process.step3.desc'), icon: Users },
   ];
 
-  const testimonials = [
-    { text: t('home:testimonials.t1'), author: t('home:testimonials.t1Author'), role: t('home:testimonials.t1Role') },
-    { text: t('home:testimonials.t2'), author: t('home:testimonials.t2Author'), role: t('home:testimonials.t2Role') },
-    { text: t('home:testimonials.t3'), author: t('home:testimonials.t3Author'), role: t('home:testimonials.t3Role') },
+  const scholarEndorsements = [
+    {
+      name: {
+        ur: 'قیومِ زماں ، استاذ العلماء ، حضرت علامہ مولانا پیر سید محمد مظہر قیوم شاہ مشہدی رحمۃ اللہ علیہ',
+        en: 'Hazrat Allama Maulana Pir Syed Muhammad Mazhar Qayyoom Shah Mashhadi (R.A.)',
+        ar: 'قيوم الزمان أستاذ العلماء حضرت العلامة مولانا السید محمد مظہر قيوم شاہ المشہدي رحمه الله',
+      },
+      title: {
+        ur: 'آستانہ عالیہ بھکھی شریف',
+        en: 'Aastana Aalia Bhekkhi Sharif',
+        ar: 'أستانة عالية بهكهي شريف',
+      },
+      quote: {
+        ur: '”جامعہ اسلام آباد میرا اپنا جامعہ ہے ،اس میں بچوں کا داخلہ کراؤ۔“',
+        en: '"Jamia Islamabad is my own Jamia; enroll your children here."',
+        ar: '«جامعة إسلام آباد هي جامعتي الخاصة، فسجّلوا أبناءكم فيها.»',
+      },
+    },
+    {
+      name: {
+        ur: 'شیخ الحدیث علامہ حافظ خادم حسین رضوی رحمۃ اللہ علیہ',
+        en: 'Shaykh al-Hadith Allama Hafiz Khadim Hussain Rizvi (R.A.)',
+        ar: 'شيخ الحديث العلامة الحافظ خادم حسين الرضوي رحمه الله',
+      },
+      title: {
+        ur: 'مؤسس و امیر - تحریک لبیک پاکستان / شیخ الحدیث',
+        en: 'Shaykh al-Hadith & Renowned Islamic Scholar',
+        ar: 'شيخ الحديث وعالم إسلامي بارز',
+      },
+      quote: {
+        ur: '”جامعہ اسلام آباد اہلسنت کی پناہ گاہ ہے ۔“',
+        en: '"Jamia Islamabad is the sanctuary of Ahl-e-Sunnat."',
+        ar: '«جامعة إسلام آباد هي ملاذ أهل السنة.»',
+      },
+    },
   ];
 
+  const getReadBioLabel = () => {
+    if (currentLanguage === 'ur') {
+      return isBioExpanded ? 'مختصر کریں' : 'مکمل سوانح حیات پڑھیں';
+    }
+    if (currentLanguage === 'ar') {
+      return isBioExpanded ? 'عرض أقل' : 'قراءة السيرة الذاتية كاملة';
+    }
+    return isBioExpanded ? 'Show Less' : 'Read Full Biography';
+  };
+
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="w-full flex flex-col items-center overflow-x-hidden">
 
       {/* HERO SECTION */}
-      <section className="relative w-full min-h-screen flex items-center justify-center bg-[radial-gradient(ellipse_at_center,var(--color-emerald-deep)_0%,var(--color-emerald-bg)_75%)] bg-diagonal-pattern overflow-hidden py-16 md:py-24 select-none -mt-20">
+      <section className="relative w-full min-h-screen flex items-center justify-center bg-[radial-gradient(ellipse_at_50%_35%,var(--color-emerald-mid)_0%,var(--color-emerald-deep)_45%,var(--color-emerald-bg)_85%)] bg-diagonal-pattern overflow-hidden py-16 md:py-24 select-none">
         <ThreeCanvasLazy />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(14,59,46,0.2)_0%,transparent_70%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(31,191,143,0.15)_0%,rgba(14,59,46,0.25)_50%,transparent_80%)] pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -117,32 +121,44 @@ export default function Home() {
             {/* 1. Small Eyebrow Label */}
             <motion.span
               variants={itemVariants}
-              className="text-[var(--color-teal-accent)] text-xs font-bold uppercase tracking-[0.25em] px-3 py-1 rounded-full bg-[var(--color-panel)]/80 border border-[var(--color-teal-accent)]/30"
+              dir={currentLanguage === 'en' ? 'ltr' : 'rtl'}
+              lang={currentLanguage}
+              className={`text-[var(--color-teal-accent)] text-xs sm:text-sm font-bold uppercase tracking-[0.18em] px-4 py-1.5 rounded-full bg-[var(--color-panel)]/80 border border-[var(--color-teal-accent)]/30 shadow-sm ${
+                currentLanguage === 'ur' || currentLanguage === 'ar' ? 'font-urdu' : ''
+              }`}
             >
-              اسلام آباد ایجوکیشن اینڈ ریلیف فاؤنڈیشن
+              {t('home:hero.eyebrow')}
             </motion.span>
 
-            {/* 2. Primary Urdu Heading in Gold with soft glow */}
+            {/* 2. Primary Heading in Gold with soft glow */}
             <motion.h1
               variants={itemVariants}
-              dir="rtl"
-              lang="ur"
-              className="font-urdu font-black text-[var(--color-gold-primary)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.85] [text-shadow:0_0_25px_rgba(212,160,23,0.30)] my-1"
+              dir={currentLanguage === 'en' ? 'ltr' : 'rtl'}
+              lang={currentLanguage}
+              className={`${
+                currentLanguage === 'en'
+                  ? 'font-serif tracking-[0.12em] font-extrabold uppercase text-3xl sm:text-4xl md:text-5xl lg:text-6xl'
+                  : 'font-urdu font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.85]'
+              } text-[var(--color-gold-primary)] [text-shadow:0_0_25px_rgba(212,160,23,0.30)] my-1`}
             >
-              جامعہ اسلام آباد
+              {t('home:hero.mainTitle')}
             </motion.h1>
 
             {/* 3. Thin 120px Gold-to-Teal Horizontal Divider Line */}
             <motion.div variants={itemVariants} className="w-[120px] h-[2px] bg-gradient-to-r from-[var(--color-gold-primary)] to-[var(--color-teal-accent)] rounded-full my-1" />
 
-            {/* 4. English / Subtitle Supporting Text */}
+            {/* 4. Subtitle Supporting Text */}
             <motion.p
               variants={itemVariants}
-              dir="rtl"
-              lang="ur"
-              className="font-urdu font-extrabold text-[var(--color-teal-soft)] text-lg sm:text-xl md:text-2xl leading-relaxed tracking-wide"
+              dir={currentLanguage === 'en' ? 'ltr' : 'rtl'}
+              lang={currentLanguage}
+              className={`${
+                currentLanguage === 'en'
+                  ? 'font-sans font-bold text-base sm:text-lg md:text-xl leading-relaxed tracking-wide'
+                  : 'font-urdu font-extrabold text-lg sm:text-xl md:text-2xl leading-[1.85] tracking-wide'
+              } text-[var(--color-teal-soft)]`}
             >
-              وفاقی دارالحکومت میں دینی و عصری تعلیم کا عظیم مرکز
+              {t('home:hero.tagline')}
             </motion.p>
 
             {/* 5. Short Tagline Paragraph in Body Text */}
@@ -184,99 +200,91 @@ export default function Home() {
       {/* PRINCIPAL SECTION */}
       <section className="w-full py-16 md:py-24 bg-[var(--color-panel)] select-none border-t border-[var(--color-emerald-mid)]/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
-            {/* Stamp Card Frame with Maroon Accent */}
-            <div className="lg:col-span-5 flex justify-center">
-              <div className="relative p-6 rounded-[4px] border border-[var(--color-gold-muted)]/40 bg-[var(--color-emerald-deep)] text-center max-w-sm shadow-2xl">
-                <div className="absolute -top-3 left-6 px-3 py-1 bg-[var(--color-maroon)] text-[var(--color-ivory)] text-[9px] font-bold tracking-widest uppercase rounded-sm shadow-md">
-                  {t('home:principal.label')}
-                </div>
-                <div className="w-40 h-40 md:w-48 md:h-48 rounded-sm border-2 border-[var(--color-gold-primary)] bg-[var(--color-panel)] mx-auto mb-6 flex items-center justify-center overflow-hidden shadow-xl">
-                  <img src="/assets/doctor_sahib.jpeg" alt={t('about:biography.name')} className="w-full h-full object-cover object-top" />
-                </div>
-                <h3 className="text-[var(--color-teal-soft)] font-bold text-sm block mb-1">{t('about:biography.namePrefix')}</h3>
-                <h2 className="text-[var(--color-gold-bright)] font-extrabold text-2xl tracking-tight mb-3 leading-snug">{t('about:biography.name')}</h2>
-                <p className="text-[var(--color-text-body)] text-xs sm:text-sm leading-relaxed mb-4 font-medium border-t border-[var(--color-emerald-mid)] pt-3">
-                  {t('about:biography.subtitle')}
-                </p>
-                <div className="border-t border-[var(--color-emerald-mid)] pt-3 flex justify-between items-center text-[10px] font-bold text-[var(--color-gold-muted)]">
-                  <span>ESTABLISHED 1992</span>
-                  <span>ISLAMABAD, PAKISTAN</span>
+            {/* Left Column: Photo + Name & Titles (Photo column narrower ~40% / col-span-5) */}
+            <div className="lg:col-span-5 flex flex-col items-center justify-center text-center">
+              <div className="relative w-full max-w-md flex flex-col items-center">
+                {/* Soft Mihrab / Arch-shaped Radial Glow behind figure (decorative depth, ~15-20% opacity) */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] h-[90%] rounded-t-full bg-[radial-gradient(ellipse_at_top,rgba(212,160,23,0.18)_0%,rgba(31,191,143,0.12)_50%,transparent_80%)] blur-2xl pointer-events-none" />
+
+                {/* Background-removed Figure Image */}
+                <img
+                  src="/assets/doctor_sahib_transparent.png"
+                  alt={t('about:biography.name')}
+                  className="relative z-10 w-full max-w-[280px] sm:max-w-[340px] md:max-w-[380px] object-contain drop-shadow-[0_12px_30px_rgba(0,0,0,0.6)]"
+                />
+
+                {/* Reused Hero Divider Line (exact same style & color) */}
+                <div className="relative z-10 w-[120px] h-[2px] bg-gradient-to-r from-[var(--color-gold-primary)] to-[var(--color-teal-accent)] rounded-full my-4" />
+
+                {/* Name + Titles directly on background with generous line spacing */}
+                <div className="relative z-10 flex flex-col items-center gap-2 sm:gap-3 py-2">
+                  <span className="text-[var(--color-gold-primary)] text-[11px] sm:text-xs font-bold uppercase tracking-[0.25em]">
+                    {t('home:principal.label')}
+                  </span>
+                  <span className="text-[var(--color-teal-soft)] font-bold text-xs sm:text-sm leading-relaxed">
+                    {t('about:biography.namePrefix')}
+                  </span>
+                  <h2 className="text-[var(--color-gold-bright)] font-extrabold text-xl sm:text-2xl lg:text-3xl tracking-normal leading-relaxed sm:leading-[1.95] font-urdu px-2 text-center">
+                    {t('about:biography.name')}
+                  </h2>
+                  <p className="text-[var(--color-text-body)] text-xs sm:text-sm font-medium leading-relaxed sm:leading-[1.85] font-urdu max-w-sm mt-1 px-2 text-center">
+                    {t('about:biography.subtitle')}
+                  </p>
                 </div>
               </div>
             </div>
 
-            {/* Introduction message */}
+            {/* Right Column: Biography Text + Collapsible Toggle + Poem (~60% / col-span-7) */}
             <div className="lg:col-span-7 flex flex-col gap-6 text-[var(--color-text-body)]">
-              <h2 className="text-3xl font-extrabold tracking-tight text-[var(--color-gold-primary)]">
+              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--color-gold-primary)] font-urdu leading-relaxed">
                 {t('home:principal.title')}
               </h2>
-              <p className="text-[var(--color-text-body)] text-sm leading-relaxed text-justify">
-                {t('home:principal.p1')}
-              </p>
-              <p className="text-[var(--color-text-body)] text-sm leading-relaxed text-justify">
-                {t('home:principal.p2')}
-              </p>
-              <p className="text-[var(--color-text-body)] text-sm leading-relaxed text-justify">
-                {t('home:principal.p3')}
-              </p>
-              <p className="text-[var(--color-text-body)] text-sm leading-relaxed text-justify">
-                {t('home:principal.p4')}
-              </p>
-              <div className="text-[var(--color-gold-bright)] font-urdu text-lg leading-relaxed text-center font-bold my-4 bg-[var(--color-emerald-deep)]/80 border border-[var(--color-gold-muted)]/30 p-5 rounded-[4px] shadow-inner">
+
+              {/* Collapsible Biography Text Area (~4 lines default with CSS max-height transition) */}
+              <div className="relative flex flex-col">
+                <div
+                  className={`flex flex-col gap-4 text-sm leading-relaxed sm:leading-[1.85] font-urdu text-justify transition-all duration-500 ease-in-out overflow-hidden ${
+                    isBioExpanded ? 'max-h-[1200px]' : 'max-h-[140px]'
+                  }`}
+                >
+                  <p>{t('home:principal.p1')}</p>
+                  <p>{t('home:principal.p2')}</p>
+                  <p>{t('home:principal.p3')}</p>
+                  <p>{t('home:principal.p4')}</p>
+                </div>
+
+                {/* Bottom Fade-to-background gradient mask when collapsed */}
+                {!isBioExpanded && (
+                  <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[var(--color-panel)] to-transparent pointer-events-none transition-opacity duration-300" />
+                )}
+              </div>
+
+              {/* Read Full Biography / Show Less Toggle Button (Fully Localized) */}
+              <button
+                onClick={() => setIsBioExpanded(prev => !prev)}
+                className="self-start inline-flex items-center gap-2 text-[var(--color-gold-primary)] hover:text-[var(--color-gold-bright)] font-bold text-xs uppercase tracking-wider transition-colors duration-200 focus:outline-none group mt-1"
+                aria-expanded={isBioExpanded}
+              >
+                <span className={currentLanguage === 'ur' || currentLanguage === 'ar' ? 'font-urdu text-sm' : ''}>
+                  {getReadBioLabel()}
+                </span>
+                <ChevronDown
+                  className={`w-4 h-4 text-[var(--color-gold-primary)] group-hover:text-[var(--color-gold-bright)] transition-transform duration-300 ${
+                    isBioExpanded ? 'rotate-180' : ''
+                  }`}
+                />
+              </button>
+
+              {/* Closing Couplet / Poem Block — ALWAYS VISIBLE OUTSIDE COLLAPSED AREA */}
+              <div className="text-[var(--color-gold-bright)] font-urdu text-lg leading-relaxed text-center font-bold mt-2 bg-[var(--color-emerald-deep)]/80 border border-[var(--color-gold-muted)]/30 p-5 rounded-[4px] shadow-inner">
                 {t('home:principal.poem').split('\n').map((line, i) => (
                   <span key={i} className="block">{line}</span>
                 ))}
               </div>
             </div>
 
-          </div>
-        </div>
-      </section>
-
-      {/* ACADEMIC PROGRAMS */}
-      <section className="w-full py-16 md:py-24 bg-[var(--color-emerald-bg)] select-none border-t border-[var(--color-emerald-mid)]/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col gap-12">
-          <div>
-            <h2 className="text-3xl font-extrabold tracking-tight text-[var(--color-gold-primary)]">{t('home:programs.title')}</h2>
-            <p className="text-[var(--color-teal-accent)] text-xs mt-2 uppercase tracking-widest font-mono font-bold">
-              {t('home:programs.subtitle')}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {programs.map((prog, idx) => {
-              const Icon = prog.icon;
-              return (
-                <div
-                  key={idx}
-                  className="card-standard rounded-[4px] p-6 flex flex-col justify-between items-start gap-4 hover:border-[var(--color-gold-primary)] hover:-translate-y-1 transition-all duration-300 text-left shadow-lg"
-                >
-                  <div className="flex flex-col gap-3">
-                    <div className="p-3 rounded-sm bg-[var(--color-emerald-deep)] text-[var(--color-teal-accent)] border border-[var(--color-teal-accent)]/20">
-                      <Icon className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <h3 className="text-[var(--color-gold-bright)] font-extrabold text-sm block mb-1">
-                        {prog.title}
-                      </h3>
-                      <span className="inline-flex px-2 py-0.5 rounded-sm bg-[var(--color-emerald-deep)] text-[var(--color-teal-soft)] text-[10px] font-bold font-mono border border-[var(--color-teal-accent)]/20">
-                        {prog.duration}
-                      </span>
-                    </div>
-                    <p className="text-[var(--color-text-body)] text-xs leading-relaxed">{prog.desc}</p>
-                  </div>
-                  <Link
-                    href="/programs"
-                    className="text-[var(--color-gold-primary)] hover:text-[var(--color-gold-bright)] font-bold text-xs flex items-center gap-0.5 mt-2"
-                  >
-                    {t('home:viewDetails')}
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-              );
-            })}
           </div>
         </div>
       </section>
@@ -329,33 +337,78 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
+      {/* ENDORSEMENTS: IN THE VIEW OF EMINENT SPIRITUAL MASTERS & ESTEEMED SCHOLARS */}
       <section className="w-full py-16 md:py-24 bg-[var(--color-emerald-bg)] select-none border-t border-[var(--color-emerald-mid)]/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col gap-12">
           <div>
-            <h2 className="text-3xl font-extrabold tracking-tight text-[var(--color-gold-primary)]">{t('home:testimonials.title')}</h2>
-            <p className="text-[var(--color-teal-accent)] text-xs mt-2 uppercase tracking-widest font-mono font-bold">
-              {t('home:testimonials.subtitle')}
+            <h2
+              dir={currentLanguage === 'en' ? 'ltr' : 'rtl'}
+              className={`text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--color-gold-primary)] ${
+                currentLanguage === 'en' ? 'font-serif tracking-normal' : 'font-urdu leading-[1.85] sm:leading-[2]'
+              } py-1`}
+            >
+              {t('home:endorsements.title')}
+            </h2>
+            <p
+              dir={currentLanguage === 'en' ? 'ltr' : 'rtl'}
+              className={`text-[var(--color-teal-accent)] text-xs sm:text-sm mt-2 uppercase tracking-widest font-mono font-bold leading-relaxed px-2 ${
+                currentLanguage === 'ur' || currentLanguage === 'ar' ? 'font-urdu' : ''
+              }`}
+            >
+              {t('home:endorsements.subtitle')}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {testimonials.map((t_item, idx) => (
-              <div key={idx} className="card-standard rounded-[4px] p-6 text-left flex flex-col justify-between gap-4 shadow-md hover:border-[var(--color-gold-primary)] transition-all duration-300">
-                <p className="text-[var(--color-text-body)] italic text-xs leading-relaxed">
-                  &ldquo;{t_item.text}&rdquo;
-                </p>
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-sm bg-[var(--color-emerald-deep)] border border-[var(--color-teal-accent)]/30 flex items-center justify-center">
-                    <Users className="w-4 h-4 text-[var(--color-teal-accent)]" />
-                  </div>
-                  <div>
-                    <h4 className="text-[var(--color-gold-bright)] font-bold text-xs leading-none">{t_item.author}</h4>
-                    <span className="text-[10px] text-[var(--color-text-muted)] mt-1 block">{t_item.role}</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto w-full">
+            {scholarEndorsements.map((scholar, idx) => {
+              const langKey = (currentLanguage === 'ur' || currentLanguage === 'ar' || currentLanguage === 'en') ? currentLanguage : 'en';
+              const nameText = scholar.name[langKey] || scholar.name.ur;
+              const titleText = scholar.title[langKey] || scholar.title.ur;
+              const quoteText = scholar.quote[langKey] || scholar.quote.ur;
+
+              return (
+                <div
+                  key={idx}
+                  className="bg-[var(--color-emerald-deep)]/90 border border-[var(--color-gold-muted)]/40 p-8 sm:p-10 rounded-[4px] shadow-2xl flex flex-col justify-between items-center text-center group hover:border-[var(--color-gold-primary)] transition-all duration-300 relative overflow-hidden"
+                >
+                  {/* Subtle Gold Corner Accent */}
+                  <div className="absolute top-0 right-0 w-12 h-12 bg-gradient-to-bl from-[var(--color-gold-primary)]/20 to-transparent pointer-events-none" />
+
+                  {/* Quote Icon */}
+                  <Quote className="w-8 h-8 text-[var(--color-gold-primary)] opacity-50 mb-4" />
+
+                  {/* Quote Statement */}
+                  <p
+                    dir={currentLanguage === 'en' ? 'ltr' : 'rtl'}
+                    className={`text-[var(--color-gold-bright)] ${
+                      currentLanguage === 'en' ? 'font-serif text-lg sm:text-xl leading-relaxed' : 'font-urdu text-xl sm:text-2xl leading-[2.2] sm:leading-[2.4]'
+                    } font-bold text-center mb-6 py-2 px-2`}
+                  >
+                    {quoteText}
+                  </p>
+
+                  {/* Scholar Name & Title */}
+                  <div className="w-full border-t border-[var(--color-emerald-mid)]/60 pt-4 flex flex-col items-center gap-1">
+                    <h3
+                      dir={currentLanguage === 'en' ? 'ltr' : 'rtl'}
+                      className={`text-[var(--color-gold-primary)] ${
+                        currentLanguage === 'en' ? 'font-bold text-base sm:text-lg' : 'font-urdu font-black text-base sm:text-xl leading-[1.95] sm:leading-[2.1]'
+                      } text-center py-1`}
+                    >
+                      {nameText}
+                    </h3>
+                    <span
+                      dir={currentLanguage === 'en' ? 'ltr' : 'rtl'}
+                      className={`text-[var(--color-teal-soft)] text-xs sm:text-sm font-semibold tracking-wide text-center leading-relaxed py-0.5 ${
+                        currentLanguage === 'ur' || currentLanguage === 'ar' ? 'font-urdu' : ''
+                      }`}
+                    >
+                      {titleText}
+                    </span>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

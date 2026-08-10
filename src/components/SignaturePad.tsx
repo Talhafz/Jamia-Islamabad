@@ -34,7 +34,7 @@ export function SignaturePad({
 
     const ctx = canvas.getContext('2d');
     if (ctx) {
-      ctx.strokeStyle = '#065f46'; // Emerald green ink
+      ctx.strokeStyle = '#d4a017'; // Gold ink for dark background
       ctx.lineWidth = 2.5;
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
@@ -167,7 +167,7 @@ export function SignaturePad({
 
   return (
     <div ref={containerRef} className="w-full flex flex-col gap-2">
-      <div className="relative w-full h-32 border-2 border-dashed border-emerald-600/30 hover:border-emerald-500 rounded-lg bg-emerald-50/10 backdrop-blur-sm overflow-hidden transition-all duration-300">
+      <div className="relative w-full h-32 border-2 border-dashed border-[var(--color-gold-muted)]/60 hover:border-[var(--color-gold-primary)] rounded-lg bg-[var(--color-emerald-deep)]/90 backdrop-blur-sm overflow-hidden transition-all duration-300">
         <canvas
           ref={canvasRef}
           onMouseDown={startDrawing}
@@ -180,7 +180,7 @@ export function SignaturePad({
           className="absolute inset-0 w-full h-full cursor-crosshair touch-none"
         />
         {!value && (
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none text-emerald-800/40 text-xs font-medium">
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none text-[var(--color-teal-soft)]/60 text-xs font-medium">
             {placeholder}
           </div>
         )}
@@ -190,7 +190,7 @@ export function SignaturePad({
           type="button"
           onClick={undo}
           disabled={history.length === 0}
-          className="flex items-center gap-1 px-2.5 py-1.5 rounded bg-emerald-50/50 hover:bg-emerald-100/50 text-emerald-800 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
+          className="flex items-center gap-1 px-2.5 py-1.5 rounded bg-[var(--color-emerald-mid)]/60 hover:bg-[var(--color-emerald-mid)] text-[var(--color-gold-bright)] disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
         >
           <RotateCcw className="w-3 h-3" />
           Undo
@@ -199,7 +199,7 @@ export function SignaturePad({
           type="button"
           onClick={clear}
           disabled={!value}
-          className="flex items-center gap-1 px-2.5 py-1.5 rounded bg-red-50 hover:bg-red-100 text-red-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
+          className="flex items-center gap-1 px-2.5 py-1.5 rounded bg-red-950/60 hover:bg-red-900/80 text-red-300 border border-red-800/40 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
         >
           <Trash2 className="w-3 h-3" />
           Clear

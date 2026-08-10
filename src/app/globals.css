@@ -45,13 +45,11 @@ body {
 
 /* ── Geometric Diagonal Pattern Overlay ── */
 .bg-diagonal-pattern {
-  background-image: repeating-linear-gradient(
-    45deg,
-    rgba(212, 160, 23, 0.02) 0px,
-    rgba(212, 160, 23, 0.02) 2px,
-    transparent 2px,
-    transparent 12px
-  );
+  background-image: repeating-linear-gradient(45deg,
+      rgba(212, 160, 23, 0.02) 0px,
+      rgba(212, 160, 23, 0.02) 2px,
+      transparent 2px,
+      transparent 12px);
 }
 
 /* ── Primary & Secondary Button Utility Classes ── */
@@ -120,21 +118,73 @@ html[dir="rtl"] *,
   word-spacing: 0 !important;
 }
 
+/* ─── Latin Font Override (ornaments, English subtitles inside RTL contexts) ── */
+/* Must appear AFTER the Nastaliq wildcard rules so it wins the cascade.         */
+
+html[lang="ur"] .font-latin-force,
+html[lang="ur"] .font-latin-force *,
+html[lang="ar"] .font-latin-force,
+html[lang="ar"] .font-latin-force *,
+html[dir="rtl"] .font-latin-force,
+html[dir="rtl"] .font-latin-force *,
+[lang="ur"] .font-latin-force,
+[lang="ur"] .font-latin-force *,
+[lang="ar"] .font-latin-force,
+[lang="ar"] .font-latin-force *,
+[dir="rtl"] .font-latin-force,
+[dir="rtl"] .font-latin-force * {
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-weight: 400 !important;
+  letter-spacing: normal !important;
+  word-spacing: normal !important;
+}
+
 /* Ensure headings in Arabic/Urdu/RTL modes have generous line height to prevent overlap */
-html[lang="ur"] h1, html[lang="ar"] h1, [dir="rtl"] h1,
-html[lang="ur"] h2, html[lang="ar"] h2, [dir="rtl"] h2,
-html[lang="ur"] h3, html[lang="ar"] h3, [dir="rtl"] h3,
-html[lang="ur"] h4, html[lang="ar"] h4, [dir="rtl"] h4 {
+html[lang="ur"] h1,
+html[lang="ar"] h1,
+[dir="rtl"] h1,
+html[lang="ur"] h2,
+html[lang="ar"] h2,
+[dir="rtl"] h2,
+html[lang="ur"] h3,
+html[lang="ar"] h3,
+[dir="rtl"] h3,
+html[lang="ur"] h4,
+html[lang="ar"] h4,
+[dir="rtl"] h4 {
   line-height: 2.0;
 }
 
 /* Explicit Line-Height Overrides for Tight Layouts (e.g. Logo headers, buttons) */
-.leading-none, .leading-none * { line-height: 1 !important; }
-.leading-tight, .leading-tight * { line-height: 1.25 !important; }
-.leading-snug, .leading-snug * { line-height: 1.375 !important; }
-.leading-normal, .leading-normal * { line-height: 1.6 !important; }
-.leading-relaxed, .leading-relaxed * { line-height: 1.9 !important; }
-.leading-loose, .leading-loose * { line-height: 2.2 !important; }
+.leading-none,
+.leading-none * {
+  line-height: 1 !important;
+}
+
+.leading-tight,
+.leading-tight * {
+  line-height: 1.25 !important;
+}
+
+.leading-snug,
+.leading-snug * {
+  line-height: 1.375 !important;
+}
+
+.leading-normal,
+.leading-normal * {
+  line-height: 1.6 !important;
+}
+
+.leading-relaxed,
+.leading-relaxed * {
+  line-height: 1.9 !important;
+}
+
+.leading-loose,
+.leading-loose * {
+  line-height: 2.2 !important;
+}
 
 /* Glassmorphism Card Style */
 .glass-card {
@@ -155,7 +205,8 @@ html[lang="ur"] h4, html[lang="ar"] h4, [dir="rtl"] h4 {
 /* Apply to any card container to enforce the emerald/gold palette  */
 .card-standard {
   background-color: var(--color-panel);
-  border: 1px solid rgba(169, 124, 31, 0.30); /* --color-gold-muted at 30% */
+  border: 1px solid rgba(169, 124, 31, 0.30);
+  /* --color-gold-muted at 30% */
   border-radius: 4px;
 }
 
@@ -164,6 +215,7 @@ html[lang="ur"] h4, html[lang="ar"] h4, [dir="rtl"] h4 {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -174,6 +226,7 @@ html[lang="ur"] h4, html[lang="ar"] h4, [dir="rtl"] h4 {
     opacity: 0;
     transform: scale(0.97);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -197,7 +250,8 @@ html[lang="ur"] h4, html[lang="ar"] h4, [dir="rtl"] h4 {
     margin: 0;
   }
 
-  html, body {
+  html,
+  body {
     width: 210mm;
     height: 297mm;
     background: #ffffff !important;
@@ -210,11 +264,11 @@ html[lang="ur"] h4, html[lang="ar"] h4, [dir="rtl"] h4 {
   }
 
   /* Hide everything except the PrintLayout element and its children */
-  nav, 
-  footer, 
-  button, 
-  select, 
-  input, 
+  nav,
+  footer,
+  button,
+  select,
+  input,
   textarea,
   .print\:hidden,
   .autosave-status,
@@ -228,7 +282,8 @@ html[lang="ur"] h4, html[lang="ar"] h4, [dir="rtl"] h4 {
     padding: 0 !important;
   }
 
-  .shadow-xl, .shadow-2xl {
+  .shadow-xl,
+  .shadow-2xl {
     box-shadow: none !important;
   }
 

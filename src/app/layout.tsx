@@ -35,15 +35,15 @@ export default function RootLayout({
   return (
     <html
       lang="ur"
-      dir="rtl"
+      dir="ltr"
       className={`${inter.variable} ${notoNastaliqUrdu.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-[var(--color-emerald-bg)] text-[var(--color-text-body)]" suppressHydrationWarning>
+      <body className="min-h-full flex flex-col bg-[var(--color-emerald-bg)] text-[var(--color-text-body)] overflow-x-hidden" suppressHydrationWarning>
         <LanguageProvider>
           <Navbar />
-          {/* Padding-top added to prevent navbar overlap on scrollable content */}
-          <main className="flex-grow pt-20">
+          {/* Main content container */}
+          <main className="flex-grow">
             {children}
           </main>
           <Footer />

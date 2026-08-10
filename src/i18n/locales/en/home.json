@@ -32,12 +32,19 @@
     "btnContact": "Contact Admin Office"
   },
   "hero": {
+    "eyebrow": "Under the Auspices of Islamabad Education & Relief Foundation",
     "subtitle": "Jamia Islamabad",
+    "mainTitle": "JAMIA ISLAMABAD",
     "title": "Empowering Minds, Nurturing Souls",
+    "tagline": "Premier Center for Classical Islamic Studies & Modern Education in the Federal Capital",
     "description": "Where classical Islamic theological studies blend seamlessly with modern secondary education, fostering ethical leadership and academic brilliance under the guidance of Dr. Mufti Muhammad Zafar Iqbal Jalali.",
     "ctaApply": "Apply Online",
     "ctaExplore": "Explore Programs",
     "ctaRequirements": "Admission Requirements"
+  },
+  "endorsements": {
+    "title": "In the View of Eminent Spiritual Masters & Esteemed Scholars",
+    "subtitle": "Endorsements & Testimonials from Renowned Islamic Luminaries"
   },
   "programs": {
     "title": "Our Academic Programs",

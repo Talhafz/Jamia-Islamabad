@@ -106,9 +106,22 @@ function EventModal({
 
   useEffect(() => {
     setMounted(true);
+    
+    // Bulletproof scroll lock (fixes iOS Safari and containing block issues)
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+    const scrollY = window.scrollY;
+    
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = '100%';
     document.body.style.overflow = 'hidden';
+
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflow = originalStyle;
+      window.scrollTo(0, scrollY);
     };
   }, []);
 
@@ -122,14 +135,14 @@ function EventModal({
 
   if (!mounted) return null;
 
-  return createPortal(
+  return (
     <motion.div
       key="events-modal-overlay"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
-      className="fixed inset-0 top-0 left-0 right-0 bottom-0 w-screen h-[100dvh] z-[9999] flex items-center justify-center p-3 sm:p-6 overflow-hidden"
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 overflow-hidden"
     >
       {/* Semi-transparent Backdrop Overlay */}
       <div
@@ -211,8 +224,7 @@ function EventModal({
           </button>
         </div>
       </motion.div>
-    </motion.div>,
-    document.body
+    </motion.div>
   );
 }
 

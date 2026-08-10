@@ -26,9 +26,9 @@ export function PageBanner({ title, description }: PageBannerProps) {
   const { direction, t } = useLanguage();
 
   return (
-    <section className="relative w-full flex items-center justify-center bg-[radial-gradient(ellipse_at_center,var(--color-emerald-deep)_0%,var(--color-emerald-bg)_80%)] bg-diagonal-pattern overflow-hidden pt-36 pb-16 select-none -mt-20 border-b border-[var(--color-emerald-mid)]">
+    <section className="relative w-full flex items-center justify-center bg-[radial-gradient(ellipse_at_50%_35%,var(--color-emerald-mid)_0%,var(--color-emerald-deep)_45%,var(--color-emerald-bg)_85%)] bg-diagonal-pattern overflow-hidden pt-36 pb-16 select-none border-b border-[var(--color-emerald-mid)]">
       <ThreeCanvas variant="subtle" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(14,59,46,0.25)_0%,transparent_75%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(31,191,143,0.15)_0%,rgba(14,59,46,0.25)_50%,transparent_80%)] pointer-events-none" />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center gap-3">
         
@@ -37,7 +37,7 @@ export function PageBanner({ title, description }: PageBannerProps) {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="flex items-center gap-2 px-3.5 py-1 rounded-full bg-[var(--color-panel)] border border-[var(--color-gold-muted)]/30 text-[11px] font-medium text-[var(--color-text-body)] backdrop-blur-sm shadow-md"
+          className="flex items-center gap-2 px-3.5 py-1 rounded-sm bg-[var(--color-panel)] border border-[var(--color-gold-muted)]/30 text-[11px] font-medium text-[var(--color-text-body)] backdrop-blur-sm shadow-md"
           dir={direction}
         >
           <Link href="/" className="flex items-center gap-1 hover:text-[var(--color-teal-accent)] transition-colors">

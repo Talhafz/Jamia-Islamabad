@@ -282,7 +282,7 @@ export function ThreeCanvas({ variant = 'hero' }: { variant?: 'hero' | 'subtle' 
   if (!webGlSupported) {
     return (
       <div
-        className="absolute inset-0 z-0 pointer-events-none w-full h-full bg-[radial-gradient(ellipse_at_center,var(--color-emerald-deep)_0%,var(--color-emerald-bg)_80%)] opacity-60"
+        className="absolute inset-0 z-0 pointer-events-none w-full h-full bg-[radial-gradient(ellipse_at_top,var(--color-emerald-deep)_0%,var(--color-emerald-bg)_85%)] opacity-60"
         aria-hidden="true"
       />
     );

@@ -54,7 +54,7 @@ export function PrintLayout({ data }: PrintLayoutProps) {
 
 
   return (
-    <div className="w-full flex flex-col gap-10 items-center justify-center bg-zinc-100 p-8 print:p-0 print:bg-white select-none">
+    <div className="w-full flex flex-col gap-10 items-center justify-center bg-zinc-100 pt-28 sm:pt-32 pb-8 px-8 print:p-0 print:bg-white select-none">
       {/* ------------------------------------------------------------- */}
       {/* PAGE 1 */}
       {/* ------------------------------------------------------------- */}
@@ -75,12 +75,14 @@ export function PrintLayout({ data }: PrintLayoutProps) {
 
         <div className="relative z-10 flex flex-col flex-grow text-right select-none" style={{ direction: 'rtl' }}>
           
-          {/* Header Calligraphy (Arabic) */}
-          <div className="flex justify-between items-center text-[10px] md:text-xs font-semibold text-emerald-800/80 mb-2 border-b border-emerald-800/20 pb-1">
-            <div className="text-left font-serif leading-relaxed select-none" style={{ direction: 'ltr' }}>
+          {/* Header Calligraphy (Arabic) — RTL order: RIGHT="وَعَلَى آلِكَ...", LEFT="الصَّلَاةُ وَالسَّلَامُ..." */}
+          <div className="flex justify-between items-center text-[10px] md:text-xs font-semibold text-emerald-800/80 mb-2 border-b border-emerald-800/20 pb-1" dir="rtl">
+            {/* First child in RTL flex → renders on the RIGHT side */}
+            <div className="text-right font-serif leading-relaxed select-none">
               وَعَلَى آلِكَ وَأَصْحَابِكَ يَا حَبِيبَ الله
             </div>
-            <div className="text-right font-serif leading-relaxed select-none">
+            {/* Second child in RTL flex → renders on the LEFT side */}
+            <div className="text-left font-serif leading-relaxed select-none">
               الصَّلَاةُ وَالسَّلَامُ عَلَيْكَ يَا رَسُولَ الله
             </div>
           </div>
@@ -122,12 +124,12 @@ export function PrintLayout({ data }: PrintLayoutProps) {
 
             {/* Right Principal Stamp Area */}
             <div className="col-span-3 select-none">
-              <div className="border border-red-500 rounded p-2 text-center text-[9px] leading-tight bg-red-50/20 text-red-800 max-w-[150px] mr-auto">
-                <span className="font-bold text-[10px] text-red-700 block mb-1">روح رواں</span>
-                آبشار علم و حکمت، مفخر الملت، استاذ الاساتذہ
-                <span className="font-bold text-[10px] block my-0.5">پروفیسر ڈاکٹر مفتی</span>
-                <span className="font-extrabold text-xs block text-red-600">محمد ظفر اقبال جلالی</span>
-                پرنسپل و شیخ الحدیث جامعہ اسلام آباد
+              <div className="border border-red-500 rounded p-3 text-center bg-red-50/20 text-red-800 max-w-[160px] mr-auto flex flex-col gap-2 h-auto min-h-fit overflow-visible">
+                <span className="font-bold text-[11px] text-red-700 block leading-[1.85]">روح رواں</span>
+                <span className="text-[10px] font-semibold block leading-[1.85]">آبشار علم و حکمت، مفخر الملت، استاذ الاساتذہ</span>
+                <span className="font-bold text-[11px] block leading-[1.85]">پروفیسر ڈاکٹر مفتی</span>
+                <span className="font-extrabold text-[12px] block text-red-600 leading-[1.85]">محمد ظفر اقبال جلالی</span>
+                <span className="text-[10px] font-semibold block leading-[1.85]">پرنسپل و شیخ الحدیث جامعہ اسلام آباد</span>
               </div>
             </div>
           </div>

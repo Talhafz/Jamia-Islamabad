@@ -23,16 +23,42 @@ import { SignaturePad } from '../../../components/SignaturePad';
 import { PrintLayout } from './PrintLayout';
 import { formatCNIC, formatMobile } from '../../../utils/formatter';
 
+import { useLanguage } from '../../../context/LanguageContext';
+
+// Collision-proof bilingual label component
+const FieldLabel = ({ en, ur, required = false }: { en: string; ur: string; required?: boolean }) => (
+  <div className="flex items-center justify-between gap-2 text-xs font-bold mb-1.5 select-none w-full">
+    <span dir="ltr" className="font-latin-force text-left font-semibold text-[var(--color-teal-soft)] text-[11px] sm:text-xs shrink-0 max-w-[48%] truncate">
+      {en}
+    </span>
+    <span dir="rtl" className="text-right font-bold font-urdu text-[var(--color-gold-primary)] text-xs sm:text-sm shrink-0 max-w-[50%]">
+      {ur} {required && <span className="font-latin-force text-red-400 font-sans">*</span>}
+    </span>
+  </div>
+);
+
 export function AdmissionFormContainer() {
+  const { currentLanguage, t } = useLanguage();
   const [activeStep, setActiveStep] = useState(0);
   const [viewMode, setViewMode] = useState<'edit' | 'preview'>('edit');
   const [isSubmitSuccess, setIsSubmitSuccess] = useState(false);
 
-
   const steps = [
-    { label: 'طالب علم کی معلومات', subLabel: 'Student Personal Info', icon: User },
-    { label: 'سرپرست کی معلومات', subLabel: 'Guardian Details', icon: Users },
-    { label: 'بیان حلفی و دستخط', subLabel: 'Rules & Signatures', icon: FileText },
+    { 
+      label: currentLanguage === 'ur' ? 'طالب علم کی معلومات' : currentLanguage === 'ar' ? 'معلومات الطالب' : 'Student Personal Info', 
+      subLabel: currentLanguage === 'ur' ? 'پہلا مرحلہ' : currentLanguage === 'ar' ? 'الخطوة الأولى' : 'Step 1', 
+      icon: User 
+    },
+    { 
+      label: currentLanguage === 'ur' ? 'سرپرست کی معلومات' : currentLanguage === 'ar' ? 'معلومات ولي الأمر' : 'Guardian Details', 
+      subLabel: currentLanguage === 'ur' ? 'دوسرا مرحلہ' : currentLanguage === 'ar' ? 'الخطوة الثانية' : 'Step 2', 
+      icon: Users 
+    },
+    { 
+      label: currentLanguage === 'ur' ? 'بیان حلفی و دستخط' : currentLanguage === 'ar' ? 'الإقرار والتوقيع' : 'Rules & Signatures', 
+      subLabel: currentLanguage === 'ur' ? 'تیسرا مرحلہ' : currentLanguage === 'ar' ? 'الخطوة الثالثة' : 'Step 3', 
+      icon: FileText 
+    },
   ];
 
   // Initialize react-hook-form
@@ -68,7 +94,7 @@ export function AdmissionFormContainer() {
     }
   }, []);
 
-  // Preview data is just the current form values, no need to sync to state
+  // Preview data is just the current form values
   const previewData = formValues;
 
   // Handle Photo upload
@@ -95,7 +121,6 @@ export function AdmissionFormContainer() {
   const onSubmit = (data: AdmissionFormData) => {
     console.log('Form Submitted successfully:', data);
     setIsSubmitSuccess(true);
-    // Clear autosave draft on successful submission
     clearDraft();
   };
 
@@ -105,22 +130,27 @@ export function AdmissionFormContainer() {
 
   if (isSubmitSuccess) {
     return (
-      <div className="max-w-2xl mx-auto my-12 p-8 bg-white/70 backdrop-blur-md rounded-2xl shadow-xl border border-emerald-100 text-center animate-fade-in">
-        <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
+      <div className="max-w-2xl mx-auto my-12 p-8 bg-[var(--color-panel)] backdrop-blur-md rounded-[4px] shadow-2xl border border-[var(--color-gold-muted)]/40 text-center animate-fade-in">
+        <div className="w-16 h-16 bg-[var(--color-gold-primary)]/20 text-[var(--color-gold-primary)] rounded-[4px] flex items-center justify-center mx-auto mb-6">
           <CheckCircle className="w-10 h-10" />
         </div>
-        <h2 className="text-2xl font-bold text-emerald-950 mb-2">داخلہ فارم کامیابی سے جمع ہو گیا ہے</h2>
-        <h3 className="text-base text-emerald-800 font-semibold mb-6">Admission Form Submitted Successfully</h3>
-        <p className="text-zinc-600 text-sm mb-8 leading-relaxed">
-          آپ کا فارم کامیابی سے وصول ہو گیا ہے۔ اب آپ ڈیجیٹل طور پر بھرے ہوئے فارم کا پرنٹ لے سکتے ہیں یا اسے محفوظ کر سکتے ہیں۔ براہ کرم اسے پرنٹ کر کے متعلقہ تعلیمی اسناد کے ساتھ جامعہ کے دفتر میں جمع کروائیں۔
+        <h2 className="text-2xl font-bold font-urdu text-[var(--color-gold-primary)] mb-4">
+          {currentLanguage === 'ur' ? 'داخلہ فارم کامیابی سے جمع ہو گیا ہے' : currentLanguage === 'ar' ? 'تم تقديم نموذج الالتحاق بنجاح' : 'Admission Form Submitted Successfully'}
+        </h2>
+        <p className="text-[var(--color-text-body)] font-urdu text-sm mb-8 leading-relaxed">
+          {currentLanguage === 'ur'
+            ? 'آپ کا فارم کامیابی سے وصول ہو گیا ہے۔ اب آپ ڈیجیٹل طور پر بھرے ہوئے فارم کا پرنٹ لے سکتے ہیں یا اسے محفوظ کر سکتے ہیں۔ براہ کرم اسے پرنٹ کر کے متعلقہ تعلیمی اسناد کے ساتھ جامعہ کے دفتر میں جمع کروائیں۔'
+            : currentLanguage === 'ar'
+            ? 'تم استلام نموذجك بنجاح. يمكنك الآن طباعة النموذج المملوء رقمياً أو حفظه. يرجى طباعته وتقديمه مع المستندات المطلوبة إلى مكتب الجامعة.'
+            : 'Your form has been received successfully. You can now print or download the digitally filled form. Please print and submit it along with required educational documents to the Jamia office.'}
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <button
             onClick={() => setViewMode('preview')}
-            className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-medium shadow-md transition-all duration-300"
+            className="btn-primary-gold flex items-center justify-center gap-2 px-6 py-3 text-xs uppercase"
           >
             <Eye className="w-4 h-4" />
-            Print Form Preview
+            {currentLanguage === 'ur' ? 'پرنٹ فارم کا معاینہ' : currentLanguage === 'ar' ? 'معاينة النموذج المطبوع' : 'Print Form Preview'}
           </button>
           <button
             onClick={() => {
@@ -129,55 +159,63 @@ export function AdmissionFormContainer() {
               setActiveStep(0);
               setViewMode('edit');
             }}
-            className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-800 font-medium transition-all duration-300"
+            className="btn-secondary-teal flex items-center justify-center gap-2 px-6 py-3 text-xs uppercase"
           >
-            Fill Another Form
+            {currentLanguage === 'ur' ? 'ایک اور فارم پر کریں' : currentLanguage === 'ar' ? 'تعبئة نموذج آخر' : 'Fill Another Form'}
           </button>
         </div>
       </div>
     );
   }
 
+  const inputStyle = "w-full px-3.5 py-2.5 rounded-[4px] border border-[var(--color-emerald-mid)]/70 bg-[var(--color-emerald-deep)]/90 text-[var(--color-ivory)] placeholder-[var(--color-text-muted)] text-xs sm:text-sm focus:outline-none focus:border-[var(--color-gold-primary)] focus:ring-1 focus:ring-[var(--color-gold-primary)]/50 transition-all duration-200";
+
   return (
     <div className="w-full flex flex-col gap-6">
       
       {/* Draft Saving Status Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-xl bg-white/50 backdrop-blur-md border border-zinc-200 shadow-sm text-xs font-semibold select-none print:hidden">
-        <div className="flex items-center gap-2 text-zinc-600">
-          <Save className="w-4 h-4 text-emerald-600" />
-          <span>Draft Autosave:</span>
+      <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-[4px] bg-[var(--color-emerald-deep)]/90 backdrop-blur-md border border-[var(--color-emerald-mid)]/60 shadow-lg text-xs font-semibold select-none print:hidden">
+        <div className="flex items-center gap-2 text-[var(--color-teal-soft)]">
+          <Save className="w-4 h-4 text-[var(--color-gold-primary)]" />
+          <span>{currentLanguage === 'ur' ? 'خودکار بچت:' : currentLanguage === 'ar' ? 'الحفظ التلقائي:' : 'Draft Autosave:'}</span>
           {isSaving ? (
-            <span className="text-amber-600 animate-pulse">Saving draft...</span>
+            <span className="text-[var(--color-gold-bright)] animate-pulse">
+              {currentLanguage === 'ur' ? 'ڈرافٹ محفوظ ہو رہا ہے...' : currentLanguage === 'ar' ? 'جاري حفظ المسودة...' : 'Saving draft...'}
+            </span>
           ) : lastSaved ? (
-            <span className="text-emerald-700">Last saved at {lastSaved}</span>
+            <span className="text-[var(--color-teal-accent)]">
+              {currentLanguage === 'ur' ? `آخری بار ${lastSaved} پر محفوظ ہوا` : currentLanguage === 'ar' ? `تم آخر حفظ في ${lastSaved}` : `Last saved at ${lastSaved}`}
+            </span>
           ) : (
-            <span className="text-zinc-400">No active draft</span>
+            <span className="text-[var(--color-text-muted)]">
+              {currentLanguage === 'ur' ? 'کوئی فعال ڈرافٹ نہیں' : currentLanguage === 'ar' ? 'لا توجد مسودة نشطة' : 'No active draft'}
+            </span>
           )}
         </div>
         <div className="flex gap-2">
           <button
             onClick={() => setViewMode(viewMode === 'edit' ? 'preview' : 'edit')}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 transition-all duration-200"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-[4px] bg-[var(--color-emerald-mid)]/60 hover:bg-[var(--color-emerald-mid)] text-[var(--color-gold-bright)] border border-[var(--color-gold-muted)]/40 transition-all duration-200 text-xs font-bold"
           >
             {viewMode === 'edit' ? (
               <>
                 <Eye className="w-3.5 h-3.5" />
-                Show PDF Print Preview (ملا خطہ فرمائیں)
+                {currentLanguage === 'ur' ? 'پی ڈی ایف پرنٹ پریویو دیکھیں' : currentLanguage === 'ar' ? 'معاينة الطباعة' : 'Show PDF Print Preview'}
               </>
             ) : (
               <>
                 <FileText className="w-3.5 h-3.5" />
-                Back to Editing (ترمیم کریں)
+                {currentLanguage === 'ur' ? 'ترمیم کی طرف واپس جائیں' : currentLanguage === 'ar' ? 'العودة للتعديل' : 'Back to Editing'}
               </>
             )}
           </button>
           {viewMode === 'preview' && (
             <button
               onClick={handlePrint}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-medium shadow-sm transition-all duration-200"
+              className="btn-primary-gold flex items-center gap-1.5 px-3.5 py-1.5 text-xs uppercase font-bold"
             >
               <Printer className="w-3.5 h-3.5" />
-              Print / Save as PDF
+              {currentLanguage === 'ur' ? 'پرنٹ / پی ڈی ایف محفوظ کریں' : currentLanguage === 'ar' ? 'طباعة / حفظ كـ PDF' : 'Print / Save as PDF'}
             </button>
           )}
         </div>
@@ -185,24 +223,28 @@ export function AdmissionFormContainer() {
 
       {viewMode === 'preview' && previewData ? (
         <div className="w-full">
-          <div className="bg-amber-50 border border-amber-200 text-amber-900 rounded-xl p-4 mb-6 text-xs text-center select-none print:hidden">
-            <p className="font-bold flex items-center justify-center gap-1">
-              <AlertCircle className="w-4 h-4 text-amber-600" />
-              This is the official printed view layout. Press "Print / Save as PDF" at the top to download or print.
+          <div className="bg-[var(--color-panel)] border border-[var(--color-gold-primary)]/40 text-[var(--color-gold-bright)] rounded-[4px] p-4 mb-6 text-xs text-center select-none print:hidden shadow-lg">
+            <p className="font-bold flex items-center justify-center gap-1.5 font-urdu">
+              <AlertCircle className="w-4 h-4 text-[var(--color-gold-primary)] flex-shrink-0" />
+              {currentLanguage === 'ur'
+                ? 'یہ سرکاری پرنٹ شدہ فارم کی معاینہ شکل ہے۔ ڈاؤن لوڈ یا پرنٹ کرنے کے لیے اوپر "پرنٹ / پی ڈی ایف محفوظ کریں" بٹن دبائیں۔'
+                : currentLanguage === 'ar'
+                ? 'هذه هي معاينة النموذج الرسمي المطبوع. اضغط على "طباعة / حفظ كـ PDF" في الأعلى للتنزيل أو الطباعة.'
+                : 'This is the official printed view layout. Press "Print / Save as PDF" at the top to download or print.'}
             </p>
           </div>
           <PrintLayout data={previewData} />
         </div>
       ) : (
         <FormProvider {...methods}>
-          <div className="w-full max-w-4xl mx-auto bg-white/70 backdrop-blur-md rounded-2xl shadow-xl border border-zinc-200/80 overflow-hidden print:hidden select-none">
+          <div className="w-full max-w-4xl mx-auto bg-[var(--color-panel)] backdrop-blur-md rounded-[4px] shadow-2xl border border-[var(--color-emerald-mid)]/60 overflow-hidden print:hidden select-none">
             
             {/* Steps Progress Indicator */}
-            <div className="bg-zinc-50 border-b border-zinc-200 p-6 select-none">
+            <div className="bg-[var(--color-emerald-deep)] border-b border-[var(--color-emerald-mid)]/60 p-6 select-none">
               <div className="flex justify-between items-center relative max-w-2xl mx-auto">
-                <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-zinc-200 -translate-y-1/2 z-0" />
+                <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-[var(--color-emerald-mid)] -translate-y-1/2 z-0" />
                 <div 
-                  className="absolute top-1/2 left-0 h-0.5 bg-emerald-600 -translate-y-1/2 z-0 transition-all duration-300"
+                  className="absolute top-1/2 left-0 h-0.5 bg-gradient-to-r from-[var(--color-gold-primary)] to-[var(--color-teal-accent)] -translate-y-1/2 z-0 transition-all duration-300"
                   style={{ width: `${(activeStep / (steps.length - 1)) * 100}%` }}
                 />
                 
@@ -216,19 +258,19 @@ export function AdmissionFormContainer() {
                       <div
                         className={`w-10 h-10 rounded-full flex items-center justify-center font-bold transition-all duration-300 ${
                           isCompleted
-                            ? 'bg-emerald-600 text-white'
+                            ? 'bg-[var(--color-teal-accent)] text-[var(--color-emerald-deep)] shadow-md'
                             : isActive
-                            ? 'bg-emerald-800 text-white ring-4 ring-emerald-100 shadow-md scale-110'
-                            : 'bg-white border-2 border-zinc-200 text-zinc-400'
+                            ? 'bg-[var(--color-gold-primary)] text-[var(--color-emerald-deep)] ring-4 ring-[var(--color-gold-primary)]/20 shadow-xl scale-110'
+                            : 'bg-[var(--color-panel)] border-2 border-[var(--color-emerald-mid)] text-[var(--color-teal-soft)]/60'
                         }`}
                       >
                         {isCompleted ? <CheckCircle className="w-5 h-5" /> : <StepIcon className="w-4 h-4" />}
                       </div>
                       <div className="text-center">
-                        <p className={`text-[11px] font-bold ${isActive ? 'text-emerald-950 font-extrabold' : 'text-zinc-500'}`}>
+                        <p className={`text-[11px] sm:text-xs font-urdu font-bold ${isActive ? 'text-[var(--color-gold-bright)] font-black' : 'text-[var(--color-text-muted)]'}`}>
                           {step.label}
                         </p>
-                        <p className="text-[9px] font-medium text-zinc-400">
+                        <p className="text-[9px] sm:text-[10px] font-medium text-[var(--color-teal-soft)]/70">
                           {step.subLabel}
                         </p>
                       </div>
@@ -244,225 +286,188 @@ export function AdmissionFormContainer() {
               {/* STEP 0: Student Personal Details */}
               {activeStep === 0 && (
                 <div className="flex flex-col gap-6 animate-fade-in">
-                  <div className="flex items-center gap-2 text-emerald-900 border-b border-zinc-150 pb-2 mb-2">
-                    <Sparkles className="w-5 h-5 text-emerald-600" />
-                    <h3 className="text-base font-bold">طالب علم کا ذاتی ریکارڈ (Student Information)</h3>
+                  <div className="flex items-center gap-2 text-[var(--color-gold-primary)] border-b border-[var(--color-emerald-mid)]/50 pb-2 mb-2 font-urdu">
+                    <Sparkles className="w-5 h-5 text-[var(--color-gold-primary)]" />
+                    <h3 className="text-base sm:text-lg font-bold">
+                      {currentLanguage === 'ur' ? 'طالب علم کا ذاتی ریکارڈ' : currentLanguage === 'ar' ? 'معلومات الطالب' : 'Student Information'}
+                    </h3>
                   </div>
 
-                  {/* Form Number, Dept, Class */}
+                  {/* Dept, Class, Date */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-bold text-zinc-700 flex justify-between">
-                        <span>Department</span>
-                        <span>شعبہ *</span>
-                      </label>
+                    <div className="flex flex-col">
+                      <FieldLabel en="Department" ur="شعبہ" required />
                       <select
                         {...register('department')}
-                        className="w-full px-3 py-2 border rounded-lg border-zinc-300 text-xs bg-white text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-600/35 focus:border-emerald-600 transition-all"
+                        className={inputStyle}
                       >
-                        <option value="">Select Department</option>
-                        <option value="درس نظامی (Dars-e-Nizami)">درس نظامی (Dars-e-Nizami)</option>
-                        <option value="حفظ القرآن (Hifz-ul-Quran)">حفظ القرآن (Hifz-ul-Quran)</option>
-                        <option value="تجوید و قراءت (Tajweed-o-Qira'at)">تجوید و قراءت (Tajweed-o-Qira'at)</option>
-                        <option value="مٹرک / ایف اے (Matric/FA)">مٹرک / ایف اے (Matric/FA)</option>
+                        <option value="" className="bg-[var(--color-panel)] text-[var(--color-ivory)]">Select Department</option>
+                        <option value="درس نظامی (Dars-e-Nizami)" className="bg-[var(--color-panel)] text-[var(--color-ivory)]">درس نظامی (Dars-e-Nizami)</option>
+                        <option value="حفظ القرآن (Hifz-ul-Quran)" className="bg-[var(--color-panel)] text-[var(--color-ivory)]">حفظ القرآن (Hifz-ul-Quran)</option>
+                        <option value="تجوید و قراءت (Tajweed-o-Qira'at)" className="bg-[var(--color-panel)] text-[var(--color-ivory)]">تجوید و قراءت (Tajweed-o-Qira'at)</option>
+                        <option value="مٹرک / ایف اے (Matric/FA)" className="bg-[var(--color-panel)] text-[var(--color-ivory)]">مٹرک / ایف اے (Matric/FA)</option>
                       </select>
                       {errors.department && (
-                        <p className="text-[10px] text-red-600 font-bold">{errors.department.message}</p>
+                        <p className="text-[10px] text-red-400 font-bold mt-1">{errors.department.message}</p>
                       )}
                     </div>
 
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-bold text-zinc-700 flex justify-between">
-                        <span>Class / Grade</span>
-                        <span>درجہ *</span>
-                      </label>
+                    <div className="flex flex-col">
+                      <FieldLabel en="Class / Grade" ur="درجہ" required />
                       <input
                         type="text"
                         {...register('classGrade')}
                         placeholder="e.g. 1st Year / درجہ اولیٰ"
-                        className="w-full px-3 py-2 border rounded-lg border-zinc-300 text-xs text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-600/35 focus:border-emerald-600 transition-all"
+                        className={inputStyle}
                       />
                       {errors.classGrade && (
-                        <p className="text-[10px] text-red-600 font-bold">{errors.classGrade.message}</p>
+                        <p className="text-[10px] text-red-400 font-bold mt-1">{errors.classGrade.message}</p>
                       )}
                     </div>
 
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-bold text-zinc-700 flex justify-between">
-                        <span>Date</span>
-                        <span>تاریخ *</span>
-                      </label>
+                    <div className="flex flex-col">
+                      <FieldLabel en="Date" ur="تاریخ" required />
                       <input
                         type="date"
                         {...register('date')}
-                        className="w-full px-3 py-2 border rounded-lg border-zinc-300 text-xs text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-600/35 focus:border-emerald-600 transition-all"
+                        className={inputStyle}
                       />
                     </div>
                   </div>
 
                   {/* Student Name & Father Name */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-bold text-zinc-700 flex justify-between">
-                        <span>Student's Name</span>
-                        <span>طالب علم/طالبہ کا نام *</span>
-                      </label>
+                    <div className="flex flex-col">
+                      <FieldLabel en="Student's Name" ur="طالب علم/طالبہ کا نام" required />
                       <input
                         type="text"
                         {...register('studentName')}
                         placeholder="Full Name (in Urdu/English)"
-                        className="w-full px-3 py-2 border rounded-lg border-zinc-300 text-xs text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-600/35 focus:border-emerald-600 transition-all"
+                        className={inputStyle}
                       />
                       {errors.studentName && (
-                        <p className="text-[10px] text-red-600 font-bold">{errors.studentName.message}</p>
+                        <p className="text-[10px] text-red-400 font-bold mt-1">{errors.studentName.message}</p>
                       )}
                     </div>
 
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-bold text-zinc-700 flex justify-between">
-                        <span>Father's Name</span>
-                        <span>ولد / ولدیت *</span>
-                      </label>
+                    <div className="flex flex-col">
+                      <FieldLabel en="Father's Name" ur="ولد / ولدیت" required />
                       <input
                         type="text"
                         {...register('fatherName')}
                         placeholder="Father's Full Name"
-                        className="w-full px-3 py-2 border rounded-lg border-zinc-300 text-xs text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-600/35 focus:border-emerald-600 transition-all"
+                        className={inputStyle}
                       />
                       {errors.fatherName && (
-                        <p className="text-[10px] text-red-600 font-bold">{errors.fatherName.message}</p>
+                        <p className="text-[10px] text-red-400 font-bold mt-1">{errors.fatherName.message}</p>
                       )}
                     </div>
                   </div>
 
                   {/* DOB, Phone, Mobile */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-bold text-zinc-700 flex justify-between">
-                        <span>Date of Birth</span>
-                        <span>تاریخ پیدائش *</span>
-                      </label>
+                    <div className="flex flex-col">
+                      <FieldLabel en="Date of Birth" ur="تاریخ پیدائش" required />
                       <input
                         type="date"
                         {...register('dob')}
-                        className="w-full px-3 py-2 border rounded-lg border-zinc-300 text-xs text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-600/35 focus:border-emerald-600 transition-all"
+                        className={inputStyle}
                       />
                       {errors.dob && (
-                        <p className="text-[10px] text-red-600 font-bold">{errors.dob.message}</p>
+                        <p className="text-[10px] text-red-400 font-bold mt-1">{errors.dob.message}</p>
                       )}
                     </div>
 
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-bold text-zinc-700 flex justify-between">
-                        <span>Phone (Landline)</span>
-                        <span>فون نمبر</span>
-                      </label>
+                    <div className="flex flex-col">
+                      <FieldLabel en="Phone (Landline)" ur="فون نمبر" />
                       <input
                         type="text"
                         {...register('phone')}
                         placeholder="e.g. 051-1234567"
-                        className="w-full px-3 py-2 border rounded-lg border-zinc-300 text-xs text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-600/35 focus:border-emerald-600 transition-all"
+                        className={inputStyle}
                       />
                     </div>
 
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-bold text-zinc-700 flex justify-between">
-                        <span>Mobile Number</span>
-                        <span>موبائل نمبر *</span>
-                      </label>
+                    <div className="flex flex-col">
+                      <FieldLabel en="Mobile Number" ur="موبائل نمبر" required />
                       <input
                         type="text"
                         {...register('mobile')}
                         onChange={(e) => setValue('mobile', formatMobile(e.target.value), { shouldValidate: true })}
                         placeholder="e.g. 0300-1234567"
-                        className="w-full px-3 py-2 border rounded-lg border-zinc-300 text-xs text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-600/35 focus:border-emerald-600 transition-all"
+                        className={inputStyle}
                       />
                       {errors.mobile && (
-                        <p className="text-[10px] text-red-600 font-bold">{errors.mobile.message}</p>
+                        <p className="text-[10px] text-red-400 font-bold mt-1">{errors.mobile.message}</p>
                       )}
                     </div>
                   </div>
 
                   {/* Student CNIC / Bform & Father CNIC */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-bold text-zinc-700 flex justify-between">
-                        <span>CNIC / B-Form Number</span>
-                        <span>طالب علم کا شناختی کارڈ نمبر *</span>
-                      </label>
+                    <div className="flex flex-col">
+                      <FieldLabel en="CNIC / B-Form Number" ur="طالب علم کا شناختی کارڈ نمبر" required />
                       <input
                         type="text"
                         {...register('studentCnic')}
                         onChange={(e) => setValue('studentCnic', formatCNIC(e.target.value), { shouldValidate: true })}
                         placeholder="XXXXX-XXXXXXX-X"
-                        className="w-full px-3 py-2 border rounded-lg border-zinc-300 text-xs text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-600/35 focus:border-emerald-600 transition-all"
+                        className={inputStyle}
                       />
                       {errors.studentCnic && (
-                        <p className="text-[10px] text-red-600 font-bold">{errors.studentCnic.message}</p>
+                        <p className="text-[10px] text-red-400 font-bold mt-1">{errors.studentCnic.message}</p>
                       )}
                     </div>
 
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-bold text-zinc-700 flex justify-between">
-                        <span>Father's CNIC Number</span>
-                        <span>والد کا شناختی کارڈ نمبر *</span>
-                      </label>
+                    <div className="flex flex-col">
+                      <FieldLabel en="Father's CNIC Number" ur="والد کا شناختی کارڈ نمبر" required />
                       <input
                         type="text"
                         {...register('fatherCnic')}
                         onChange={(e) => setValue('fatherCnic', formatCNIC(e.target.value), { shouldValidate: true })}
                         placeholder="XXXXX-XXXXXXX-X"
-                        className="w-full px-3 py-2 border rounded-lg border-zinc-300 text-xs text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-600/35 focus:border-emerald-600 transition-all"
+                        className={inputStyle}
                       />
                       {errors.fatherCnic && (
-                        <p className="text-[10px] text-red-600 font-bold">{errors.fatherCnic.message}</p>
+                        <p className="text-[10px] text-red-400 font-bold mt-1">{errors.fatherCnic.message}</p>
                       )}
                     </div>
                   </div>
 
                   {/* Addresses */}
                   <div className="flex flex-col gap-4">
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-bold text-zinc-700 flex justify-between">
-                        <span>Permanent Address</span>
-                        <span>مستقل پتہ *</span>
-                      </label>
+                    <div className="flex flex-col">
+                      <FieldLabel en="Permanent Address" ur="مستقل پتہ" required />
                       <textarea
                         {...register('permanentAddress')}
                         rows={2}
                         placeholder="Permanent Address as on CNIC"
-                        className="w-full px-3 py-2 border rounded-lg border-zinc-300 text-xs text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-600/35 focus:border-emerald-600 transition-all resize-none"
+                        className={`${inputStyle} resize-none`}
                       />
                       {errors.permanentAddress && (
-                        <p className="text-[10px] text-red-600 font-bold">{errors.permanentAddress.message}</p>
+                        <p className="text-[10px] text-red-400 font-bold mt-1">{errors.permanentAddress.message}</p>
                       )}
                     </div>
 
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-bold text-zinc-700 flex justify-between">
-                        <span>Temporary Address</span>
-                        <span>عارضی پتہ</span>
-                      </label>
+                    <div className="flex flex-col">
+                      <FieldLabel en="Temporary Address" ur="عارضی پتہ" />
                       <textarea
                         {...register('temporaryAddress')}
                         rows={2}
                         placeholder="Temporary/Current Address"
-                        className="w-full px-3 py-2 border rounded-lg border-zinc-300 text-xs text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-600/35 focus:border-emerald-600 transition-all resize-none"
+                        className={`${inputStyle} resize-none`}
                       />
                     </div>
                   </div>
 
                   {/* Photograph Upload */}
-                  <div className="flex flex-col gap-2">
-                    <label className="text-xs font-bold text-zinc-700 flex justify-between">
-                      <span>Passport Photograph (1.5x2 size)</span>
-                      <span>طالب علم کی تصویر *</span>
-                    </label>
-                    <div className="flex flex-col sm:flex-row items-center gap-4 border-2 border-dashed border-zinc-300 hover:border-emerald-500 rounded-xl p-4 bg-zinc-50/50 transition-all duration-300">
+                  <div className="flex flex-col gap-1">
+                    <FieldLabel en="Passport Photograph (1.5x2 size)" ur="طالب علم کی تصویر" required />
+                    <div className="flex flex-col sm:flex-row items-center gap-4 border-2 border-dashed border-[var(--color-gold-muted)]/60 hover:border-[var(--color-gold-primary)] rounded-[4px] p-4 bg-[var(--color-emerald-deep)]/60 transition-all duration-300">
                       <div className="flex flex-col items-center gap-1.5 text-center flex-grow">
-                        <UploadCloud className="w-8 h-8 text-zinc-400" />
-                        <span className="text-xs font-bold text-zinc-700">Drag or Browse Profile Photo</span>
-                        <span className="text-[10px] text-zinc-500">Supports PNG, JPG, JPEG. (Max 1MB)</span>
+                        <UploadCloud className="w-8 h-8 text-[var(--color-gold-primary)] opacity-70" />
+                        <span className="text-xs font-bold text-[var(--color-gold-bright)]">Drag or Browse Profile Photo</span>
+                        <span className="text-[10px] text-[var(--color-teal-soft)]">Supports PNG, JPG, JPEG. (Max 1MB)</span>
                         <input
                           type="file"
                           accept="image/*"
@@ -472,23 +477,23 @@ export function AdmissionFormContainer() {
                         />
                         <label
                           htmlFor="student-photo-file"
-                          className="mt-2 px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 text-xs font-bold cursor-pointer transition-all duration-200"
+                          className="mt-2 px-3.5 py-1.5 rounded-[4px] bg-[var(--color-emerald-mid)] hover:bg-[var(--color-emerald-mid)]/80 border border-[var(--color-gold-muted)]/40 text-[var(--color-gold-bright)] text-xs font-bold cursor-pointer transition-all duration-200"
                         >
                           Select Image
                         </label>
                       </div>
                       
                       {/* Photo preview */}
-                      <div className="w-[85px] h-[110px] border-2 border-dashed border-zinc-200 bg-white rounded-lg flex items-center justify-center p-1 overflow-hidden">
+                      <div className="w-[85px] h-[110px] border-2 border-dashed border-[var(--color-emerald-mid)] bg-[var(--color-panel)] rounded-[4px] flex items-center justify-center p-1 overflow-hidden">
                         {formValues.photo ? (
                           <img src={formValues.photo} alt="Upload preview" className="w-full h-full object-cover rounded" />
                         ) : (
-                          <span className="text-[9px] text-zinc-400 text-center">1.5x2 Size Photo</span>
+                          <span className="text-[9px] text-[var(--color-teal-soft)] text-center">1.5x2 Size Photo</span>
                         )}
                       </div>
                     </div>
                     {errors.photo && (
-                      <p className="text-[10px] text-red-600 font-bold">{errors.photo.message}</p>
+                      <p className="text-[10px] text-red-400 font-bold mt-1">{errors.photo.message}</p>
                     )}
                   </div>
                 </div>
@@ -497,98 +502,82 @@ export function AdmissionFormContainer() {
               {/* STEP 1: Guardian Details */}
               {activeStep === 1 && (
                 <div className="flex flex-col gap-6 animate-fade-in">
-                  <div className="flex items-center gap-2 text-emerald-900 border-b border-zinc-150 pb-2 mb-2">
-                    <Users className="w-5 h-5 text-emerald-600" />
-                    <h3 className="text-base font-bold">سرپرست کے کوائف (Guardian Information)</h3>
+                  <div className="flex items-center gap-2 text-[var(--color-gold-primary)] border-b border-[var(--color-emerald-mid)]/50 pb-2 mb-2 font-urdu">
+                    <Users className="w-5 h-5 text-[var(--color-gold-primary)]" />
+                    <h3 className="text-base sm:text-lg font-bold">
+                      {currentLanguage === 'ur' ? 'سرپرست کی معلومات' : currentLanguage === 'ar' ? 'معلومات ولي الأمر' : 'Guardian Details'}
+                    </h3>
                   </div>
 
                   {/* Guardian Name & Relation */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-bold text-zinc-700 flex justify-between">
-                        <span>Guardian Name</span>
-                        <span>سرپرست کا نام</span>
-                      </label>
+                    <div className="flex flex-col">
+                      <FieldLabel en="Guardian Name" ur="سرپرست کا نام" />
                       <input
                         type="text"
                         {...register('guardianName')}
                         placeholder="Guardian's Full Name"
-                        className="w-full px-3 py-2 border rounded-lg border-zinc-300 text-xs text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-600/35 focus:border-emerald-600 transition-all"
+                        className={inputStyle}
                       />
                     </div>
 
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-bold text-zinc-700 flex justify-between">
-                        <span>Relation with Guardian</span>
-                        <span>سرپرست سے رشتہ</span>
-                      </label>
+                    <div className="flex flex-col">
+                      <FieldLabel en="Relation with Guardian" ur="سرپرست سے رشتہ" />
                       <input
                         type="text"
                         {...register('guardianRelation')}
                         placeholder="e.g. Uncle / Brother"
-                        className="w-full px-3 py-2 border rounded-lg border-zinc-300 text-xs text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-600/35 focus:border-emerald-600 transition-all"
+                        className={inputStyle}
                       />
                     </div>
                   </div>
 
                   {/* Guardian CNIC & Phone */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-bold text-zinc-700 flex justify-between">
-                        <span>Guardian CNIC Number</span>
-                        <span>سرپرست کا شناختی کارڈ نمبر</span>
-                      </label>
+                    <div className="flex flex-col">
+                      <FieldLabel en="Guardian CNIC Number" ur="سرپرست کا شناختی کارڈ نمبر" />
                       <input
                         type="text"
                         {...register('guardianCnic')}
                         onChange={(e) => setValue('guardianCnic', formatCNIC(e.target.value), { shouldValidate: true })}
                         placeholder="XXXXX-XXXXXXX-X"
-                        className="w-full px-3 py-2 border rounded-lg border-zinc-300 text-xs text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-600/35 focus:border-emerald-600 transition-all"
+                        className={inputStyle}
                       />
                       {errors.guardianCnic && (
-                        <p className="text-[10px] text-red-600 font-bold">{errors.guardianCnic.message}</p>
+                        <p className="text-[10px] text-red-400 font-bold mt-1">{errors.guardianCnic.message}</p>
                       )}
                     </div>
 
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-bold text-zinc-700 flex justify-between">
-                        <span>Guardian Contact (Mobile/Office)</span>
-                        <span>سرپرست کا فون نمبر</span>
-                      </label>
+                    <div className="flex flex-col">
+                      <FieldLabel en="Guardian Contact (Mobile/Office)" ur="سرپرست کا فون نمبر" />
                       <input
                         type="text"
                         {...register('guardianPhone')}
                         placeholder="e.g. 0300-1234567"
-                        className="w-full px-3 py-2 border rounded-lg border-zinc-300 text-xs text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-600/35 focus:border-emerald-600 transition-all"
+                        className={inputStyle}
                       />
                     </div>
                   </div>
 
                   {/* Guardian Address details */}
                   <div className="flex flex-col gap-4">
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-bold text-zinc-700 flex justify-between">
-                        <span>Guardian Permanent Address</span>
-                        <span>سرپرست کا مستقل پتہ</span>
-                      </label>
+                    <div className="flex flex-col">
+                      <FieldLabel en="Guardian Permanent Address" ur="سرپرست کا مستقل پتہ" />
                       <textarea
                         {...register('guardianPermanentAddress')}
                         rows={2}
                         placeholder="Guardian Permanent Address"
-                        className="w-full px-3 py-2 border rounded-lg border-zinc-300 text-xs text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-600/35 focus:border-emerald-600 transition-all resize-none"
+                        className={`${inputStyle} resize-none`}
                       />
                     </div>
 
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-bold text-zinc-700 flex justify-between">
-                        <span>Guardian Temporary Address</span>
-                        <span>سرپرست کا عارضی پتہ</span>
-                      </label>
+                    <div className="flex flex-col">
+                      <FieldLabel en="Guardian Temporary Address" ur="سرپرست کا عارضی پتہ" />
                       <textarea
                         {...register('guardianTemporaryAddress')}
                         rows={2}
                         placeholder="Guardian Temporary Address"
-                        className="w-full px-3 py-2 border rounded-lg border-zinc-300 text-xs text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-600/35 focus:border-emerald-600 transition-all resize-none"
+                        className={`${inputStyle} resize-none`}
                       />
                     </div>
                   </div>
@@ -598,17 +587,17 @@ export function AdmissionFormContainer() {
               {/* STEP 2: Rules & Digital Signatures */}
               {activeStep === 2 && (
                 <div className="flex flex-col gap-6 animate-fade-in">
-                  <div className="flex items-center gap-2 text-emerald-900 border-b border-zinc-150 pb-2 mb-2">
-                    <FileText className="w-5 h-5 text-emerald-600" />
-                    <h3 className="text-base font-bold">قواعد و ضوابط اور بیان حلفی (Rules & Digital Signatures)</h3>
+                  <div className="flex items-center gap-2 text-[var(--color-gold-primary)] border-b border-[var(--color-emerald-mid)]/50 pb-2 mb-2 font-urdu">
+                    <FileText className="w-5 h-5 text-[var(--color-gold-primary)]" />
+                    <h3 className="text-base sm:text-lg font-bold">
+                      {currentLanguage === 'ur' ? 'قواعد و ضوابط اور بیان حلفی' : currentLanguage === 'ar' ? 'القواعد والتعهد الخطي' : 'Rules & Digital Signatures'}
+                    </h3>
                   </div>
 
                   {/* Rules Scroll Box */}
-                  <div className="flex flex-col gap-2">
-                    <label className="text-xs font-bold text-zinc-700">
-                      قواعد و ضوابط (Please read the rules and regulations carefully)
-                    </label>
-                    <div className="h-44 border border-zinc-300 rounded-lg p-4 bg-zinc-50 overflow-y-auto text-zinc-800 text-[11px] leading-relaxed text-right" style={{ direction: 'rtl' }}>
+                  <div className="flex flex-col">
+                    <FieldLabel en="Please read the rules and regulations carefully" ur="قواعد و ضوابط" />
+                    <div className="h-44 border border-[var(--color-emerald-mid)]/70 rounded-[4px] p-4 bg-[var(--color-emerald-deep)]/90 text-[var(--color-text-body)] text-[11px] leading-relaxed text-right font-urdu overflow-y-auto" style={{ direction: 'rtl' }}>
                       <ol className="list-decimal pr-5 flex flex-col gap-2 font-semibold">
                         <li>امیدوار کو چاہیے کہ پرنسپل کے نام درخواست ارسال کرے جو مجوزہ فارم پر مشتمل ہو۔</li>
                         <li>درخواست فارم کے ساتھ اپنا شناختی کارڈ/بے فارم، سرپرست/والد کا شناختی کارڈ، تعلیمی اسناد کی فوٹو سٹیٹ اور 2 عدد 1.5x2 کی تصاویر منسلک کریں۔</li>
@@ -619,59 +608,53 @@ export function AdmissionFormContainer() {
                         <li>تین دن کی بغیر اطلاع غیر حاضری سے طالب علم کو جامعہ سے خارج کر دیا جائے گا۔</li>
                         <li>جو قواعد و ضوابط وقتاً فوقتاً نگران ادارہ کی طرف سے نافذ کئے جائیں گے ان کی پابندی ہر طالب علم کیلئے ضروری ہوگی۔</li>
                         <li>کلاس ٹائم میں کسی فرد سے ملاقات اور موبائل فون رکھنے یا فون سننے کی اجازت نہیں ہوگی۔</li>
-                        <li>والدین شکایت کی صورت میں جامعہ کے ذمہ داران سے رابطہ کریں اور اساتذہ سے کسی قسم کا ایکشن لینے کے مجاز نہیں ہونگے۔</li>
+                        <li>والدین شکایت کی صورت میں جامعہ کے ذمہ داران سے رابطہ کریں اور اساتذہ سے کسی قسم کا ایکشن لینے کے مجاز نہیں ہونگےے۔</li>
                         <li>طالب علم کے بھاگنے کی صورت میں جامعہ ذمہ دار نہیں ہوگا، صرف حتی الوسع ذمہ داران کو مطلع کیا جائے گا۔</li>
                       </ol>
                     </div>
                   </div>
 
                   {/* Affidavit Checkbox */}
-                  <div className="p-4 rounded-lg bg-emerald-50/50 border border-emerald-100 flex items-start gap-3">
+                  <div className="p-4 rounded-[4px] bg-[var(--color-emerald-deep)]/70 border border-[var(--color-gold-muted)]/40 flex items-start gap-3">
                     <input
                       type="checkbox"
                       id="agreeToRules"
                       {...register('agreeToRules')}
-                      className="mt-1 w-4 h-4 text-emerald-800 border-zinc-300 rounded focus:ring-emerald-600 focus:outline-none accent-emerald-800"
+                      className="mt-1 w-4 h-4 accent-[var(--color-gold-primary)] rounded focus:outline-none"
                     />
-                    <label htmlFor="agreeToRules" className="text-xs font-bold text-emerald-950 leading-relaxed text-right" style={{ direction: 'rtl' }}>
+                    <label htmlFor="agreeToRules" className="text-xs font-bold text-[var(--color-gold-bright)] leading-relaxed text-right font-urdu cursor-pointer" style={{ direction: 'rtl' }}>
                       میں اقرار کرتا ہوں کہ میں نے جامعہ اسلام آباد کے قواعد و ضوابط اور ہدایات اچھی طرح پڑھ لئے ہیں۔ میں ان پر سختی سے عمل پیرا ہونے کا عہد کرتا ہوں۔ اگر میں قواعد و ضوابط کی خلاف ورزی کرتا ہوں، تو میں جامعہ اسلام آباد کے مطابق مناسب سزا کیلئے ذمہ دار ہوں گا۔
                     </label>
                   </div>
                   {errors.agreeToRules && (
-                    <p className="text-[10px] text-red-600 font-bold">{errors.agreeToRules.message}</p>
+                    <p className="text-[10px] text-red-400 font-bold mt-1">{errors.agreeToRules.message}</p>
                   )}
 
                   {/* Signature Pads */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Student Signature */}
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-bold text-zinc-700 flex justify-between">
-                        <span>Student Signature</span>
-                        <span>طالب علم کے دستخط *</span>
-                      </label>
+                    <div className="flex flex-col">
+                      <FieldLabel en="Student Signature" ur="طالب علم کے دستخط" required />
                       <SignaturePad
                         value={formValues.studentSignature}
                         onChange={(val) => setValue('studentSignature', val, { shouldValidate: true })}
                         placeholder="طالب علم اپنے دستخط یہاں کریں"
                       />
                       {errors.studentSignature && (
-                        <p className="text-[10px] text-red-600 font-bold">{errors.studentSignature.message}</p>
+                        <p className="text-[10px] text-red-400 font-bold mt-1">{errors.studentSignature.message}</p>
                       )}
                     </div>
 
                     {/* Guardian Signature */}
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-bold text-zinc-700 flex justify-between">
-                        <span>Guardian / Father Signature</span>
-                        <span>سرپرست/والد کے دستخط *</span>
-                      </label>
+                    <div className="flex flex-col">
+                      <FieldLabel en="Guardian / Father Signature" ur="سرپرست/والد کے دستخط" required />
                       <SignaturePad
                         value={formValues.guardianSignature}
                         onChange={(val) => setValue('guardianSignature', val, { shouldValidate: true })}
                         placeholder="سرپرست اپنے دستخط یہاں کریں"
                       />
                       {errors.guardianSignature && (
-                        <p className="text-[10px] text-red-600 font-bold">{errors.guardianSignature.message}</p>
+                        <p className="text-[10px] text-red-400 font-bold mt-1">{errors.guardianSignature.message}</p>
                       )}
                     </div>
                   </div>
@@ -680,10 +663,16 @@ export function AdmissionFormContainer() {
 
               {/* Error summary alert */}
               {Object.keys(errors).length > 0 && (
-                <div className="p-4 rounded-lg bg-red-50 border border-red-200 text-red-800 text-xs font-semibold select-none flex items-start gap-2">
-                  <AlertCircle className="w-4 h-4 mt-0.5 text-red-600 flex-shrink-0" />
+                <div className="p-4 rounded-[4px] bg-red-950/80 border border-red-700/60 text-red-200 text-xs font-semibold select-none flex items-start gap-2">
+                  <AlertCircle className="w-4 h-4 mt-0.5 text-red-400 flex-shrink-0" />
                   <div>
-                    <p className="font-bold mb-1">Please correct the validation errors before submitting:</p>
+                    <p className="font-bold mb-1 font-urdu">
+                      {currentLanguage === 'ur'
+                        ? 'براہ کرم فارم جمع کرنے سے پہلے غلطیوں کی تصحیح کریں:'
+                        : currentLanguage === 'ar'
+                        ? 'يرجى تصحيح الأخطاء قبل التقديم:'
+                        : 'Please correct the validation errors before submitting:'}
+                    </p>
                     <ul className="list-disc pl-4 flex flex-col gap-1">
                       {Object.entries(errors).map(([key, err]) => (
                         <li key={key}>{err?.message}</li>
@@ -694,33 +683,33 @@ export function AdmissionFormContainer() {
               )}
 
               {/* Wizard Navigations */}
-              <div className="flex justify-between items-center border-t border-zinc-200 pt-6 mt-4 select-none">
+              <div className="flex justify-between items-center border-t border-[var(--color-emerald-mid)]/50 pt-6 mt-4 select-none">
                 <button
                   type="button"
                   onClick={prevStep}
                   disabled={activeStep === 0}
-                  className="flex items-center gap-1 px-4 py-2 rounded-lg border border-zinc-300 hover:bg-zinc-50 text-zinc-700 font-bold text-xs disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
+                  className="btn-secondary-teal text-xs py-2 px-5 font-bold uppercase flex items-center gap-1 shadow-md disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   <ChevronLeft className="w-4 h-4" />
-                  Previous
+                  {currentLanguage === 'ur' ? 'پچھلا مرحلہ' : currentLanguage === 'ar' ? 'السابق' : 'Previous'}
                 </button>
 
                 {activeStep < steps.length - 1 ? (
                   <button
                     type="button"
                     onClick={nextStep}
-                    className="flex items-center gap-1 px-5 py-2.5 rounded-lg bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs shadow-md transition-all duration-200"
+                    className="btn-primary-gold text-xs py-2.5 px-6 font-bold uppercase flex items-center gap-1 shadow-lg"
                   >
-                    Next
+                    {currentLanguage === 'ur' ? 'اگلا مرحلہ' : currentLanguage === 'ar' ? 'التالي' : 'Next'}
                     <ChevronRight className="w-4 h-4" />
                   </button>
                 ) : (
                   <button
                     type="submit"
                     disabled={!isValid}
-                    className="flex items-center gap-2 px-6 py-3 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-sm shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
+                    className="btn-primary-gold text-sm py-3 px-7 font-extrabold uppercase flex items-center gap-2 shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Submit Admission Form
+                    {currentLanguage === 'ur' ? 'داخلہ فارم جمع کریں' : currentLanguage === 'ar' ? 'تقديم نموذج الالتحاق' : 'Submit Admission Form'}
                   </button>
                 )}
               </div>
