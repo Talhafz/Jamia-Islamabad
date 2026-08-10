@@ -1,14 +1,13 @@
 'use client';
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, MapPin, Calendar, Tag, Search, ChevronRight, Award, Mic2, Users, Flag } from 'lucide-react';
+import { X, MapPin, Calendar, Tag, Search, ChevronRight, ChevronLeft, Award, Mic2, Users, Flag, Camera } from 'lucide-react';
 import { PageBanner } from '../../components/PageBanner';
 import { galleryItems, GalleryItem } from '../../constants/galleryData';
 import { useLanguage } from '../../context/LanguageContext';
 
-// ── Only the event-related categories (not infrastructure) ────────────────────
+// ── Only event-related categories ──────────────────────────────────────────────
 const EVENT_CATEGORIES = [
   { id: 'all', icon: null },
   { id: 'convocation', icon: Award },
@@ -87,7 +86,7 @@ const modalVariants = {
   exit: { opacity: 0, scale: 0.94, y: 24, transition: { duration: 0.2 } },
 };
 
-// ── Event Detail Modal (Rendered via Portal directly to document.body) ────────
+// ── Multi-Image Event Detail Modal ─────────────────────────────────────────────
 function EventModal({
   item,
   onClose,
@@ -102,12 +101,30 @@ function EventModal({
   t: (key: string) => string;
 }) {
   const [mounted, setMounted] = useState(false);
+  const [activePhotoIdx, setActivePhotoIdx] = useState(0);
   const token = getToken(item.category);
+
+  const photos = useMemo(() => {
+    if (item.images && item.images.length > 0) {
+      return item.images;
+    }
+    return [item.src];
+  }, [item]);
+
+  const currentPhoto = photos[activePhotoIdx] || item.src;
+
+  const handleNext = () => {
+    setActivePhotoIdx((prev) => (prev + 1) % photos.length);
+  };
+
+  const handlePrev = () => {
+    setActivePhotoIdx((prev) => (prev - 1 + photos.length) % photos.length);
+  };
 
   useEffect(() => {
     setMounted(true);
     
-    // Bulletproof scroll lock (fixes iOS Safari and containing block issues)
+    // Lock background scroll
     const originalStyle = window.getComputedStyle(document.body).overflow;
     const scrollY = window.scrollY;
     
@@ -128,10 +145,16 @@ function EventModal({
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowRight') {
+        dir === 'rtl' ? handlePrev() : handleNext();
+      }
+      if (e.key === 'ArrowLeft') {
+        dir === 'rtl' ? handleNext() : handlePrev();
+      }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onClose]);
+  }, [onClose, dir, photos.length]);
 
   if (!mounted) return null;
 
@@ -142,7 +165,7 @@ function EventModal({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
-      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 overflow-hidden"
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-6 overflow-hidden"
     >
       {/* Semi-transparent Backdrop Overlay */}
       <div
@@ -157,19 +180,27 @@ function EventModal({
         initial="hidden"
         animate="show"
         exit="exit"
-        className="relative z-10 w-full max-w-2xl max-h-[85vh] sm:max-h-[90vh] bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col my-auto"
+        className="relative z-10 w-full max-w-3xl max-h-[92vh] bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden shadow-2xl flex flex-col my-auto"
         onClick={(e) => e.stopPropagation()}
         dir={dir}
       >
-        {/* Image Header — Responsive Fixed Height */}
-        <div className="relative w-full h-44 sm:h-64 md:h-72 shrink-0 overflow-hidden bg-zinc-950">
-          <img
-            src={item.src}
-            alt={getLoc(item.title, lang)}
-            className="w-full h-full object-cover object-center"
-          />
+        {/* Main Image Viewport */}
+        <div className="relative w-full h-56 sm:h-80 md:h-96 shrink-0 overflow-hidden bg-zinc-950 flex items-center justify-center group">
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={currentPhoto}
+              src={currentPhoto}
+              alt={getLoc(item.title, lang)}
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              transition={{ duration: 0.2 }}
+              className="w-full h-full object-cover object-center"
+            />
+          </AnimatePresence>
+
           {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/30 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-black/40 pointer-events-none" />
 
           {/* Close Button */}
           <button
@@ -180,8 +211,35 @@ function EventModal({
             <X className="w-4 h-4" />
           </button>
 
+          {/* Carousel Prev/Next Overlay Controls (shown if multiple photos) */}
+          {photos.length > 1 && (
+            <>
+              <button
+                onClick={handlePrev}
+                aria-label="Previous photo"
+                className={`absolute top-1/2 -translate-y-1/2 ${dir === 'rtl' ? 'right-3' : 'left-3'} w-10 h-10 rounded-full bg-zinc-950/80 hover:bg-emerald-600 border border-zinc-700/80 text-white flex items-center justify-center shadow-xl backdrop-blur-md transition-all duration-200 hover:scale-105 z-20`}
+              >
+                <ChevronLeft className={`w-5 h-5 ${dir === 'rtl' ? 'rotate-180' : ''}`} />
+              </button>
+
+              <button
+                onClick={handleNext}
+                aria-label="Next photo"
+                className={`absolute top-1/2 -translate-y-1/2 ${dir === 'rtl' ? 'left-3' : 'right-3'} w-10 h-10 rounded-full bg-zinc-950/80 hover:bg-emerald-600 border border-zinc-700/80 text-white flex items-center justify-center shadow-xl backdrop-blur-md transition-all duration-200 hover:scale-105 z-20`}
+              >
+                <ChevronRight className={`w-5 h-5 ${dir === 'rtl' ? 'rotate-180' : ''}`} />
+              </button>
+
+              {/* Photo Counter Pill */}
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 px-3 py-1 rounded-full bg-zinc-950/85 border border-zinc-700/80 text-[11px] font-bold text-amber-400 shadow-md backdrop-blur-md flex items-center gap-1.5">
+                <Camera className="w-3.5 h-3.5 text-emerald-400" />
+                <span>{activePhotoIdx + 1} / {photos.length}</span>
+              </div>
+            </>
+          )}
+
           {/* Category Badge */}
-          <div className={`absolute bottom-4 ${dir === 'rtl' ? 'right-4' : 'left-4'} z-10`}>
+          <div className={`absolute bottom-3 ${dir === 'rtl' ? 'right-4' : 'left-4'} z-10`}>
             <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${token.badge}`}>
               <Tag className="w-3 h-3" />
               {t(`events:categories.${item.category}`)}
@@ -189,13 +247,36 @@ function EventModal({
           </div>
         </div>
 
+        {/* Thumbnail Carousel Strip (if multiple photos) */}
+        {photos.length > 1 && (
+          <div className="w-full bg-zinc-950/90 border-b border-zinc-800 px-4 py-2.5 flex items-center gap-2 overflow-x-auto shrink-0 select-none">
+            {photos.map((pUrl, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActivePhotoIdx(idx)}
+                className={`relative w-14 h-10 sm:w-16 sm:h-11 rounded-md overflow-hidden shrink-0 border transition-all duration-200 ${
+                  idx === activePhotoIdx
+                    ? 'border-amber-400 ring-2 ring-amber-400/40 opacity-100 scale-105'
+                    : 'border-zinc-700/60 opacity-50 hover:opacity-85'
+                }`}
+              >
+                <img
+                  src={pUrl}
+                  alt={`Thumbnail ${idx + 1}`}
+                  className="w-full h-full object-cover"
+                />
+              </button>
+            ))}
+          </div>
+        )}
+
         {/* Vertically Scrollable Content Body */}
         <div className="p-5 sm:p-6 flex flex-col gap-4 overflow-y-auto flex-1">
           <h2 className="text-white font-extrabold text-lg sm:text-2xl leading-tight tracking-tight">
             {getLoc(item.title, lang)}
           </h2>
 
-          <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed whitespace-pre-line">
+          <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed sm:leading-loose whitespace-pre-line text-justify">
             {getLoc(item.desc, lang)}
           </p>
 
@@ -228,7 +309,7 @@ function EventModal({
   );
 }
 
-// ── Main Page ──────────────────────────────────────────────────────────────────
+// ── Main Page Component ────────────────────────────────────────────────────────
 export default function EventsPage() {
   const { t, currentLanguage, direction } = useLanguage();
   const [activeCategory, setActiveCategory] = useState<EventCategoryId>('all');
@@ -339,6 +420,8 @@ export default function EventsPage() {
                   {filtered.map((item) => {
                     const token = getToken(item.category);
                     const title = getLoc(item.title, currentLanguage);
+                    const photoCount = item.images ? item.images.length : 1;
+
                     return (
                       <motion.article
                         key={item.id}
@@ -350,7 +433,7 @@ export default function EventsPage() {
                         id={`event-card-${item.id}`}
                       >
                         {/* Thumbnail */}
-                        <div className="relative w-full h-44 overflow-hidden">
+                        <div className="relative w-full h-48 overflow-hidden bg-zinc-950">
                           <img
                             src={item.src}
                             alt={title}
@@ -368,11 +451,12 @@ export default function EventsPage() {
                             </span>
                           </div>
 
-                          {/* Featured star */}
-                          {item.featured && (
+                          {/* Photo Count Badge (for multi-image events) */}
+                          {photoCount > 1 && (
                             <div className="absolute top-3 right-3">
-                              <span className="inline-flex items-center px-2 py-0.5 rounded-sm text-[10px] font-bold bg-amber-500/30 text-amber-300 border border-amber-500/30 backdrop-blur-sm">
-                                ★
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-sm text-[10px] font-bold bg-zinc-950/85 text-amber-300 border border-amber-500/30 backdrop-blur-md shadow-sm">
+                                <Camera className="w-3 h-3 text-emerald-400" />
+                                <span>{photoCount}</span>
                               </span>
                             </div>
                           )}

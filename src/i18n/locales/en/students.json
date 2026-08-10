@@ -1,23 +1,66 @@
 {
-  "title": "Student Directory",
-  "description": "Official records of registered students at Jamia Islamabad. Search by roll number, name, or class.",
-  "searchPlaceholder": "Search by roll number, name, or class...",
+  "title": "Current Enrolled Students",
+  "description": "Official office records of currently enrolled students. Search by department, roll number, name, or CNIC.",
+  "searchPlaceholder": "Search by Name, Roll No, CNIC, Father...",
   "filters": {
-    "all": "All Grades",
+    "allPrograms": "All Programs",
+    "allStatuses": "All Statuses"
+  },
+  "programs": {
     "dars": "Dars-e-Nizami",
     "hifz": "Hifz-ul-Quran",
-    "tajweed": "Tajweed & Qira'at"
+    "tajweed": "Tajweed & Qira'at",
+    "matric": "Matric / F.A."
+  },
+  "status": {
+    "enrolled": "Enrolled",
+    "graduated": "Graduated",
+    "suspended": "Suspended",
+    "left": "Left"
+  },
+  "viewMode": {
+    "table": "Table View",
+    "grid": "Card Grid View"
   },
   "table": {
     "rollNo": "Roll No",
     "name": "Student Name",
     "fatherName": "Father's Name",
-    "classGrade": "Class / Grade",
-    "department": "Department",
-    "admissionDate": "Admission Date",
+    "department": "Program / Department",
+    "dob": "Date of Birth",
     "status": "Status",
-    "active": "Active",
-    "inactive": "Inactive",
+    "profile": "Profile",
     "noRecords": "No student records found."
+  },
+  "card": {
+    "fatherPrefix": "S/O ",
+    "dobPrefix": "DOB: "
+  },
+  "buttons": {
+    "details": "Details",
+    "viewProfile": "View Student Profile"
+  },
+  "pagination": {
+    "prev": "Prev",
+    "next": "Next",
+    "pageOf": "Page {current} of {total}"
+  },
+  "noMatchTitle": "No students match the criteria.",
+  "noMatchDesc": "Try modifying search tags or filters.",
+  "modal": {
+    "academicProgram": "Academic Program",
+    "admissionDate": "Admission Date",
+    "currentStatus": "Current Status",
+    "personalDetails": "Personal Details",
+    "dob": "Date of Birth",
+    "cnic": "CNIC / B-Form",
+    "mobile": "Mobile Contact",
+    "address": "Permanent Address",
+    "parentDetails": "Guardian / Parent Details",
+    "fatherName": "Father's Name",
+    "fatherCnic": "Father's CNIC",
+    "fatherOccupation": "Father's Occupation",
+    "fatherContact": "Father's Contact",
+    "close": "Close"
   }
 }

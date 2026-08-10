@@ -211,12 +211,12 @@ export default function AboutPage() {
                     <Icon className={`w-5 h-5 ${meta.iconColor}`} />
                   </div>
 
-                  {/* Stat number */}
-                  <div>
-                    <p className="text-3xl font-extrabold text-[var(--color-gold-bright)] tracking-tight leading-none">
+                  {/* Stat number & Label */}
+                  <div className="flex flex-col gap-2 my-1">
+                    <p className="text-3xl sm:text-4xl font-extrabold text-[var(--color-gold-bright)] tracking-tight leading-snug">
                       {t(card.statKey)}
                     </p>
-                    <p className={`text-xs font-bold mt-1 ${meta.iconColor}`}>
+                    <p className={`text-xs sm:text-sm font-bold leading-relaxed ${meta.iconColor}`}>
                       {t(card.labelKey)}
                     </p>
                   </div>

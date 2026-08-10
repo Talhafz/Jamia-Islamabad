@@ -15,7 +15,10 @@ import {
   Eye, 
   ChevronLeft, 
   ChevronRight, 
-  UploadCloud 
+  UploadCloud,
+  Copy,
+  Check,
+  Search
 } from 'lucide-react';
 import { formSchema, AdmissionFormData, defaultFormValues } from '../schemas/formSchema';
 import { useAutosave } from '../../../hooks/useAutosave';
@@ -40,8 +43,14 @@ const FieldLabel = ({ en, ur, required = false }: { en: string; ur: string; requ
 export function AdmissionFormContainer() {
   const { currentLanguage, t } = useLanguage();
   const [activeStep, setActiveStep] = useState(0);
-  const [viewMode, setViewMode] = useState<'edit' | 'preview'>('edit');
+  const [viewMode, setViewMode] = useState<'edit' | 'preview' | 'review'>('edit');
   const [isSubmitSuccess, setIsSubmitSuccess] = useState(false);
+  const [submittedRecord, setSubmittedRecord] = useState<(AdmissionFormData & { formNo?: string; submittedAt?: string }) | null>(null);
+  
+  // Lookup state
+  const [searchFormNo, setSearchFormNo] = useState('');
+  const [lookupError, setLookupError] = useState<string | null>(null);
+  const [copiedFormNo, setCopiedFormNo] = useState(false);
 
   const steps = [
     { 
@@ -87,15 +96,48 @@ export function AdmissionFormContainer() {
     1500
   );
 
+  // Helper to get saved submissions DB from localStorage
+  const getSubmissionsDB = (): Record<string, AdmissionFormData & { formNo: string; submittedAt: string }> => {
+    try {
+      const stored = localStorage.getItem('jamia_submissions_db');
+      return stored ? JSON.parse(stored) : {};
+    } catch {
+      return {};
+    }
+  };
+
+  // Helper to save a submission record to localStorage
+  const saveSubmissionToDB = (record: AdmissionFormData & { formNo: string; submittedAt: string }) => {
+    try {
+      const db = getSubmissionsDB();
+      db[record.formNo] = record;
+      db[record.formNo.toLowerCase()] = record;
+      localStorage.setItem('jamia_submissions_db', JSON.stringify(db));
+    } catch (e) {
+      console.error('Failed to persist submission to localStorage:', e);
+    }
+  };
+
   useEffect(() => {
     const draft = getDraft();
     if (draft) {
       reset(draft);
     }
-  }, []);
 
-  // Preview data is just the current form values
-  const previewData = formValues;
+    // Auto-check URL query parameters for ?formNo=XXXX
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const urlFormNo = params.get('formNo');
+      if (urlFormNo) {
+        const db = getSubmissionsDB();
+        const found = db[urlFormNo] || db[urlFormNo.toLowerCase()];
+        if (found) {
+          setSubmittedRecord(found);
+          setViewMode('preview');
+        }
+      }
+    }
+  }, []);
 
   // Handle Photo upload
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,36 +160,248 @@ export function AdmissionFormContainer() {
     setActiveStep((prev) => Math.max(prev - 1, 0));
   };
 
-  const onSubmit = (data: AdmissionFormData) => {
-    console.log('Form Submitted successfully:', data);
+  // Step 1: When user submits step 3 form, trigger Review Mode first
+  const onFormSubmit = (_data: AdmissionFormData) => {
+    setViewMode('review');
+    window.scrollTo({ top: 300, behavior: 'smooth' });
+  };
+
+  // Step 1 -> Finalize submission after review confirmation
+  const handleFinalConfirmSubmit = () => {
+    const randomDigits = Math.floor(10000 + Math.random() * 90000);
+    const formNo = `JI-2026-${randomDigits}`;
+    const submittedAt = new Date().toISOString();
+
+    const record = {
+      ...formValues,
+      formNo,
+      submittedAt,
+    };
+
+    // Save to client-side database
+    saveSubmissionToDB(record);
+    setSubmittedRecord(record);
     setIsSubmitSuccess(true);
+    setViewMode('edit');
     clearDraft();
+    window.scrollTo({ top: 300, behavior: 'smooth' });
+  };
+
+  // Step 3: Handle Form Number Search Lookup
+  const handleLookupForm = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLookupError(null);
+    const query = searchFormNo.trim();
+    if (!query) return;
+
+    const db = getSubmissionsDB();
+    const found = db[query] || db[query.toLowerCase()];
+
+    if (found) {
+      setSubmittedRecord(found);
+      setViewMode('preview');
+    } else {
+      setLookupError(
+        currentLanguage === 'ur'
+          ? `فارم نمبر "${query}" کا کوئی ریکارڈ نہیں ملا۔ براہ کرم صحیح فارم نمبر درج کریں۔`
+          : currentLanguage === 'ar'
+          ? `لم يتم العثور على سجل لرقم النموذج "${query}".`
+          : `No record found for Form No "${query}". Please verify the number.`
+      );
+    }
   };
 
   const handlePrint = () => {
     window.print();
   };
 
+  const copyFormNoToClipboard = (formNo: string) => {
+    navigator.clipboard.writeText(formNo);
+    setCopiedFormNo(true);
+    setTimeout(() => setCopiedFormNo(false), 2500);
+  };
+
+  // Render Preview Mode (from Review step, Success screen, or Form Number Lookup)
+  if (viewMode === 'preview') {
+    const dataToPrint = submittedRecord || formValues;
+    return (
+      <div className="w-full flex flex-col gap-4 animate-fade-in">
+        {/* Top Control Bar for Preview Mode */}
+        <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-[4px] bg-[var(--color-emerald-deep)] backdrop-blur-md border border-[var(--color-gold-muted)]/40 shadow-xl text-xs select-none print:hidden">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => {
+                if (isSubmitSuccess) {
+                  setViewMode('edit');
+                } else {
+                  setViewMode('edit');
+                }
+              }}
+              className="flex items-center gap-1.5 px-4 py-2 rounded-[4px] bg-[var(--color-emerald-mid)] hover:bg-[var(--color-emerald-mid)]/80 text-[var(--color-gold-bright)] border border-[var(--color-gold-muted)]/40 font-bold transition-all text-xs"
+            >
+              <FileText className="w-4 h-4 text-[var(--color-gold-primary)]" />
+              {isSubmitSuccess
+                ? (currentLanguage === 'ur' ? 'کامیابی کی سکرین پر واپس جائیں' : currentLanguage === 'ar' ? 'العودة لصفحة النجاح' : 'Back to Success Screen')
+                : (currentLanguage === 'ur' ? 'ترمیم کی طرف واپس جائیں' : currentLanguage === 'ar' ? 'العودة للتعديل' : 'Back to Editing')}
+            </button>
+          </div>
+
+          <div className="flex items-center gap-3">
+            {submittedRecord?.formNo && (
+              <span className="font-mono font-bold text-xs bg-[var(--color-panel)] px-3 py-1.5 rounded border border-[var(--color-gold-primary)]/40 text-[var(--color-gold-bright)]">
+                فارم نمبر: {submittedRecord.formNo}
+              </span>
+            )}
+            <button
+              onClick={handlePrint}
+              className="btn-primary-gold flex items-center gap-2 px-5 py-2 text-xs uppercase font-extrabold shadow-lg"
+            >
+              <Printer className="w-4 h-4" />
+              {currentLanguage === 'ur' ? 'پرنٹ / پی ڈی ایف محفوظ کریں' : currentLanguage === 'ar' ? 'طباعة / حفظ كـ PDF' : 'Print / Save as PDF'}
+            </button>
+          </div>
+        </div>
+
+        <div className="bg-[var(--color-panel)] border border-[var(--color-gold-primary)]/40 text-[var(--color-gold-bright)] rounded-[4px] p-4 text-xs text-center select-none print:hidden shadow-lg">
+          <p className="font-bold flex items-center justify-center gap-1.5 font-urdu">
+            <AlertCircle className="w-4 h-4 text-[var(--color-gold-primary)] flex-shrink-0" />
+            {currentLanguage === 'ur'
+              ? 'یہ سرکار کی طرف سے تصدیق شدہ فارم کا باقاعدہ پریویو ہے۔ ڈاؤن لوڈ یا پرنٹ کے لیے "پرنٹ / پی ڈی ایف محفوظ کریں" کا بٹن دبائیں۔'
+              : currentLanguage === 'ar'
+              ? 'هذه هي المعاينة الرسمية للنموذج المعتمد. اضغط على "طباعة / حفظ كـ PDF" للتنزيل أو الطباعة.'
+              : 'Official print preview layout. Press "Print / Save as PDF" above to print or download.'}
+          </p>
+        </div>
+
+        <PrintLayout data={dataToPrint} />
+      </div>
+    );
+  }
+
+  // Render Step 1: Review Before Final Submit
+  if (viewMode === 'review') {
+    return (
+      <div className="w-full flex flex-col gap-6 animate-fade-in select-none">
+        {/* Sticky Review Header Banner */}
+        <div className="p-5 rounded-[4px] bg-[var(--color-emerald-deep)] border-2 border-[var(--color-gold-primary)] shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-4 text-right print:hidden" style={{ direction: 'rtl' }}>
+          <div className="flex items-start gap-3">
+            <div className="w-10 h-10 rounded-full bg-[var(--color-gold-primary)]/20 text-[var(--color-gold-bright)] flex items-center justify-center shrink-0 mt-1">
+              <Eye className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-lg font-extrabold font-urdu text-[var(--color-gold-bright)]">
+                {currentLanguage === 'ur' ? 'مرحلہ ۱: جمع کروانے سے پہلے جائزہ لیں (Review Before Submit)' : currentLanguage === 'ar' ? 'مراجعة المعلومات قبل التقديم النهائي' : 'Review Form Details Before Final Submission'}
+              </h3>
+              <p className="text-xs text-[var(--color-teal-soft)] font-urdu mt-1 leading-relaxed">
+                {currentLanguage === 'ur'
+                  ? 'براہ کرم تمام معلومات، تعلیمی ریکارڈ اور دستخط کا بغور معائنہ کریں۔ اگر تمام معلومات درست ہیں تو "تصدیق اور جمع کروائیں" کا بٹن دبائیں۔'
+                  : currentLanguage === 'ar'
+                  ? 'يرجى مراجعة كافة البيانات بعناية. إذا كانت البيانات صحيحة، اضغط على "تأكيد وتقديم".'
+                  : 'Please inspect all details carefully. If accurate, click "Confirm & Submit".'}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 shrink-0">
+            <button
+              onClick={() => setViewMode('edit')}
+              className="btn-secondary-teal text-xs py-2.5 px-5 font-bold uppercase flex items-center gap-1.5 shadow-md"
+            >
+              <FileText className="w-4 h-4" />
+              {currentLanguage === 'ur' ? 'ترمیم کریں' : currentLanguage === 'ar' ? 'تعديل البيانات' : 'Edit Details'}
+            </button>
+
+            <button
+              onClick={handleFinalConfirmSubmit}
+              className="btn-primary-gold text-xs py-3 px-6 font-extrabold uppercase flex items-center gap-2 shadow-xl animate-pulse"
+            >
+              <CheckCircle className="w-4 h-4" />
+              {currentLanguage === 'ur' ? 'تصدیق اور جمع کروائیں' : currentLanguage === 'ar' ? 'تأكيد وتقديم' : 'Confirm & Submit'}
+            </button>
+          </div>
+        </div>
+
+        {/* Read-only Print Preview layout matching final output */}
+        <PrintLayout data={formValues} />
+
+        {/* Bottom Review Actions */}
+        <div className="p-4 rounded-[4px] bg-[var(--color-panel)] border border-[var(--color-gold-muted)]/40 flex items-center justify-between gap-4 print:hidden" style={{ direction: 'rtl' }}>
+          <p className="text-xs font-bold text-[var(--color-gold-bright)] font-urdu">
+            {currentLanguage === 'ur' ? 'کیا تمام درج کردہ معلومات درست ہیں؟' : currentLanguage === 'ar' ? 'هل كافة البيانات صحيحية؟' : 'Are all entered details accurate?'}
+          </p>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setViewMode('edit')}
+              className="btn-secondary-teal text-xs py-2 px-4 font-bold uppercase"
+            >
+              {currentLanguage === 'ur' ? 'ترمیم کی طرف واپس جائیں' : currentLanguage === 'ar' ? 'العودة للتعديل' : 'Back to Edit'}
+            </button>
+            <button
+              onClick={handleFinalConfirmSubmit}
+              className="btn-primary-gold text-xs py-2.5 px-6 font-extrabold uppercase flex items-center gap-1.5"
+            >
+              <CheckCircle className="w-4 h-4" />
+              {currentLanguage === 'ur' ? 'تصدیق اور جمع کروائیں' : currentLanguage === 'ar' ? 'تأكيد وتقديم' : 'Confirm & Submit'}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Render Step 2: Success Screen
   if (isSubmitSuccess) {
     return (
-      <div className="max-w-2xl mx-auto my-12 p-8 bg-[var(--color-panel)] backdrop-blur-md rounded-[4px] shadow-2xl border border-[var(--color-gold-muted)]/40 text-center animate-fade-in">
+      <div className="max-w-2xl mx-auto my-12 p-8 bg-[var(--color-panel)] backdrop-blur-md rounded-[4px] shadow-2xl border border-[var(--color-gold-muted)]/40 text-center animate-fade-in select-none">
         <div className="w-16 h-16 bg-[var(--color-gold-primary)]/20 text-[var(--color-gold-primary)] rounded-[4px] flex items-center justify-center mx-auto mb-6">
-          <CheckCircle className="w-10 h-10" />
+          <CheckCircle className="w-10 h-10 text-[var(--color-gold-bright)]" />
         </div>
-        <h2 className="text-2xl font-bold font-urdu text-[var(--color-gold-primary)] mb-4">
+        
+        <h2 className="text-2xl sm:text-3xl font-bold font-urdu text-[var(--color-gold-primary)] mb-3">
           {currentLanguage === 'ur' ? 'داخلہ فارم کامیابی سے جمع ہو گیا ہے' : currentLanguage === 'ar' ? 'تم تقديم نموذج الالتحاق بنجاح' : 'Admission Form Submitted Successfully'}
         </h2>
+
+        {/* PROMINENT FORM NUMBER DISPLAY BOX */}
+        {submittedRecord?.formNo && (
+          <div className="my-6 p-5 rounded-[4px] bg-[var(--color-emerald-deep)] border-2 border-[var(--color-gold-primary)] shadow-inner flex flex-col items-center gap-2">
+            <span className="text-xs font-bold font-urdu text-[var(--color-teal-soft)] uppercase tracking-wider">
+              {currentLanguage === 'ur' ? 'آپ کا باقاعدہ فارم نمبر (Form Number)' : currentLanguage === 'ar' ? 'رقم النموذج الخاص بك' : 'Your Official Form Number'}
+            </span>
+            <div className="flex items-center gap-3 dir-ltr">
+              <span className="text-2xl sm:text-3xl font-mono font-black text-[var(--color-gold-bright)] tracking-wider">
+                {submittedRecord.formNo}
+              </span>
+              <button
+                onClick={() => copyFormNoToClipboard(submittedRecord.formNo!)}
+                className="p-2 rounded bg-[var(--color-panel)] border border-[var(--color-gold-muted)]/40 hover:border-[var(--color-gold-primary)] text-[var(--color-gold-bright)] text-xs font-bold transition-all flex items-center gap-1"
+                title="Copy Form Number"
+              >
+                {copiedFormNo ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-[var(--color-gold-primary)]" />}
+                <span>{copiedFormNo ? (currentLanguage === 'ur' ? 'کاپی ہو گیا' : 'Copied') : (currentLanguage === 'ur' ? 'کاپی کریں' : 'Copy')}</span>
+              </button>
+            </div>
+            <p className="text-[11px] text-[var(--color-teal-soft)] font-urdu mt-1 max-w-md">
+              {currentLanguage === 'ur'
+                ? 'براہ کرم یہ فارم نمبر نوٹ فرمائیں۔ آپ کسی بھی وقت ویب سائٹ پر یہ نمبر درج کر کے اپنا فارم ڈاؤن لوڈ یا پرنٹ کر سکتے ہیں۔'
+                : currentLanguage === 'ar'
+                ? 'يرجى الاحتفاظ برقم النموذج لاسترجاعه وطباعته في أي وقت.'
+                : 'Please save this Form Number. You can retrieve and reprint your form anytime using this number.'}
+            </p>
+          </div>
+        )}
+
         <p className="text-[var(--color-text-body)] font-urdu text-sm mb-8 leading-relaxed">
           {currentLanguage === 'ur'
-            ? 'آپ کا فارم کامیابی سے وصول ہو گیا ہے۔ اب آپ ڈیجیٹل طور پر بھرے ہوئے فارم کا پرنٹ لے سکتے ہیں یا اسے محفوظ کر سکتے ہیں۔ براہ کرم اسے پرنٹ کر کے متعلقہ تعلیمی اسناد کے ساتھ جامعہ کے دفتر میں جمع کروائیں۔'
+            ? 'آپ کا فارم کامیابی سے ہمارے ریکارڈ میں محفوظ ہو گیا ہے۔ اب آپ ڈیجیٹل طور پر بھرے ہوئے فارم کا پرنٹ دیکھ سکتے ہیں اور پی ڈی ایف ڈاؤن لوڈ کر سکتے ہیں۔'
             : currentLanguage === 'ar'
-            ? 'تم استلام نموذجك بنجاح. يمكنك الآن طباعة النموذج المملوء رقمياً أو حفظه. يرجى طباعته وتقديمه مع المستندات المطلوبة إلى مكتب الجامعة.'
-            : 'Your form has been received successfully. You can now print or download the digitally filled form. Please print and submit it along with required educational documents to the Jamia office.'}
+            ? 'تم حفظ نموذجك بنجاح. يمكنك الآن معاينة النموذج المملوء رقمياً وطباعته.'
+            : 'Your form has been safely saved in our records. You can now view and print your filled PDF form.'}
         </p>
+
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <button
             onClick={() => setViewMode('preview')}
-            className="btn-primary-gold flex items-center justify-center gap-2 px-6 py-3 text-xs uppercase"
+            className="btn-primary-gold flex items-center justify-center gap-2 px-6 py-3.5 text-xs font-extrabold uppercase shadow-xl"
           >
             <Eye className="w-4 h-4" />
             {currentLanguage === 'ur' ? 'پرنٹ فارم کا معاینہ' : currentLanguage === 'ar' ? 'معاينة النموذج المطبوع' : 'Print Form Preview'}
@@ -156,10 +410,11 @@ export function AdmissionFormContainer() {
             onClick={() => {
               reset(defaultFormValues);
               setIsSubmitSuccess(false);
+              setSubmittedRecord(null);
               setActiveStep(0);
               setViewMode('edit');
             }}
-            className="btn-secondary-teal flex items-center justify-center gap-2 px-6 py-3 text-xs uppercase"
+            className="btn-secondary-teal flex items-center justify-center gap-2 px-6 py-3.5 text-xs uppercase font-bold"
           >
             {currentLanguage === 'ur' ? 'ایک اور فارم پر کریں' : currentLanguage === 'ar' ? 'تعبئة نموذج آخر' : 'Fill Another Form'}
           </button>
@@ -172,6 +427,45 @@ export function AdmissionFormContainer() {
 
   return (
     <div className="w-full flex flex-col gap-6">
+      
+      {/* Step 3: Form Number Lookup Bar */}
+      <div className="p-4 rounded-[4px] bg-[var(--color-emerald-deep)]/95 border border-[var(--color-gold-muted)]/40 shadow-xl select-none print:hidden">
+        <form onSubmit={handleLookupForm} className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2 text-[var(--color-gold-bright)] text-xs font-bold font-urdu">
+            <Search className="w-4 h-4 text-[var(--color-gold-primary)] shrink-0" />
+            <span>
+              {currentLanguage === 'ur'
+                ? 'فارم نمبر سے اپنا جمع شدہ فارم تلاش کریں:'
+                : currentLanguage === 'ar'
+                ? 'البحث عن النموذج بالرقم:'
+                : 'Find Submitted Form by Form No:'}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <input
+              type="text"
+              value={searchFormNo}
+              onChange={(e) => setSearchFormNo(e.target.value)}
+              placeholder="e.g. JI-2026-84920"
+              className="px-3 py-1.5 rounded-[4px] border border-[var(--color-emerald-mid)] bg-[var(--color-panel)] text-xs font-mono font-bold text-[var(--color-gold-bright)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-gold-primary)] w-full sm:w-48"
+            />
+            <button
+              type="submit"
+              className="btn-primary-gold px-4 py-1.5 text-xs uppercase font-bold shrink-0 flex items-center gap-1"
+            >
+              <Search className="w-3.5 h-3.5" />
+              {currentLanguage === 'ur' ? 'تلاش کریں' : currentLanguage === 'ar' ? 'بحث' : 'Search'}
+            </button>
+          </div>
+        </form>
+
+        {lookupError && (
+          <p className="mt-2 text-xs font-bold font-urdu text-red-400 border-t border-red-800/40 pt-2 text-right" style={{ direction: 'rtl' }}>
+            {lookupError}
+          </p>
+        )}
+      </div>
       
       {/* Draft Saving Status Bar */}
       <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-[4px] bg-[var(--color-emerald-deep)]/90 backdrop-blur-md border border-[var(--color-emerald-mid)]/60 shadow-lg text-xs font-semibold select-none print:hidden">
@@ -192,51 +486,16 @@ export function AdmissionFormContainer() {
             </span>
           )}
         </div>
-        <div className="flex gap-2">
           <button
-            onClick={() => setViewMode(viewMode === 'edit' ? 'preview' : 'edit')}
+            onClick={() => setViewMode('preview')}
             className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-[4px] bg-[var(--color-emerald-mid)]/60 hover:bg-[var(--color-emerald-mid)] text-[var(--color-gold-bright)] border border-[var(--color-gold-muted)]/40 transition-all duration-200 text-xs font-bold"
           >
-            {viewMode === 'edit' ? (
-              <>
-                <Eye className="w-3.5 h-3.5" />
-                {currentLanguage === 'ur' ? 'پی ڈی ایف پرنٹ پریویو دیکھیں' : currentLanguage === 'ar' ? 'معاينة الطباعة' : 'Show PDF Print Preview'}
-              </>
-            ) : (
-              <>
-                <FileText className="w-3.5 h-3.5" />
-                {currentLanguage === 'ur' ? 'ترمیم کی طرف واپس جائیں' : currentLanguage === 'ar' ? 'العودة للتعديل' : 'Back to Editing'}
-              </>
-            )}
+            <Eye className="w-3.5 h-3.5" />
+            {currentLanguage === 'ur' ? 'پی ڈی ایف پرنٹ پریویو دیکھیں' : currentLanguage === 'ar' ? 'معاينة الطباعة' : 'Show PDF Print Preview'}
           </button>
-          {viewMode === 'preview' && (
-            <button
-              onClick={handlePrint}
-              className="btn-primary-gold flex items-center gap-1.5 px-3.5 py-1.5 text-xs uppercase font-bold"
-            >
-              <Printer className="w-3.5 h-3.5" />
-              {currentLanguage === 'ur' ? 'پرنٹ / پی ڈی ایف محفوظ کریں' : currentLanguage === 'ar' ? 'طباعة / حفظ كـ PDF' : 'Print / Save as PDF'}
-            </button>
-          )}
-        </div>
       </div>
 
-      {viewMode === 'preview' && previewData ? (
-        <div className="w-full">
-          <div className="bg-[var(--color-panel)] border border-[var(--color-gold-primary)]/40 text-[var(--color-gold-bright)] rounded-[4px] p-4 mb-6 text-xs text-center select-none print:hidden shadow-lg">
-            <p className="font-bold flex items-center justify-center gap-1.5 font-urdu">
-              <AlertCircle className="w-4 h-4 text-[var(--color-gold-primary)] flex-shrink-0" />
-              {currentLanguage === 'ur'
-                ? 'یہ سرکاری پرنٹ شدہ فارم کی معاینہ شکل ہے۔ ڈاؤن لوڈ یا پرنٹ کرنے کے لیے اوپر "پرنٹ / پی ڈی ایف محفوظ کریں" بٹن دبائیں۔'
-                : currentLanguage === 'ar'
-                ? 'هذه هي معاينة النموذج الرسمي المطبوع. اضغط على "طباعة / حفظ كـ PDF" في الأعلى للتنزيل أو الطباعة.'
-                : 'This is the official printed view layout. Press "Print / Save as PDF" at the top to download or print.'}
-            </p>
-          </div>
-          <PrintLayout data={previewData} />
-        </div>
-      ) : (
-        <FormProvider {...methods}>
+      <FormProvider {...methods}>
           <div className="w-full max-w-4xl mx-auto bg-[var(--color-panel)] backdrop-blur-md rounded-[4px] shadow-2xl border border-[var(--color-emerald-mid)]/60 overflow-hidden print:hidden select-none">
             
             {/* Steps Progress Indicator */}
@@ -281,7 +540,7 @@ export function AdmissionFormContainer() {
             </div>
 
             {/* Form Fields Wrapper */}
-            <form onSubmit={handleSubmit(onSubmit)} className="p-6 md:p-8 flex flex-col gap-6">
+            <form onSubmit={handleSubmit(onFormSubmit)} className="p-6 md:p-8 flex flex-col gap-6">
               
               {/* STEP 0: Student Personal Details */}
               {activeStep === 0 && (
@@ -709,7 +968,7 @@ export function AdmissionFormContainer() {
                     disabled={!isValid}
                     className="btn-primary-gold text-sm py-3 px-7 font-extrabold uppercase flex items-center gap-2 shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {currentLanguage === 'ur' ? 'داخلہ فارم جمع کریں' : currentLanguage === 'ar' ? 'تقديم نموذج الالتحاق' : 'Submit Admission Form'}
+                    {currentLanguage === 'ur' ? 'جائزہ اور جمع کروائیں' : currentLanguage === 'ar' ? 'مراجعة وتقديم' : 'Review & Submit Form'}
                   </button>
                 )}
               </div>
@@ -717,7 +976,6 @@ export function AdmissionFormContainer() {
             </form>
           </div>
         </FormProvider>
-      )}
     </div>
   );
 }

@@ -43,6 +43,62 @@ body {
   overflow-x: hidden;
 }
 
+/* ─── Global Custom Theme Scrollbar ────────────────────────────── */
+/* Wrapped in @layer base so Tailwind v4 / Lightning CSS preserves  */
+/* these rules in the compiled output rather than silently dropping  */
+/* pseudo-element selectors it doesn't recognise as utility classes. */
+@layer base {
+
+  /* Tell the OS to render native dark-mode UI chrome (window scrollbar zone).
+     Without this, Windows/macOS renders a light-grey track in the browser
+     chrome area regardless of our transparent/none CSS value on the track. */
+  html {
+    color-scheme: dark;
+  }
+
+  /* Firefox standard (scrollbar-color / scrollbar-width) */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-gold-muted) transparent;
+  }
+
+  /* WebKit / Chromium: Chrome, Edge, Safari, Opera */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  /* Universal scrollbar track — completely transparent across all elements, html, and body */
+  ::-webkit-scrollbar-track,
+  html::-webkit-scrollbar-track,
+  body::-webkit-scrollbar-track {
+    background: transparent !important;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent !important;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-gold-muted);
+    border-radius: 4px;
+    /* 2px transparent border + background-clip creates a floating pill effect */
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-gold-primary);
+    background-clip: padding-box;
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    background: var(--color-gold-bright);
+    background-clip: padding-box;
+  }
+
+}
+
 /* ── Geometric Diagonal Pattern Overlay ── */
 .bg-diagonal-pattern {
   background-image: repeating-linear-gradient(45deg,
@@ -139,6 +195,16 @@ html[dir="rtl"] .font-latin-force *,
   word-spacing: normal !important;
 }
 
+/* ─── Universal Line-Height & Vertical Clearance for Arabic & Urdu (RTL) ─── */
+html[lang="ur"],
+html[lang="ar"],
+html[dir="rtl"],
+[lang="ur"],
+[lang="ar"],
+[dir="rtl"] {
+  line-height: 1.85;
+}
+
 /* Ensure headings in Arabic/Urdu/RTL modes have generous line height to prevent overlap */
 html[lang="ur"] h1,
 html[lang="ar"] h1,
@@ -153,6 +219,22 @@ html[lang="ur"] h4,
 html[lang="ar"] h4,
 [dir="rtl"] h4 {
   line-height: 2.0;
+}
+
+/* Ensure paragraph, span, label, and block text elements in RTL/Urdu inherit generous clearance */
+html[lang="ur"] p,
+html[lang="ar"] p,
+[dir="rtl"] p,
+html[lang="ur"] label,
+html[lang="ar"] label,
+[dir="rtl"] label,
+html[lang="ur"] li,
+html[lang="ar"] li,
+[dir="rtl"] li,
+html[lang="ur"] td,
+html[lang="ar"] td,
+[dir="rtl"] td {
+  line-height: 1.8;
 }
 
 /* Explicit Line-Height Overrides for Tight Layouts (e.g. Logo headers, buttons) */
@@ -199,6 +281,51 @@ html[lang="ar"] h4,
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* ─── Browser Autofill Override Fix ────────────────────────────── */
+/* Prevents WebKit/Blink (Chrome, Edge, Safari) and standard browsers from forcing a white background */
+/* on autofilled form fields, preserving the dark emerald theme (#0E3B2E) & ivory text (#F0EAD6) */
+@layer utilities {
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  textarea:-webkit-autofill:active,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus,
+  select:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px #0E3B2E inset !important;
+    box-shadow: 0 0 0 1000px #0E3B2E inset !important;
+    -webkit-text-fill-color: #F0EAD6 !important;
+    color: #F0EAD6 !important;
+    caret-color: #F0EAD6 !important;
+    transition: background-color 600000s ease-in-out 0s !important;
+  }
+
+  input:autofill,
+  input:autofill:hover,
+  input:autofill:focus,
+  input:autofill:active,
+  textarea:autofill,
+  textarea:autofill:hover,
+  textarea:autofill:focus,
+  textarea:autofill:active,
+  select:autofill,
+  select:autofill:hover,
+  select:autofill:focus,
+  select:autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px #0E3B2E inset !important;
+    box-shadow: 0 0 0 1000px #0E3B2E inset !important;
+    -webkit-text-fill-color: #F0EAD6 !important;
+    color: #F0EAD6 !important;
+    caret-color: #F0EAD6 !important;
+    transition: background-color 600000s ease-in-out 0s !important;
+  }
 }
 
 /* ─── Institutional Card Standard ──────────────────────────────── */
