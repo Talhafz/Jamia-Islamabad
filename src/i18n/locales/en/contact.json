@@ -1,21 +1,19 @@
 {
-  "title": "Contact Us",
-  "description": "If you have any questions or would like to gather more information, feel free to contact us via the form below or using our office details.",
-  "form": {
-    "name": "Your Name",
-    "namePlaceholder": "Enter your full name",
-    "email": "Email Address",
-    "emailPlaceholder": "name@example.com",
-    "message": "Your Message",
-    "messagePlaceholder": "Write your message here...",
-    "submit": "Send Message",
-    "sending": "Sending message...",
-    "success": "Your message has been sent successfully. We will get back to you shortly."
-  },
-  "info": {
-    "title": "Contact Information",
-    "addressTitle": "Our Address",
-    "phoneTitle": "Phone Number",
-    "emailTitle": "Email"
-  }
+  "title": "Contact Admin Office",
+  "description": "Have queries regarding registration, eligibility, or certificates? Get in touch with our team.",
+  "officeAddressTitle": "Office Address",
+  "officeAddressText": "Adjacent Central Jamia Masjid Noor-e-Madina, Street No. B-85, I-8/4, Islamabad, Pakistan",
+  "formTitle": "Send an Inquiry",
+  "fullName": "Full Name *",
+  "fullNamePlaceholder": "Enter your name",
+  "email": "Email Address *",
+  "emailPlaceholder": "Enter your email",
+  "subject": "Subject",
+  "subjectPlaceholder": "Inquiry Topic",
+  "message": "Message *",
+  "messagePlaceholder": "Enter details of your inquiry",
+  "submitBtn": "Submit Message",
+  "successTitle": "Inquiry Sent Successfully",
+  "successDesc": "Thank you for contacting us. Our administrator will review your message and reply via email shortly.",
+  "sendAnother": "Send Another Message"
 }

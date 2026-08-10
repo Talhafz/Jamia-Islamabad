@@ -75,15 +75,15 @@ export function PrintLayout({ data }: PrintLayoutProps) {
 
         <div className="relative z-10 flex flex-col flex-grow text-right select-none" style={{ direction: 'rtl' }}>
           
-          {/* Header Calligraphy (Arabic) — RTL order: RIGHT="وَعَلَى آلِكَ...", LEFT="الصَّلَاةُ وَالسَّلَامُ..." */}
+          {/* Header Calligraphy (Arabic) — RTL order: RIGHT="الصَّلَاةُ وَالسَّلَامُ..." (first/beginning), LEFT="وَعَلَى آلِكَ..." (continuation) */}
           <div className="flex justify-between items-center text-[10px] md:text-xs font-semibold text-emerald-800/80 mb-2 border-b border-emerald-800/20 pb-1" dir="rtl">
-            {/* First child in RTL flex → renders on the RIGHT side */}
+            {/* First child in RTL flex → renders on the RIGHT side — sentence beginning */}
             <div className="text-right font-serif leading-relaxed select-none">
-              وَعَلَى آلِكَ وَأَصْحَابِكَ يَا حَبِيبَ الله
-            </div>
-            {/* Second child in RTL flex → renders on the LEFT side */}
-            <div className="text-left font-serif leading-relaxed select-none">
               الصَّلَاةُ وَالسَّلَامُ عَلَيْكَ يَا رَسُولَ الله
+            </div>
+            {/* Second child in RTL flex → renders on the LEFT side — sentence continuation */}
+            <div className="text-left font-serif leading-relaxed select-none">
+              وَعَلَى آلِكَ وَأَصْحَابِكَ يَا حَبِيبَ الله
             </div>
           </div>
 
@@ -108,16 +108,19 @@ export function PrintLayout({ data }: PrintLayoutProps) {
             <div className="col-span-6 text-center flex flex-col justify-center select-none">
               <div className="flex justify-center mb-1">
                 <div className="w-[64px] h-[64px] rounded-full overflow-hidden p-1 border border-zinc-200 shadow-sm bg-white">
-                  <img src="/assets/Logo.png" alt="Jamia Logo" className="w-full h-full object-contain grayscale opacity-90" />
+                  {/* Bug fix: removed grayscale and opacity-90 — restores full green/gold color */}
+                  <img src="/assets/Logo.png" alt="Jamia Logo" className="w-full h-full object-contain" />
                 </div>
               </div>
-              <h1 className="text-3xl font-extrabold text-red-700 tracking-tight leading-none mb-1 font-serif select-none">
+              {/* Bug fix: leading-[1.85] uses an arbitrary Tailwind value that bypasses
+                  the globals.css `.leading-snug * { line-height: 1.375 !important }` rule */}
+              <h1 className="text-3xl font-extrabold text-red-700 tracking-tight leading-[1.6] mb-0.5 font-serif select-none">
                 جامعہ اسلام آباد
               </h1>
-              <h2 className="text-lg font-bold text-emerald-900 leading-none select-none">
+              <h2 className="text-lg font-bold text-emerald-900 leading-[1.85] select-none">
                 جامعہ غوثیہ رضویہ I-8/4
               </h2>
-              <p className="text-[11px] font-semibold text-emerald-700 mt-1 select-none">
+              <p className="text-[11px] font-semibold text-emerald-700 mt-3 leading-[1.85] select-none">
                 (الحاق شدہ تنظیم المدارس اہلسنت پاکستان)
               </p>
             </div>

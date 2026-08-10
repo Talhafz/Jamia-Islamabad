@@ -185,24 +185,24 @@ export function SignaturePad({
           </div>
         )}
       </div>
-      <div className="flex justify-end gap-2 text-xs">
+      <div className="flex justify-end gap-2 text-xs font-latin-force">
         <button
           type="button"
           onClick={undo}
           disabled={history.length === 0}
-          className="flex items-center gap-1 px-2.5 py-1.5 rounded bg-[var(--color-emerald-mid)]/60 hover:bg-[var(--color-emerald-mid)] text-[var(--color-gold-bright)] disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
+          className="font-latin-force inline-flex items-center gap-1 px-2.5 py-1.5 rounded bg-[var(--color-emerald-mid)]/60 hover:bg-[var(--color-emerald-mid)] text-[var(--color-gold-bright)] disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 leading-none"
         >
-          <RotateCcw className="w-3 h-3" />
-          Undo
+          <RotateCcw className="w-3 h-3 shrink-0" />
+          <span className="leading-none">Undo</span>
         </button>
         <button
           type="button"
           onClick={clear}
           disabled={!value}
-          className="flex items-center gap-1 px-2.5 py-1.5 rounded bg-red-950/60 hover:bg-red-900/80 text-red-300 border border-red-800/40 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
+          className="font-latin-force inline-flex items-center gap-1 px-2.5 py-1.5 rounded bg-red-950/60 hover:bg-red-900/80 text-red-300 border border-red-800/40 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 leading-none"
         >
-          <Trash2 className="w-3 h-3" />
-          Clear
+          <Trash2 className="w-3 h-3 shrink-0" />
+          <span className="leading-none">Clear</span>
         </button>
       </div>
     </div>

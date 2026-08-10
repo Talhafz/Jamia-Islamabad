@@ -19,8 +19,10 @@ import {
   X 
 } from 'lucide-react';
 import { mockStudents, StudentWithParent } from '../../../constants/mockStudents';
+import { useLanguage } from '../../../context/LanguageContext';
 
 export function StudentDirectory() {
+  const { t, direction } = useLanguage();
   const [search, setSearch] = useState('');
   const [programFilter, setProgramFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
@@ -34,6 +36,29 @@ export function StudentDirectory() {
 
   // Selected student for details modal
   const [selectedStudent, setSelectedStudent] = useState<StudentWithParent | null>(null);
+
+  // Helper for program localization
+  const getProgramLabel = (programName: string) => {
+    if (programName.includes('Dars-e-Nizami') || programName.includes('درس نظامی')) {
+      return t('students:programs.dars');
+    }
+    if (programName.includes('Hifz') || programName.includes('حفظ')) {
+      return t('students:programs.hifz');
+    }
+    if (programName.includes('Tajweed') || programName.includes('تجوید')) {
+      return t('students:programs.tajweed');
+    }
+    if (programName.includes('Matric') || programName.includes('مٹرک')) {
+      return t('students:programs.matric');
+    }
+    return programName;
+  };
+
+  // Helper for status localization
+  const getStatusLabel = (status: string) => {
+    const key = `students:status.${status.toLowerCase()}`;
+    return t(key);
+  };
 
   // Filter & Sort Logic
   const filteredAndSortedStudents = useMemo(() => {
@@ -107,7 +132,7 @@ export function StudentDirectory() {
   ];
 
   return (
-    <div className="w-full flex flex-col gap-6">
+    <div className="w-full flex flex-col gap-6" dir={direction}>
       
       {/* Search & Filter Panel */}
       <div className="p-6 rounded-[4px] card-standard shadow-md flex flex-col gap-4">
@@ -115,16 +140,17 @@ export function StudentDirectory() {
           
           {/* Keyword Search */}
           <div className="md:col-span-5 relative">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-[var(--color-teal-accent)]" />
+            <Search className={`absolute ${direction === 'rtl' ? 'right-3.5' : 'left-3.5'} top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-[var(--color-teal-accent)]`} />
             <input
               type="text"
-              placeholder="Search by Name, Roll No, CNIC, Father..."
+              placeholder={t('students:searchPlaceholder')}
               value={search}
               onChange={(e) => {
                 setSearch(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full pl-10 pr-4 py-2 text-xs border rounded-sm border-[var(--color-emerald-mid)] text-[var(--color-text-body)] bg-[var(--color-emerald-deep)] focus:outline-none focus:border-[var(--color-gold-primary)] transition-all"
+              className={`w-full ${direction === 'rtl' ? 'pr-10 pl-4' : 'pl-10 pr-4'} py-2 text-xs border rounded-sm border-[var(--color-emerald-mid)] text-[var(--color-text-body)] bg-[var(--color-emerald-deep)] focus:outline-none focus:border-[var(--color-gold-primary)] transition-all`}
+              dir={direction}
             />
           </div>
 
@@ -137,10 +163,11 @@ export function StudentDirectory() {
                 setCurrentPage(1);
               }}
               className="w-full px-3 py-2 text-xs border rounded-sm border-[var(--color-emerald-mid)] text-[var(--color-text-body)] bg-[var(--color-emerald-deep)] focus:outline-none focus:border-[var(--color-gold-primary)] transition-all"
+              dir={direction}
             >
-              <option value="">All Programs / شعبہ جات</option>
+              <option value="">{t('students:filters.allPrograms')}</option>
               {programs.map((p) => (
-                <option key={p} value={p}>{p}</option>
+                <option key={p} value={p}>{getProgramLabel(p)}</option>
               ))}
             </select>
           </div>
@@ -154,17 +181,18 @@ export function StudentDirectory() {
                 setCurrentPage(1);
               }}
               className="w-full px-3 py-2 text-xs border rounded-sm border-[var(--color-emerald-mid)] text-[var(--color-text-body)] bg-[var(--color-emerald-deep)] focus:outline-none focus:border-[var(--color-gold-primary)] transition-all"
+              dir={direction}
             >
-              <option value="">All Statuses</option>
-              <option value="enrolled">Enrolled / زیرِ تعلیم</option>
-              <option value="graduated">Graduated / فارغ التحصیل</option>
-              <option value="suspended">Suspended / معطل</option>
-              <option value="left">Left / چھوڑ گئے</option>
+              <option value="">{t('students:filters.allStatuses')}</option>
+              <option value="enrolled">{t('students:status.enrolled')}</option>
+              <option value="graduated">{t('students:status.graduated')}</option>
+              <option value="suspended">{t('students:status.suspended')}</option>
+              <option value="left">{t('students:status.left')}</option>
             </select>
           </div>
 
           {/* View Modes */}
-          <div className="md:col-span-2 flex justify-end gap-2">
+          <div className={`md:col-span-2 flex ${direction === 'rtl' ? 'justify-start md:justify-end' : 'justify-end'} gap-2`}>
             <button
               onClick={() => setViewMode('table')}
               className={`p-2 rounded-sm border transition-all ${
@@ -172,7 +200,7 @@ export function StudentDirectory() {
                   ? 'bg-[var(--color-gold-primary)] border-[var(--color-gold-bright)] text-[var(--color-emerald-bg)] shadow-sm' 
                   : 'bg-[var(--color-emerald-deep)] border-[var(--color-emerald-mid)] text-[var(--color-text-body)] hover:text-[var(--color-gold-bright)]'
               }`}
-              title="Table View"
+              title={t('students:viewMode.table')}
             >
               <List className="w-4 h-4" />
             </button>
@@ -183,7 +211,7 @@ export function StudentDirectory() {
                   ? 'bg-[var(--color-gold-primary)] border-[var(--color-gold-bright)] text-[var(--color-emerald-bg)] shadow-sm' 
                   : 'bg-[var(--color-emerald-deep)] border-[var(--color-emerald-mid)] text-[var(--color-text-body)] hover:text-[var(--color-gold-bright)]'
               }`}
-              title="Card Grid View"
+              title={t('students:viewMode.grid')}
             >
               <Grid className="w-4 h-4" />
             </button>
@@ -196,38 +224,38 @@ export function StudentDirectory() {
       {filteredAndSortedStudents.length === 0 ? (
         <div className="text-center p-12 card-standard rounded-[4px] shadow-sm text-[var(--color-text-muted)]">
           <Info className="w-10 h-10 text-[var(--color-teal-accent)] mx-auto mb-3" />
-          <p className="text-sm font-bold text-[var(--color-gold-bright)]">No students match the criteria.</p>
-          <p className="text-xs text-[var(--color-text-muted)]">Try modifying search tags or filters.</p>
+          <p className="text-sm font-bold text-[var(--color-gold-bright)]">{t('students:noMatchTitle')}</p>
+          <p className="text-xs text-[var(--color-text-muted)]">{t('students:noMatchDesc')}</p>
         </div>
       ) : viewMode === 'table' ? (
         /* TABLE VIEW */
         <div className="w-full overflow-hidden card-standard rounded-[4px] shadow-xl">
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse text-xs text-[var(--color-text-body)]">
+            <table className={`w-full border-collapse text-xs text-[var(--color-text-body)] ${direction === 'rtl' ? 'text-right' : 'text-left'}`} dir={direction}>
               <thead className="bg-[var(--color-emerald-deep)] border-b border-[var(--color-emerald-mid)] text-[var(--color-gold-primary)] font-bold select-none">
                 <tr>
                   <th className="p-4 cursor-pointer hover:bg-[var(--color-panel)] transition-colors" onClick={() => toggleSort('roll_no')}>
                     <div className="flex items-center gap-1.5">
-                      Roll No
+                      {t('students:table.rollNo')}
                       <ArrowUpDown className="w-3.5 h-3.5 text-[var(--color-teal-accent)]" />
                     </div>
                   </th>
                   <th className="p-4 cursor-pointer hover:bg-[var(--color-panel)] transition-colors" onClick={() => toggleSort('name')}>
                     <div className="flex items-center gap-1.5">
-                      Student Name
+                      {t('students:table.name')}
                       <ArrowUpDown className="w-3.5 h-3.5 text-[var(--color-teal-accent)]" />
                     </div>
                   </th>
-                  <th className="p-4">Father Name</th>
-                  <th className="p-4">Program / Department</th>
+                  <th className="p-4">{t('students:table.fatherName')}</th>
+                  <th className="p-4">{t('students:table.department')}</th>
                   <th className="p-4 cursor-pointer hover:bg-[var(--color-panel)] transition-colors" onClick={() => toggleSort('dob')}>
                     <div className="flex items-center gap-1.5">
-                      Date of Birth
+                      {t('students:table.dob')}
                       <ArrowUpDown className="w-3.5 h-3.5 text-[var(--color-teal-accent)]" />
                     </div>
                   </th>
-                  <th className="p-4 text-center">Status</th>
-                  <th className="p-4 text-center">Profile</th>
+                  <th className="p-4 text-center">{t('students:table.status')}</th>
+                  <th className="p-4 text-center">{t('students:table.profile')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[var(--color-emerald-mid)]/40">
@@ -236,7 +264,7 @@ export function StudentDirectory() {
                     <td className="p-4 font-mono font-bold text-[var(--color-gold-bright)]">{student.roll_no}</td>
                     <td className="p-4 font-bold text-[var(--color-text-body)]">{student.first_name} {student.last_name}</td>
                     <td className="p-4 font-medium text-[var(--color-text-muted)]">{student.parent.full_name}</td>
-                    <td className="p-4 text-[var(--color-text-body)]">{student.programName}</td>
+                    <td className="p-4 text-[var(--color-text-body)]">{getProgramLabel(student.programName)}</td>
                     <td className="p-4 text-[var(--color-teal-soft)] font-mono">{student.date_of_birth}</td>
                     <td className="p-4 text-center">
                       <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-sm text-[10px] font-bold border ${
@@ -247,7 +275,7 @@ export function StudentDirectory() {
                           : 'bg-[var(--color-emerald-deep)] text-[var(--color-text-muted)] border-[var(--color-emerald-mid)]'
                       }`}>
                         {student.current_status === 'enrolled' ? <UserCheck className="w-3 h-3" /> : <UserX className="w-3 h-3" />}
-                        {student.current_status.toUpperCase()}
+                        {getStatusLabel(student.current_status)}
                       </span>
                     </td>
                     <td className="p-4 text-center">
@@ -255,7 +283,7 @@ export function StudentDirectory() {
                         onClick={() => setSelectedStudent(student)}
                         className="px-2.5 py-1 rounded-sm bg-[var(--color-emerald-deep)] hover:bg-[var(--color-gold-primary)] hover:text-[var(--color-emerald-bg)] text-[var(--color-gold-bright)] border border-[var(--color-gold-primary)]/40 transition-all font-bold"
                       >
-                        Details
+                        {t('students:buttons.details')}
                       </button>
                     </td>
                   </tr>
@@ -279,7 +307,7 @@ export function StudentDirectory() {
                       ? 'bg-[var(--color-emerald-deep)] text-[var(--color-teal-soft)] border-[var(--color-teal-accent)]/30'
                       : 'bg-[var(--color-emerald-deep)] text-[var(--color-gold-bright)] border-[var(--color-gold-primary)]/30'
                   }`}>
-                    {student.current_status.toUpperCase()}
+                    {getStatusLabel(student.current_status)}
                   </span>
                 </div>
                 
@@ -287,17 +315,17 @@ export function StudentDirectory() {
                   <h3 className="text-sm font-bold text-[var(--color-gold-bright)] mt-1">
                     {student.first_name} {student.last_name}
                   </h3>
-                  <p className="text-xs text-[var(--color-text-muted)] font-medium">S/O {student.parent.full_name}</p>
+                  <p className="text-xs text-[var(--color-text-muted)] font-medium">{t('students:card.fatherPrefix')}{student.parent.full_name}</p>
                 </div>
                 
                 <div className="text-xs text-[var(--color-text-body)] flex flex-col gap-1 mt-2">
                   <div className="flex items-center gap-1.5">
-                    <GraduationCap className="w-3.5 h-3.5 text-[var(--color-teal-accent)]" />
-                    <span>{student.programName}</span>
+                    <GraduationCap className="w-3.5 h-3.5 text-[var(--color-teal-accent)] shrink-0" />
+                    <span>{getProgramLabel(student.programName)}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <Calendar className="w-3.5 h-3.5 text-[var(--color-teal-accent)]" />
-                    <span>DOB: {student.date_of_birth}</span>
+                    <Calendar className="w-3.5 h-3.5 text-[var(--color-teal-accent)] shrink-0" />
+                    <span>{t('students:card.dobPrefix')}{student.date_of_birth}</span>
                   </div>
                 </div>
               </div>
@@ -306,7 +334,7 @@ export function StudentDirectory() {
                 onClick={() => setSelectedStudent(student)}
                 className="w-full py-2 bg-[var(--color-emerald-deep)] hover:bg-[var(--color-gold-primary)] hover:text-[var(--color-emerald-bg)] border border-[var(--color-gold-primary)]/40 text-[var(--color-gold-bright)] rounded-sm text-xs font-bold transition-all duration-300"
               >
-                View Student Profile
+                {t('students:buttons.viewProfile')}
               </button>
             </div>
           ))}
@@ -321,24 +349,24 @@ export function StudentDirectory() {
             disabled={currentPage === 1}
             className="px-3 py-1.5 rounded-sm border border-[var(--color-emerald-mid)] bg-[var(--color-emerald-deep)] hover:border-[var(--color-gold-primary)] disabled:opacity-40 disabled:cursor-not-allowed text-xs font-bold text-[var(--color-text-body)] transition-all"
           >
-            Prev
+            {t('students:pagination.prev')}
           </button>
-          <span className="text-xs font-semibold text-[var(--color-text-muted)]">
-            Page {currentPage} of {totalPages}
+          <span className="text-xs font-semibold text-[var(--color-text-muted)] font-mono">
+            {t('students:pagination.pageOf', { current: String(currentPage), total: String(totalPages) })}
           </span>
           <button
             onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
             disabled={currentPage === totalPages}
             className="px-3 py-1.5 rounded-sm border border-[var(--color-emerald-mid)] bg-[var(--color-emerald-deep)] hover:border-[var(--color-gold-primary)] disabled:opacity-40 disabled:cursor-not-allowed text-xs font-bold text-[var(--color-text-body)] transition-all"
           >
-            Next
+            {t('students:pagination.next')}
           </button>
         </div>
       )}
 
       {/* Profile Detail Overlay Modal */}
       {selectedStudent && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto animate-fade-in select-none">
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto animate-fade-in select-none" dir={direction}>
           <div className="card-standard rounded-[4px] shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative animate-scale-up border border-[var(--color-gold-primary)]/40">
             
             {/* Header */}
@@ -352,6 +380,7 @@ export function StudentDirectory() {
               <button
                 onClick={() => setSelectedStudent(null)}
                 className="p-1 rounded-sm hover:bg-[var(--color-panel)] text-[var(--color-text-muted)] hover:text-[var(--color-gold-bright)] transition-all"
+                aria-label={t('students:modal.close')}
               >
                 <X className="w-5 h-5" />
               </button>
@@ -363,54 +392,56 @@ export function StudentDirectory() {
               {/* Enrollment Info */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 border-b border-[var(--color-emerald-mid)]/40 pb-5">
                 <div>
-                  <span className="text-[10px] text-[var(--color-teal-accent)] font-bold block mb-0.5 uppercase">ACADEMIC PROGRAM</span>
-                  <span className="font-bold text-[var(--color-gold-bright)]">{selectedStudent.programName}</span>
+                  <span className="text-[10px] text-[var(--color-teal-accent)] font-bold block mb-0.5 uppercase">{t('students:modal.academicProgram')}</span>
+                  <span className="font-bold text-[var(--color-gold-bright)]">{getProgramLabel(selectedStudent.programName)}</span>
                 </div>
                 <div>
-                  <span className="text-[10px] text-[var(--color-teal-accent)] font-bold block mb-0.5 uppercase">ADMISSION DATE</span>
+                  <span className="text-[10px] text-[var(--color-teal-accent)] font-bold block mb-0.5 uppercase">{t('students:modal.admissionDate')}</span>
                   <span className="font-bold font-mono text-[var(--color-text-body)]">{selectedStudent.admission_date}</span>
                 </div>
                 <div>
-                  <span className="text-[10px] text-[var(--color-teal-accent)] font-bold block mb-0.5 uppercase">CURRENT STATUS</span>
+                  <span className="text-[10px] text-[var(--color-teal-accent)] font-bold block mb-0.5 uppercase">{t('students:modal.currentStatus')}</span>
                   <span className={`inline-flex px-2.5 py-0.5 rounded-sm text-[9px] font-bold border ${
                     selectedStudent.current_status === 'enrolled'
                       ? 'bg-[var(--color-emerald-deep)] text-[var(--color-teal-soft)] border-[var(--color-teal-accent)]/30'
                       : 'bg-[var(--color-emerald-deep)] text-[var(--color-gold-bright)] border-[var(--color-gold-primary)]/30'
                   }`}>
-                    {selectedStudent.current_status.toUpperCase()}
+                    {getStatusLabel(selectedStudent.current_status)}
                   </span>
                 </div>
               </div>
 
               {/* Student Personal details */}
               <div className="flex flex-col gap-3">
-                <h4 className="font-bold text-[var(--color-gold-primary)] border-l-2 border-[var(--color-gold-primary)] pl-2">Personal Details</h4>
+                <h4 className={`font-bold text-[var(--color-gold-primary)] ${direction === 'rtl' ? 'border-r-2 pr-2' : 'border-l-2 pl-2'} border-[var(--color-gold-primary)]`}>
+                  {t('students:modal.personalDetails')}
+                </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-[var(--color-emerald-deep)] p-4 rounded-sm border border-[var(--color-emerald-mid)]/40">
                   <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-[var(--color-teal-accent)]" />
+                    <Calendar className="w-4 h-4 text-[var(--color-teal-accent)] shrink-0" />
                     <div>
-                      <span className="text-[9px] text-[var(--color-text-muted)] block">Date of Birth</span>
+                      <span className="text-[9px] text-[var(--color-text-muted)] block">{t('students:modal.dob')}</span>
                       <span className="font-bold font-mono">{selectedStudent.date_of_birth}</span>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CreditCard className="w-4 h-4 text-[var(--color-teal-accent)]" />
+                    <CreditCard className="w-4 h-4 text-[var(--color-teal-accent)] shrink-0" />
                     <div>
-                      <span className="text-[9px] text-[var(--color-text-muted)] block">CNIC / B-Form</span>
+                      <span className="text-[9px] text-[var(--color-text-muted)] block">{t('students:modal.cnic')}</span>
                       <span className="font-bold font-mono">{selectedStudent.cnic_bform}</span>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Phone className="w-4 h-4 text-[var(--color-teal-accent)]" />
+                    <Phone className="w-4 h-4 text-[var(--color-teal-accent)] shrink-0" />
                     <div>
-                      <span className="text-[9px] text-[var(--color-text-muted)] block">Mobile Contact</span>
+                      <span className="text-[9px] text-[var(--color-text-muted)] block">{t('students:modal.mobile')}</span>
                       <span className="font-bold font-mono">{selectedStudent.mobile}</span>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-[var(--color-teal-accent)]" />
+                    <MapPin className="w-4 h-4 text-[var(--color-teal-accent)] shrink-0" />
                     <div>
-                      <span className="text-[9px] text-[var(--color-text-muted)] block">Permanent Address</span>
+                      <span className="text-[9px] text-[var(--color-text-muted)] block">{t('students:modal.address')}</span>
                       <span className="font-medium">{selectedStudent.address_permanent}</span>
                     </div>
                   </div>
@@ -419,30 +450,32 @@ export function StudentDirectory() {
 
               {/* Parent Details */}
               <div className="flex flex-col gap-3">
-                <h4 className="font-bold text-[var(--color-gold-primary)] border-l-2 border-[var(--color-gold-primary)] pl-2">Guardian / Parent Details</h4>
+                <h4 className={`font-bold text-[var(--color-gold-primary)] ${direction === 'rtl' ? 'border-r-2 pr-2' : 'border-l-2 pl-2'} border-[var(--color-gold-primary)]`}>
+                  {t('students:modal.parentDetails')}
+                </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-[var(--color-emerald-deep)] p-4 rounded-sm border border-[var(--color-emerald-mid)]/40">
                   <div>
-                    <span className="text-[9px] text-[var(--color-text-muted)] block">Father's Name</span>
+                    <span className="text-[9px] text-[var(--color-text-muted)] block">{t('students:modal.fatherName')}</span>
                     <span className="font-bold">{selectedStudent.parent.full_name}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CreditCard className="w-4 h-4 text-[var(--color-teal-accent)]" />
+                    <CreditCard className="w-4 h-4 text-[var(--color-teal-accent)] shrink-0" />
                     <div>
-                      <span className="text-[9px] text-[var(--color-text-muted)] block">Father's CNIC</span>
+                      <span className="text-[9px] text-[var(--color-text-muted)] block">{t('students:modal.fatherCnic')}</span>
                       <span className="font-bold font-mono">{selectedStudent.parent.cnic}</span>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Briefcase className="w-4 h-4 text-[var(--color-teal-accent)]" />
+                    <Briefcase className="w-4 h-4 text-[var(--color-teal-accent)] shrink-0" />
                     <div>
-                      <span className="text-[9px] text-[var(--color-text-muted)] block">Father's Occupation</span>
+                      <span className="text-[9px] text-[var(--color-text-muted)] block">{t('students:modal.fatherOccupation')}</span>
                       <span className="font-bold">{selectedStudent.parent.occupation || 'N/A'}</span>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Phone className="w-4 h-4 text-[var(--color-teal-accent)]" />
+                    <Phone className="w-4 h-4 text-[var(--color-teal-accent)] shrink-0" />
                     <div>
-                      <span className="text-[9px] text-[var(--color-text-muted)] block">Father's Contact</span>
+                      <span className="text-[9px] text-[var(--color-text-muted)] block">{t('students:modal.fatherContact')}</span>
                       <span className="font-bold font-mono">{selectedStudent.parent.phone}</span>
                     </div>
                   </div>

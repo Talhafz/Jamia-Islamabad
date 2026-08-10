@@ -106,11 +106,11 @@ export function GalleryLightbox({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.94, y: 20 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="relative z-10 w-full max-w-5xl flex flex-col lg:flex-row bg-zinc-900/80 border border-white/10 rounded-[4px] overflow-hidden shadow-2xl shadow-black/60 backdrop-blur-md"
+            className="relative z-10 w-full max-w-5xl max-h-[82vh] flex flex-col lg:flex-row bg-zinc-900/80 border border-white/10 rounded-[4px] overflow-hidden shadow-2xl shadow-black/60 backdrop-blur-md"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* IMAGE PANEL */}
-            <div className="relative flex-1 min-h-[300px] lg:min-h-[520px] bg-zinc-950 flex items-center justify-center overflow-hidden">
+            {/* IMAGE PANEL — fills all remaining space; acts as strict bounding box for image */}
+            <div className="relative flex-1 min-h-[260px] lg:min-h-0 h-full bg-zinc-950 flex items-center justify-center overflow-hidden">
               <motion.img
                 key={item.src}
                 initial={{ opacity: 0, scale: 1.04 }}
@@ -118,7 +118,7 @@ export function GalleryLightbox({
                 transition={{ duration: 0.4 }}
                 src={item.src}
                 alt={getTitle(item)}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
               />
 
               {/* Gradient overlay for mobile */}
@@ -148,9 +148,9 @@ export function GalleryLightbox({
               </div>
             </div>
 
-            {/* INFO PANEL */}
+            {/* INFO PANEL — static width, never shrinks when images change */}
             <div
-              className="w-full lg:w-72 flex flex-col gap-5 p-6 overflow-y-auto"
+              className="w-full lg:w-80 lg:shrink-0 flex flex-col gap-5 p-6 overflow-y-auto border-t lg:border-t-0 lg:border-l border-white/10"
               dir={direction}
             >
               {/* Close button */}
