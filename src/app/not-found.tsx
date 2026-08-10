@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function NotFound() {
   return (
-    <div className="max-w-md mx-auto my-24 p-8 card-standard rounded-[4px] shadow-xl text-center animate-scale-up select-none">
+    <div className="max-w-md mx-auto mt-28 mb-24 p-8 card-standard rounded-[4px] shadow-xl text-center animate-scale-up select-none">
       <div className="w-14 h-14 bg-[var(--color-emerald-deep)] text-[var(--color-gold-primary)] border border-[var(--color-gold-primary)]/30 rounded-sm flex items-center justify-center mx-auto mb-6">
         <AlertCircle className="w-8 h-8" />
       </div>

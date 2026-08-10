@@ -15,11 +15,16 @@
   "footer": {
     "description": "A premium integration of classical Islamic learning and modern schooling, fostering ethical leadership and academic brilliance.",
     "quickLinks": "Quick Links",
+    "resources": "Resources",
+    "faqs": "FAQs",
+    "privacy": "Privacy Policy",
+    "terms": "Terms & Conditions",
     "contactUs": "Contact Us",
-    "address": "Jamia Islamabad, Sector G-10, Islamabad, Pakistan",
-    "phone": "Phone: 051-9234567",
-    "email": "Email: info@jamiaislamabad.edu.pk",
-    "rights": "All rights reserved © {year} Jamia Islamabad"
+    "address": "Adjacent Central Jamia Masjid Noor-e-Madina, Street No. B-85, I-8/4, Islamabad, Pakistan",
+    "phone": "Phone: +92 51 4864 945",
+    "email": "Email: info@jamiaislamabad.net",
+    "rights": "All rights reserved © {year} Jamia Islamabad",
+    "engineered": "Engineered for Jamia Islamabad EMS"
   },
   "buttons": {
     "submit": "Submit",
