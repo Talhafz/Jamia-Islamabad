@@ -1,0 +1,126 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  ADMIN
+  DIRECTOR
+  DEAN
+  STUDENT
+}
+
+enum AdmissionStatus {
+  PENDING
+  ENROLLED
+  GRADUATED
+  WITHDRAWN
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  passwordHash  String?
+  role          Role      @default(STUDENT)
+
+  // Link to Student record when role == STUDENT
+  studentId     String?   @unique
+  student       Student?  @relation(fields: [studentId], references: [id], onDelete: SetNull)
+
+  accounts      Account[]
+  sessions      Session[]
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("users")
+}
+
+model Student {
+  id                       String          @id @default(cuid())
+  formNo                   String          @unique // e.g. "JI-2026-84920"
+  date                     String?
+  department               String
+  classGrade               String
+
+  // Student Personal Info
+  studentName              String
+  fatherName               String
+  dob                      String
+  phone                    String?
+  mobile                   String
+  studentCnic              String
+  fatherCnic               String
+  permanentAddress         String          @db.Text
+  temporaryAddress         String?         @db.Text
+
+  // Guardian Info
+  guardianName             String?
+  guardianRelation         String?
+  guardianCnic             String?
+  guardianPhone            String?
+  guardianPermanentAddress String?         @db.Text
+  guardianTemporaryAddress String?         @db.Text
+
+  // Media / Signatures (Base64)
+  photo                    String          @db.Text
+  studentSignature         String          @db.Text
+  guardianSignature        String          @db.Text
+
+  // Terms & System Status
+  agreeToRules             Boolean         @default(true)
+  status                   AdmissionStatus @default(PENDING)
+  submittedAt              DateTime        @default(now())
+  updatedAt                DateTime        @updatedAt
+
+  // Inverse 1-to-1 relation with User account
+  user                     User?
+
+  @@map("students")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}

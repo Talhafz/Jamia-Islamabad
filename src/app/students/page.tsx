@@ -1,24 +1,22 @@
-'use client';
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
+import { authOptions } from '../../lib/auth';
+import { StudentsDirectoryClient } from './StudentsDirectoryClient';
 
-import React from 'react';
-import { StudentDirectory } from '../../features/student-directory/components/StudentDirectory';
-import { PageBanner } from '../../components/PageBanner';
-import { useLanguage } from '../../context/LanguageContext';
+const STAFF_ROLES = ['ADMIN', 'DIRECTOR', 'DEAN'];
 
-export default function StudentsDirectoryPage() {
-  const { t } = useLanguage();
+export default async function StudentsDirectoryPage() {
+  const session = await getServerSession(authOptions);
 
-  return (
-    <div className="w-full flex flex-col items-center">
-      <PageBanner 
-        title={t('students:title')} 
-        description={t('students:description')} 
-      />
+  // Server-side gate: no session → login
+  if (!session) {
+    redirect('/login?callbackUrl=/students');
+  }
 
-      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-16 select-none">
-        {/* Directory component mount */}
-        <StudentDirectory />
-      </div>
-    </div>
-  );
+  // Server-side gate: STUDENT role → their portal (explicit block, server-enforced)
+  if (!STAFF_ROLES.includes(session.user.role)) {
+    redirect('/student-portal');
+  }
+
+  return <StudentsDirectoryClient />;
 }

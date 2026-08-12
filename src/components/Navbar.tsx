@@ -15,12 +15,17 @@ const LANGUAGES: { code: Language; label: string }[] = [
 
 import { LogoBrand } from './LogoBrand';
 
+import { useSession, signOut } from 'next-auth/react';
+import { User, LogOut, Lock } from 'lucide-react';
+
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const { currentLanguage, setLanguage, t } = useLanguage();
   const pathname = usePathname();
+  const { data: session } = useSession();
+  const userRole = session?.user?.role;
 
   // Refs for language dropdown containers
   const desktopLangRef = useRef<HTMLDivElement>(null);
@@ -57,17 +62,28 @@ export function Navbar() {
     setIsOpen(false);
   }, [setLanguage]);
 
-  const navLinks = React.useMemo(() => [
-    { name: t('navbar.home'), path: '/' },
-    { name: t('navbar.about'), path: '/about' },
-    { name: t('navbar.admissionForm'), path: '/admission-form' },
-    { name: t('navbar.programs'), path: '/programs' },
-    { name: t('navbar.studentsDirectory'), path: '/students' },
-    { name: t('navbar.faculty'), path: '/faculty' },
-    { name: t('navbar.gallery'), path: '/gallery' },
-    { name: t('navbar.events'), path: '/events' },
-    { name: t('navbar.contact'), path: '/contact' },
-  ], [t]);
+  const navLinks = React.useMemo(() => {
+    const links = [
+      { name: t('navbar.home'), path: '/' },
+      { name: t('navbar.about'), path: '/about' },
+      { name: t('navbar.admissionForm'), path: '/admission-form' },
+      { name: t('navbar.programs'), path: '/programs' },
+    ];
+
+    // FULLY HIDE Student Directory from STUDENT sessions
+    if (userRole !== 'STUDENT') {
+      links.push({ name: t('navbar.studentsDirectory'), path: '/students' });
+    }
+
+    links.push(
+      { name: t('navbar.faculty'), path: '/faculty' },
+      { name: t('navbar.gallery'), path: '/gallery' },
+      { name: t('navbar.events'), path: '/events' },
+      { name: t('navbar.contact'), path: '/contact' }
+    );
+
+    return links;
+  }, [t, userRole]);
 
   const currentLangLabel = LANGUAGES.find(l => l.code === currentLanguage)?.label ?? 'اردو';
 
@@ -149,6 +165,30 @@ export function Navbar() {
               )}
             </div>
 
+            {session?.user ? (
+              <div className="flex items-center gap-2">
+                <span className="px-2 py-1 rounded-[2px] bg-[var(--color-gold-primary)]/20 border border-[var(--color-gold-primary)]/40 text-[var(--color-gold-bright)] text-[10px] font-extrabold uppercase font-mono">
+                  {session.user.role || 'USER'}
+                </span>
+                <button
+                  onClick={() => signOut({ callbackUrl: '/login' })}
+                  className="px-2.5 py-1.5 rounded-sm border border-red-800/60 bg-red-950/40 hover:bg-red-900/60 text-red-200 text-[11px] font-bold transition-all flex items-center gap-1"
+                  title="Sign Out"
+                >
+                  <LogOut className="w-3.5 h-3.5 text-red-400" />
+                  <span>{currentLanguage === 'ur' ? 'لاگ آؤٹ' : 'Sign Out'}</span>
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/login"
+                className="px-3 py-1.5 rounded-sm border border-[var(--color-gold-primary)]/50 bg-[var(--color-panel)] hover:bg-[var(--color-gold-primary)] hover:text-[var(--color-emerald-deep)] text-[var(--color-gold-bright)] text-[11px] xl:text-xs font-bold transition-all flex items-center gap-1 shadow-sm"
+              >
+                <User className="w-3.5 h-3.5" />
+                <span>{currentLanguage === 'ur' ? 'لاگ ان' : 'Sign In'}</span>
+              </Link>
+            )}
+
             <Link
               href="/admission-form"
               className="btn-primary-gold px-3 xl:px-4 py-2 text-[11px] xl:text-xs flex items-center gap-1.5 shadow-md whitespace-nowrap"
@@ -217,6 +257,37 @@ export function Navbar() {
               {link.name}
             </Link>
           ))}
+          {session?.user ? (
+            <div className="flex items-center justify-between px-4 py-2 bg-[var(--color-panel)] rounded-lg border border-[var(--color-emerald-mid)]">
+              <div className="flex items-center gap-2">
+                <User className="w-4 h-4 text-[var(--color-gold-primary)]" />
+                <span className="text-xs font-bold text-[var(--color-gold-bright)]">{session.user.name || session.user.email}</span>
+                <span className="px-1.5 py-0.5 rounded-[2px] bg-[var(--color-gold-primary)]/20 text-[var(--color-gold-bright)] text-[9px] font-extrabold font-mono">
+                  {session.user.role}
+                </span>
+              </div>
+              <button
+                onClick={() => {
+                  setIsOpen(false);
+                  signOut({ callbackUrl: '/login' });
+                }}
+                className="text-xs font-bold text-red-400 hover:underline flex items-center gap-1"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span>{currentLanguage === 'ur' ? 'لاگ آؤٹ' : 'Sign Out'}</span>
+              </button>
+            </div>
+          ) : (
+            <Link
+              href="/login"
+              onClick={() => setIsOpen(false)}
+              className="px-4 py-2.5 rounded-lg text-sm font-bold text-[var(--color-gold-bright)] bg-[var(--color-panel)] border border-[var(--color-gold-primary)]/40 flex items-center justify-center gap-2"
+            >
+              <User className="w-4 h-4" />
+              <span>{currentLanguage === 'ur' ? 'اکاؤنٹ لاگ ان' : 'Sign In'}</span>
+            </Link>
+          )}
+
           <Link
             href="/admission-form"
             onClick={() => setIsOpen(false)}
