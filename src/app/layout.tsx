@@ -3,6 +3,7 @@ import { Inter, Noto_Nastaliq_Urdu } from 'next/font/google';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { LanguageProvider } from '../context/LanguageContext';
+import { NextAuthProvider } from '../providers/NextAuthProvider';
 import './globals.css';
 
 const inter = Inter({
@@ -40,14 +41,16 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col bg-[var(--color-emerald-bg)] text-[var(--color-text-body)] overflow-x-hidden" suppressHydrationWarning>
-        <LanguageProvider>
-          <Navbar />
-          {/* Main content container */}
-          <main className="flex-grow">
-            {children}
-          </main>
-          <Footer />
-        </LanguageProvider>
+        <NextAuthProvider>
+          <LanguageProvider>
+            <Navbar />
+            {/* Main content container */}
+            <main className="flex-grow">
+              {children}
+            </main>
+            <Footer />
+          </LanguageProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );
