@@ -35,7 +35,7 @@ export async function middleware(req: NextRequest) {
 
   // ── 2. Student Portal Routes ──────────────────────────────────────────────
   if (
-    pathname.startsWith('/student-portal/dashboard') ||
+    pathname.startsWith('/student-portal') ||
     pathname.startsWith('/my-application')
   ) {
     if (!token) {
@@ -59,7 +59,8 @@ export const config = {
     '/students/:path*',
     '/faculty/manage/:path*',
     '/admin/:path*',
-    '/student-portal/dashboard/:path*',
+    '/student-portal',
+    '/student-portal/:path*',
     '/my-application/:path*',
   ],
 };
