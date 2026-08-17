@@ -14,8 +14,8 @@ const LANGUAGES: { code: Language; label: string }[] = [
 ];
 
 import { LogoBrand } from './LogoBrand';
-
-import { useSession, signOut } from 'next-auth/react';
+import { AdaptiveAuthButton } from './AdaptiveAuthButton';
+import { useSession } from 'next-auth/react';
 import { User, LogOut, Lock } from 'lucide-react';
 
 export function Navbar() {
@@ -165,37 +165,8 @@ export function Navbar() {
               )}
             </div>
 
-            {session?.user ? (
-              <div className="flex items-center gap-2">
-                <span className="px-2 py-1 rounded-[2px] bg-[var(--color-gold-primary)]/20 border border-[var(--color-gold-primary)]/40 text-[var(--color-gold-bright)] text-[10px] font-extrabold uppercase font-mono">
-                  {session.user.role || 'USER'}
-                </span>
-                <button
-                  onClick={() => signOut({ callbackUrl: '/login' })}
-                  className="px-2.5 py-1.5 rounded-sm border border-red-800/60 bg-red-950/40 hover:bg-red-900/60 text-red-200 text-[11px] font-bold transition-all flex items-center gap-1"
-                  title="Sign Out"
-                >
-                  <LogOut className="w-3.5 h-3.5 text-red-400" />
-                  <span>{currentLanguage === 'ur' ? 'لاگ آؤٹ' : 'Sign Out'}</span>
-                </button>
-              </div>
-            ) : (
-              <Link
-                href="/login"
-                className="px-3 py-1.5 rounded-sm border border-[var(--color-gold-primary)]/50 bg-[var(--color-panel)] hover:bg-[var(--color-gold-primary)] hover:text-[var(--color-emerald-deep)] text-[var(--color-gold-bright)] text-[11px] xl:text-xs font-bold transition-all flex items-center gap-1 shadow-sm"
-              >
-                <User className="w-3.5 h-3.5" />
-                <span>{currentLanguage === 'ur' ? 'لاگ ان' : 'Sign In'}</span>
-              </Link>
-            )}
-
-            <Link
-              href="/admission-form"
-              className="btn-primary-gold px-3 xl:px-4 py-2 text-[11px] xl:text-xs flex items-center gap-1.5 shadow-md whitespace-nowrap"
-            >
-              <FileCheck className="w-3.5 h-3.5" />
-              {t('navbar.applyNow')}
-            </Link>
+            {/* ── Single Adaptive Auth Button (Desktop) ── */}
+            <AdaptiveAuthButton currentLanguage={currentLanguage} />
           </div>
 
           {/* Mobile: Globe Dropdown + Hamburger */}
@@ -257,45 +228,11 @@ export function Navbar() {
               {link.name}
             </Link>
           ))}
-          {session?.user ? (
-            <div className="flex items-center justify-between px-4 py-2 bg-[var(--color-panel)] rounded-lg border border-[var(--color-emerald-mid)]">
-              <div className="flex items-center gap-2">
-                <User className="w-4 h-4 text-[var(--color-gold-primary)]" />
-                <span className="text-xs font-bold text-[var(--color-gold-bright)]">{session.user.name || session.user.email}</span>
-                <span className="px-1.5 py-0.5 rounded-[2px] bg-[var(--color-gold-primary)]/20 text-[var(--color-gold-bright)] text-[9px] font-extrabold font-mono">
-                  {session.user.role}
-                </span>
-              </div>
-              <button
-                onClick={() => {
-                  setIsOpen(false);
-                  signOut({ callbackUrl: '/login' });
-                }}
-                className="text-xs font-bold text-red-400 hover:underline flex items-center gap-1"
-              >
-                <LogOut className="w-3.5 h-3.5" />
-                <span>{currentLanguage === 'ur' ? 'لاگ آؤٹ' : 'Sign Out'}</span>
-              </button>
-            </div>
-          ) : (
-            <Link
-              href="/login"
-              onClick={() => setIsOpen(false)}
-              className="px-4 py-2.5 rounded-lg text-sm font-bold text-[var(--color-gold-bright)] bg-[var(--color-panel)] border border-[var(--color-gold-primary)]/40 flex items-center justify-center gap-2"
-            >
-              <User className="w-4 h-4" />
-              <span>{currentLanguage === 'ur' ? 'اکاؤنٹ لاگ ان' : 'Sign In'}</span>
-            </Link>
-          )}
 
-          <Link
-            href="/admission-form"
-            onClick={() => setIsOpen(false)}
-            className="mt-2 w-full py-3 btn-primary-gold text-xs shadow-md transition-all text-center flex items-center justify-center gap-2"
-          >
-            <FileCheck className="w-4 h-4" />
-            {t('navbar.applyNow')}
-          </Link>
+          {/* Single Adaptive Auth Button (Mobile Drawer) */}
+          <div className="pt-2 border-t border-[var(--color-emerald-mid)]/40 flex justify-start">
+            <AdaptiveAuthButton currentLanguage={currentLanguage} onMobileClick={() => setIsOpen(false)} />
+          </div>
         </div>
       )}
     </nav>
